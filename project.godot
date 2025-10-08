@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="3D-tutorial"
+config/name="Bathhouse-GAME"
 run/main_scene="uid://b8e8bseuynjvd"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
