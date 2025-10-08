@@ -1,0 +1,7 @@
+do GameManager.change_selfie_cam("NPC_TownspersonA")
+[wait time="1.0"]
+ParkMan: Beautiful Sunset!
+do GameManager.change_selfie_cam("Player")
+Player: Yes...
+do GameManager.change_cinematic_cam("Cinematic_Cam2")
+ParkMan: You be careful tonight old man.

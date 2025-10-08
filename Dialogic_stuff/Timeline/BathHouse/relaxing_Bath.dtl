@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: Rough Day?
+do GameManager.change_selfie_cam("BathGoer5")
+BathGoer2: Busy, yes. But nothing a bath can't cure.

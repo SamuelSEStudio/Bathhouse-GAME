@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=4 uid="uid://d212xg671282g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qumjf"]
+resource_name = "Material"
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ensme"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 2, 2),
+"format": 34359742465,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAQADAAIABAAAAAIAAQAAAAQABAACAAMAAQAFAAMABQAEAAMAAQAEAAUA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AACAvwAAAAAAAIA/AACAvwAAAAAAAIC/AACAvwAAAEAAAACAAACAPwAAAEAAAACAAACAPwAAAAAAAIA/AACAPwAAAAAAAIC/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_l7bod"]
+resource_name = "cone1_Cube_026"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/"),
+"format": 34359742487,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUAAwAGAAQABwAIAAkACgALAAwACgANAAsADgAPABAADgARAA8A"),
+"material": SubResource("StandardMaterial3D_qumjf"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("AACAvwAAAAAAAIA/AACAvwAAAAAAAIC/AACAvwAAAEAAAACAAACAvwAAAAAAAIC/AACAPwAAAEAAAACAAACAvwAAAEAAAACAAACAPwAAAAAAAIC/AACAPwAAAAAAAIC/AACAPwAAAAAAAIA/AACAPwAAAEAAAACAAACAPwAAAAAAAIA/AACAvwAAAEAAAACAAACAPwAAAEAAAACAAACAvwAAAAAAAIA/AACAvwAAAAAAAIC/AACAPwAAAAAAAIA/AACAPwAAAAAAAIC/AACAvwAAAAAAAIA/AAD/f////78AAP9/////vwAA/3////+/VNX//////79U1f//////v1TV//////+/VNX//////7////9/////v////3////+/////f////7//f6qq////P/9/qqr///8//3+qqv///z//f6qq////P/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ensme")
+
+[node name="cone1" type="Node3D"]
+
+[node name="cone_001" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_l7bod")
+skeleton = NodePath("")

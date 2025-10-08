@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: How's your Night?
+do GameManager.change_selfie_cam("")
+Thug01: Keep moving old man, Just lost a card game so im not in the mood, but I’ll win tomorrow.

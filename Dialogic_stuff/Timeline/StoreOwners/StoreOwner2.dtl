@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: Still keeping the shop?
+do GameManager.change_selfie_cam()
+StoreOwner2: For now. But I saw two men loitering out front, scribbling in notebooks. Customers don't like it.

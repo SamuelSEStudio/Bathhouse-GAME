@@ -1,0 +1,7 @@
+do GameManager.change_selfie_cam("BathGoer2")
+do GameManager.play_anim("Player", "idle")
+FrontDesk: fefefefe
+do GameManager.change_cinematic_cam("Cinematic_Cam")
+FrontDesk: ddsddsds
+do GameManager.change_selfie_cam("Player")
+Player: sdsdsdsdsdsds

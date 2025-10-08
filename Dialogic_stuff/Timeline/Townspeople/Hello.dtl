@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: Hello
+do GameManager.change_selfie_cam("BathGoer3")
+BathGoerq: Sorry i dont talk to strangers goodbye!

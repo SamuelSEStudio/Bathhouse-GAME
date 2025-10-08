@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=4 uid="uid://midcmb5kbhr6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhcsb"]
+resource_name = "Material"
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qyrqc"]
+_surfaces = [{
+"aabb": AABB(-1.07288e-06, 0, -0.5, 0.406003, 2, 0.500001),
+"format": 34359742465,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMAAAAEAAEAAgADAAUAAAACAAUABgADAAEABgABAAQABQADAAYABAAAAAcAAAAFAAcABAAHAAYABQAGAAcA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("ZN/PPgAAAED2//++AABgtQAAAAAEAAC/bN/PPgAAADQEAAC/AABgtQAAAAAAAIC0AACQtQAAAED2//++bN/PPgAAADQAAIC0AACQtQAAAEAAAKA0ZN/PPgAAAEAAAKA0")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_mp2xq"]
+resource_name = "fence wood_Cylinder_079"
+_surfaces = [{
+"aabb": AABB(-1.07288e-06, 0, -0.5, 0.406003, 2, 0.500001),
+"attribute_data": PackedByteArray("YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/YN99PYPgTz9g3309g+BPP2DffT2D4E8/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_bhcsb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZN/PPgAAAED2//++AABgtQAAAAAEAAC/bN/PPgAAADQEAAC/AACQtQAAAED2//++bN/PPgAAADQAAIC0AACQtQAAAEAAAKA0ZN/PPgAAAEAAAKA0AABgtQAAAAAAAIC0ZN/PPgAAAED2//++bN/PPgAAADQAAIC0ZN/PPgAAAEAAAKA0bN/PPgAAADQEAAC/bN/PPgAAADQEAAC/AABgtQAAAAAAAIC0bN/PPgAAADQAAIC0AABgtQAAAAAEAAC/AACQtQAAAED2//++ZN/PPgAAAEAAAKA0AACQtQAAAEAAAKA0ZN/PPgAAAED2//++AACQtQAAAEAAAKA0AABgtQAAAAAEAAC/AACQtQAAAED2//++AABgtQAAAAAAAIC0/////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////P////3////+/////f////7////9/////v////3////+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7//f///////v/9///////+//3///////7//f///////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_qyrqc")
+
+[node name="fence wood" type="Node3D"]
+
+[node name="Fence wood" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_mp2xq")
+skeleton = NodePath("")

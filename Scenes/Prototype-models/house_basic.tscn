@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cteiei5ay12fg"]
+
+[ext_resource type="PackedScene" uid="uid://brtb3jg60mu2x" path="res://Scenes/Prototype-models/cube_7.tscn" id="1_3xruy"]
+[ext_resource type="PackedScene" uid="uid://b7cch4cntp7p2" path="res://Scenes/Prototype-models/roof.tscn" id="2_mpevo"]
+
+[node name="House-Basic" type="Node3D"]
+
+[node name="cube7" parent="." instance=ExtResource("1_3xruy")]
+
+[node name="cone2" parent="." instance=ExtResource("2_mpevo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00114655, 1.00065, 0.00428033)

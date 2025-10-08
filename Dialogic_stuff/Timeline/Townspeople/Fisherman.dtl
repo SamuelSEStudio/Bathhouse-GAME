@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: Catch anything?
+do GameManager.change_selfie_cam("Fisherman")
+Fisherman: Not a thing. But the river was shining like glass today, and that’s reward enough.

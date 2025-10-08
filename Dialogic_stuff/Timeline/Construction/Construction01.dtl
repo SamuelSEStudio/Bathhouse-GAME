@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: um... Excuse me
+do GameManager.change_selfie_cam("ConstructionWoker01")
+Construction01: Sorry Sir! Its dangerous here and we are busy right now! Try talking to someone else.

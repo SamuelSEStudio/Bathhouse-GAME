@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: How are you doing?
+do GameManager.change_selfie_cam("Townsperson-03")
+Townsperson03: I used to climb this hill all the time when i was younger, things get much harder in old age.

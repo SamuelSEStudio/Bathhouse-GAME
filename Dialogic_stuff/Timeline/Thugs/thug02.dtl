@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: How's your night?
+do GameManager.change_selfie_cam("")
+Thug02: Yeah. Pretty good, just won some money... We’re not all bad, y’know. Some of us just like a pint and a laugh.

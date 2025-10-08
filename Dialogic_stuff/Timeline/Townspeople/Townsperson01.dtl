@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: enjoying the view?
+do GameManager.change_selfie_cam("TownsPerson_01")
+TownsPerson01: We are luck to live where we are...got to enjoy it while we can... its a shame that the character of this town is changing.

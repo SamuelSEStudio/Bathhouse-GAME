@@ -1,0 +1,8 @@
+do GameManager.play_anim("Player", "idle")
+do GameManager.change_selfie_cam("Npc-Worker")
+FrontDesk: Welcome sir!
+do GameManager.change_selfie_cam("Player")
+Player: Can i get a pass for one?
+do GameManager.play_anim("Npc-Worker", "Spell_Double_Enter")
+do GameManager.change_selfie_cam("Npc-Worker")
+FrontDesk: sure head on in

@@ -1,0 +1,91 @@
+[gd_scene load_steps=15 format=3 uid="uid://c38oj2n6qbcch"]
+
+[ext_resource type="Texture2D" uid="uid://78pehu0r5g6w" path="res://Assets/textures/grids/Dark/texture_04.png" id="1_tm05i"]
+[ext_resource type="Texture2D" uid="uid://c6tbgl2cypvn5" path="res://Assets/textures/grids/Purple/texture_04.png" id="2_dexeq"]
+[ext_resource type="Texture2D" uid="uid://ct6ufttqsgq22" path="res://Assets/textures/grids/Orange/texture_04.png" id="3_yvsmj"]
+[ext_resource type="Texture2D" uid="uid://c7ks4lubwjoy3" path="res://Assets/textures/grids/Green/texture_04.png" id="4_hay4s"]
+[ext_resource type="PackedScene" uid="uid://sn1i8p8ggbwl" path="res://Scenes/NPCS/fighter_practice.tscn" id="5_yvsmj"]
+[ext_resource type="PackedScene" uid="uid://c3mr3orx2w8q6" path="res://Scenes/player.tscn" id="7_1a1k7"]
+[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/fight_cam_2d.tscn" id="7_hay4s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_hay4s"]
+sky_material = SubResource("ProceduralSkyMaterial_yvsmj")
+
+[sub_resource type="Environment" id="Environment_eb7qw"]
+background_mode = 2
+sky = SubResource("Sky_hay4s")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb7qw"]
+albedo_texture = ExtResource("1_tm05i")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amjer"]
+albedo_texture = ExtResource("2_dexeq")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prhq4"]
+albedo_texture = ExtResource("3_yvsmj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibogx"]
+albedo_texture = ExtResource("4_hay4s")
+uv1_triplanar = true
+
+[node name="world-park-practice" type="Node3D"]
+
+[node name="Fight_Cam-2D" parent="." node_paths=PackedStringArray("player_ref", "opponent_ref") instance=ExtResource("7_hay4s")]
+transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 2.62639, 1.26331, 1.19668)
+player_ref = NodePath("../Player")
+opponent_ref = NodePath("../Temp_Enemy")
+min_distance = 3.0
+max_distance = 60.0
+vertical_offset = 1.0
+horizontal_offset = 0.0
+keep_player_on_left = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eb7qw")
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.502172, 0)
+material_override = SubResource("StandardMaterial3D_eb7qw")
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="purple_box" type="CSGBox3D" parent="."]
+transform = Transform3D(0.776311, 0, -0.630351, 0, 1, 0, 0.630351, 0, 0.776311, -6.90892, 0.400064, 1.85233)
+material_override = SubResource("StandardMaterial3D_amjer")
+use_collision = true
+
+[node name="Ornage_box" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.35682, 0, 0.934173, 0, 1, 0, -0.934173, 0, -0.35682, -5.24364, 0.958675, -3.02395)
+material_override = SubResource("StandardMaterial3D_prhq4")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="Green_box" type="CSGBox3D" parent="."]
+transform = Transform3D(0.86431, 0, 0.50296, 0, 1, 0, -0.50296, 0, 0.86431, -6.60778, 0.723854, 4.76955)
+material_override = SubResource("StandardMaterial3D_ibogx")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="Temp_Enemy" parent="." instance=ExtResource("5_yvsmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.632743, -0.00217247, -2.65658)
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 5.04208, 1.26331, 0.672947)
+
+[node name="Player" parent="." node_paths=PackedStringArray("player_combat_cam") instance=ExtResource("7_1a1k7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709392, -0.00013489, 0.779357)
+start_in_practice = true
+use_internal_cam = false
+player_combat_cam = NodePath("../Fight_Cam-2D")

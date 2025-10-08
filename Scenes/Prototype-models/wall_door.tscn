@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=4 uid="uid://7r6mfg6ytlrd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0fp8q"]
+resource_name = "Material"
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ll6e6"]
+_surfaces = [{
+"aabb": AABB(-4, 0, 2.23517e-08, 4, 4, 1),
+"format": 34359742465,
+"index_count": 84,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAAAAIAAAAFAAMAAAAEAAUABgADAAUABgABAAMABQAEAAcABQAHAAYABAACAAcACAABAAYAAgABAAkACAAJAAEABwACAAoAAgAJAAoABgAHAAsABgALAAgABwAKAAsACgAJAAwACAALAA0ACwAKAA4ACgAMAA4ACwAOAA0ADwAMAAkADwAJAAgADgAMAA8ACAANAA8ADgAPAA0A"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("AACAwAAAAAAAAIA/AACAwAAAgEAAAMAyAACAwAAAgEAAAIA/AACAwAAAAAAAAMAyAABAwAAAAAAAAIA/AABAwAAAAAAAAMAyAABAwAAAQEAAAMAyAABAwAAAQEAAAIA/AQCAvwAAQEAAAMAyXIgQtAAAgEAAAMAyXIgQtAAAgEAAAIA/AQCAvwAAQEAAAIA/nd59swAAoDQAAMAyAACAvwAAgDQAAIA/nd59swAAoDQAAIA/AACAvwAAgDQAAMAy")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aebsf"]
+resource_name = "wall door_Cube_044"
+_surfaces = [{
+"aabb": AABB(-4, 0, 2.23517e-08, 4, 4, 1),
+"attribute_data": PackedByteArray("YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2HffT2C4E8/Yd99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9f3309g+BPP2DffT2C4E8/Yd99PYLgTz9g3309guBPP1/ffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/Yd99PYLgTz9f3309g+BPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2HffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9g3309guBPP2DffT2C4E8/X999PYLgTz9g3309guBPP2DffT2C4E8/Yd99PYLgTz9g3309guBPP2DffT2C4E8/YN99PYLgTz9f3309g+BPP1/ffT2C4E8/"),
+"format": 34359742487,
+"index_count": 84,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAFgAVABgAFgAYABkAGQAYABoAGQAaABsAHAAdAB4AHAAfAB0AIAAfABwAIAAhAB8AIgAhACAAIgAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0A"),
+"material": SubResource("StandardMaterial3D_0fp8q"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 48,
+"vertex_data": PackedByteArray("AACAwAAAAAAAAIA/AACAwAAAgEAAAMAyAACAwAAAgEAAAIA/AACAwAAAAAAAAMAyXIgQtAAAgEAAAIA/nd59swAAoDQAAMAynd59swAAoDQAAIA/XIgQtAAAgEAAAMAyAQCAvwAAQEAAAMAyAACAvwAAgDQAAIA/AACAvwAAgDQAAMAyAQCAvwAAQEAAAIA/AACAwAAAgEAAAIA/XIgQtAAAgEAAAMAyXIgQtAAAgEAAAIA/AACAwAAAgEAAAMAyAABAwAAAQEAAAMAyAQCAvwAAQEAAAIA/AQCAvwAAQEAAAMAyAABAwAAAQEAAAIA/AABAwAAAAAAAAIA/AACAwAAAgEAAAIA/AABAwAAAQEAAAIA/AACAwAAAAAAAAIA/XIgQtAAAgEAAAIA/AQCAvwAAQEAAAIA/nd59swAAoDQAAIA/AACAvwAAgDQAAIA/AABAwAAAQEAAAMAyAACAwAAAAAAAAMAyAABAwAAAAAAAAMAyAACAwAAAgEAAAMAyAQCAvwAAQEAAAMAyXIgQtAAAgEAAAMAyAACAvwAAgDQAAMAynd59swAAoDQAAMAyAACAwAAAAAAAAIA/AABAwAAAAAAAAMAyAACAwAAAAAAAAMAyAABAwAAAAAAAAIA/nd59swAAoDQAAIA/AACAvwAAgDQAAMAyAACAvwAAgDQAAIA/nd59swAAoDQAAMAyAABAwAAAAAAAAMAyAABAwAAAQEAAAIA/AABAwAAAQEAAAMAyAABAwAAAAAAAAIA/AAD/f////78AAP9/////vwAA/3////+/AAD/f////7////9/////v////3////+/////f////7////9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+//3///////7//f///////v/9///////+//3///////7//fwAA//////9/AAD//////38AAP//////fwAA////v/9//3////8//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//3//f////z///////9//T/////////+//////////7///////9//T///////3/9P/////////7//////////v/////////+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v////3////+/////f////7////9/////v////3////+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ll6e6")
+
+[node name="wall door" type="Node3D"]
+
+[node name="Wall door" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_aebsf")
+skeleton = NodePath("")

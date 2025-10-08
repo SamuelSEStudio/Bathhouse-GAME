@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: Busy day?
+do GameManager.change_selfie_cam("StorePerson")
+StoreOwner: Had three customers before noon! That’s enough excitement for me.

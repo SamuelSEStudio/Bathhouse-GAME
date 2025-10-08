@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw1pxs55g26wu"]
+
+[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/fight_cam_2d.tscn" id="1_1c0q1"]
+[ext_resource type="Script" uid="uid://beocb4fs5w1uo" path="res://Scripts/Game-Wide/map-cameratest.gd" id="2_sp3if"]
+[ext_resource type="PackedScene" uid="uid://c3mr3orx2w8q6" path="res://Scenes/player.tscn" id="3_sp3if"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3pu5d"]
+size = Vector3(18.1546, 1, 8.7131)
+
+[node name="Node" type="Node"]
+
+[node name="Fight_Cam-2D" parent="." instance=ExtResource("1_1c0q1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699839, 0.943316, 2.18268)
+
+[node name="map" type="Node3D" parent="."]
+script = ExtResource("2_sp3if")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.12858, -0.507307, -3.23891)
+use_collision = true
+collision_mask = 3
+size = Vector3(18.3648, 1, 10.6617)
+
+[node name="Can_fight" type="Area3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.318313, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/Can_fight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.13736, 0, -2.27171)
+shape = SubResource("BoxShape3D_3pu5d")
+
+[node name="Player" parent="." node_paths=PackedStringArray("player_combat_cam") instance=ExtResource("3_sp3if")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71974, 0, -0.491956)
+player_combat_cam = NodePath("../Fight_Cam-2D")
+
+[connection signal="body_entered" from="map/Can_fight" to="map" method="_on_can_fight_body_entered"]

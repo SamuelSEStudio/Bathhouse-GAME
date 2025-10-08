@@ -1,0 +1,4 @@
+do GameManager.change_selfie_cam("Player")
+Player: What are you doing?
+do GameManager.change_selfie_cam("Townsperson-02")
+Townsperson02: Gotta make sure things are running smoothly! who else will keep this place running.
