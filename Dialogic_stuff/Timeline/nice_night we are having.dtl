@@ -1,5 +1,4 @@
 do GameManager.change_selfie_cam("NPC_TownspersonA")
-[wait time="1.0"]
 ParkMan: Beautiful Sunset!
 do GameManager.change_selfie_cam("Player")
 Player: Yes...

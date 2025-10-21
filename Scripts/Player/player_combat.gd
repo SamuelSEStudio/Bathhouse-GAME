@@ -77,6 +77,7 @@ func resolve_attack(button: StringName) -> State:
 		if button == &"K" and front_kick_state: return front_kick_state
 	if _is_back_held():
 		if button == &"K" and back_kick_state: return back_kick_state
+		
 	if button == &"P" and jab_state: return jab_state
 	if button == &"K" and neutral_kick_state: return neutral_kick_state
 	return null

@@ -1,4 +1,8 @@
 do GameManager.change_selfie_cam("Player")
 Player: Still keeping the shop?
-do GameManager.change_selfie_cam()
-StoreOwner2: For now. But I saw two men loitering out front, scribbling in notebooks. Customers don't like it.
+do GameManager.change_selfie_cam("StorePerson")
+StoreOwner2: For now. But I saw two men loitering out front, scribbling in notebooks. Makes everyone anxious, customers don't like it.
+do GameManager.change_selfie_cam("Player")
+Player: Want me to talk to them.
+do GameManager.change_selfie_cam("StorePerson")
+StoreOwner2: You're in enough trouble with them as is. I dont want you getting in more on my behalf.

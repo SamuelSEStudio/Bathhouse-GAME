@@ -16,6 +16,7 @@ const ATTACK_RANGE = 2.5
 @export var orbit_radius: float = 4.0
 @export var orbit_blend_range: float = 2.0
 @export var backoff_speed: float = 3.0
+@export var follow: bool = false
 
 var _character: CharacterBody3D = null
 
@@ -31,6 +32,10 @@ func _process(delta: float) -> void:
 
 	if player == null:
 		return
+	if !follow:
+		move_and_slide()
+	else:
+		pass
 #position of player and self
 	var ppos: Vector3 = player.global_position
 	var self_pos: Vector3 = global_position

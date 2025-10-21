@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcn4g5t6ur0b0"]
+
+[ext_resource type="Script" uid="uid://lpm5mn57c1q0" path="res://HB-Autosetup.gd" id="1_3y8g4"]
+
+[node name="Hurt-Auto" type="Node"]
+script = ExtResource("1_3y8g4")
+region_bones = {
+"Head": PackedStringArray("Head", "head"),
+"Hips": PackedStringArray("Hips", "Root", "pelvis", "Hips_1"),
+"Torso": PackedStringArray("Spine2", "Spine1", "Spine", "Chest", "chest")
+}
+region_shapes = {
+"Head": {
+"extents": Vector3(0.17, 0.17, 0.17),
+"offset": Vector3(0, 0.18, 0)
+},
+"Hips": {
+"extents": Vector3(0.24, 0.18, 0.2),
+"offset": Vector3(0, 0, 0)
+},
+"Torso": {
+"extents": Vector3(0.22, 0.28, 0.18),
+"offset": Vector3(0, 0.05, 0)
+}
+}
