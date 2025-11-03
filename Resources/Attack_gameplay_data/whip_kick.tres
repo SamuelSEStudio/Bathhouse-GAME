@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://d1j2iec84dp3m"]
+
+[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Hitboxes/Attack_data.gd" id="1_ut3nj"]
+
+[resource]
+script = ExtResource("1_ut3nj")
+name = &"Kick"
+damage = 30
+hitstun_frames = 4
+hitstop_frames = 2
+knockback = Vector3(0, 2, -3.5)
+can_multi_hit = false
+max_hits_per_target = 1
+owner_team = 0
+metadata/_custom_type_script = "uid://dbdkh6cikc0ga"

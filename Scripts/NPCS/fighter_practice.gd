@@ -33,7 +33,8 @@ func _process(delta: float) -> void:
 	if player == null:
 		return
 	if !follow:
-		move_and_slide()
+		#move_and_slide()
+		return
 	else:
 		pass
 #position of player and self

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://tstbkvxkvtc8"]
-
-[ext_resource type="Script" uid="uid://ily5ka3ptuvn" path="res://Combatant.gd" id="1_h6vs2"]
-
-[node name="Combatant" type="Node3D"]
-script = ExtResource("1_h6vs2")

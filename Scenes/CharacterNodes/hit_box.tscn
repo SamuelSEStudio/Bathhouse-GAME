@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://tt8qs1rvu5uq"]
+
+[ext_resource type="Script" uid="uid://crxl1syhq1iic" path="res://Scripts/Game-Wide/Hitboxes/hit_box.gd" id="1_7c1i0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kppcc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mywce"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="HitBox" type="Area3D"]
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("1_7c1i0")
+target_world_size = Vector3(0.1, 0.1, 0.1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_kppcc")
+debug_color = Color(0.900183, 0.00017019, 0.763451, 0.42)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_mywce")

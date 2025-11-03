@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://cajmrno8wry3q"]
+
+[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Hitboxes/Attack_data.gd" id="1_hgcjv"]
+
+[resource]
+script = ExtResource("1_hgcjv")
+name = &"Jab"
+damage = 10
+hitstun_frames = 18
+hitstop_frames = 6
+knockback = Vector3(0, 2, -3.5)
+can_multi_hit = false
+max_hits_per_target = 1
+owner_team = 0
+metadata/_custom_type_script = "uid://dbdkh6cikc0ga"

@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
-GameManager="*res://Scripts/Game-Wide/game_manager.gd"
+GameManager="*res://Scripts/Game-Wide/Tools/game_manager.gd"
+Hitstop_Loader="*res://combat/Hitstop.gd"
 
 [dialogic]
 
@@ -92,6 +93,10 @@ save/autosave_delay=60.0
 save/encryption_on_exports_only=true
 text/autopauses={}
 variables={}
+layout/style_directory={
+"": "res://Dialogic_stuff/VN-style.tres",
+"VN-style": "res://Dialogic_stuff/VN-style.tres"
+}
 
 [dotnet]
 

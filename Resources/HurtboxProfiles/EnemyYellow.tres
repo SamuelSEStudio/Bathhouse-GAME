@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="HurtProfile" load_steps=6 format=3 uid="uid://k8gk5b7xhd2n"]
+
+[ext_resource type="Script" uid="uid://xgspx0rnf7xi" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxRegionSpec.gd" id="1_k3qug"]
+[ext_resource type="Script" uid="uid://bwc72pvriuuxf" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxProfile.gd" id="2_bw02q"]
+
+[sub_resource type="Resource" id="Resource_k3qug"]
+script = ExtResource("1_k3qug")
+region = &"Head"
+bone_names = ["DEF-head"]
+target_world_size = Vector3(0.2, 0.2, 0.2)
+target_world_offset = Vector3(0, 0.18, 0)
+metadata/_custom_type_script = "uid://xgspx0rnf7xi"
+
+[sub_resource type="Resource" id="Resource_bw02q"]
+script = ExtResource("1_k3qug")
+region = &"Torso"
+bone_names = ["DEF-spine.002"]
+target_world_size = Vector3(0.6, 0.6, 0.6)
+target_world_offset = Vector3(0, 0.1, 0)
+metadata/_custom_type_script = "uid://xgspx0rnf7xi"
+
+[sub_resource type="Resource" id="Resource_8re26"]
+script = ExtResource("1_k3qug")
+region = &"Hips"
+bone_names = ["DEF-hips"]
+target_world_size = Vector3(0.5, 0.4, 0.4)
+target_world_offset = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://xgspx0rnf7xi"
+
+[resource]
+script = ExtResource("2_bw02q")
+regions = Array[ExtResource("1_k3qug")]([SubResource("Resource_k3qug"), SubResource("Resource_bw02q"), SubResource("Resource_8re26")])
+metadata/_custom_type_script = "uid://bwc72pvriuuxf"

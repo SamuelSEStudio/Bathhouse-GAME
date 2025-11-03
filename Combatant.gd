@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 func receive_hit(damage: int, knockback: Vector3, hitstun: int, hitstop: int) -> void:
 	var final_damage: int = damage
 	var final_hitstun: int  = hitstun
+	print("HIT")
 	#simple blocking example
 	if is_blocking:
 		final_damage = int(round(damage * 0.2))

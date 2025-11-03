@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg3vbgdejvxqm"]
+
+[ext_resource type="Script" uid="uid://c2f2hsrwfxbta" path="res://Scripts/Game-Wide/Hitboxes/HitBoxAutoSetup.gd" id="1_5qmwh"]
+
+[node name="HitboxAutoSetup" type="Node"]
+script = ExtResource("1_5qmwh")

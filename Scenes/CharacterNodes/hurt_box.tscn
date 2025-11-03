@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d15v3hgo6gwf5"]
+
+[ext_resource type="Script" uid="uid://digwqfnuk3ec5" path="res://Scripts/Game-Wide/HurtBoxes/hurt_box.gd" id="1_1e3k5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2ktet"]
+
+[node name="HurtBox" type="Area3D"]
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("1_1e3k5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+debug_color = Color(0, 0.639216, 0.0392157, 0.419608)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_2ktet")

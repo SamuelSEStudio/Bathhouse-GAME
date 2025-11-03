@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackAsset" load_steps=3 format=3 uid="uid://m15i7mtu12a8"]
+
+[ext_resource type="Resource" uid="uid://d1j2iec84dp3m" path="res://Resources/Attack_gameplay_data/whip_kick.tres" id="1_rfrlw"]
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_xhjep"]
+
+[resource]
+script = ExtResource("1_xhjep")
+move = &"Kick"
+data = ExtResource("1_rfrlw")
+bone_names = []
+node_name = &"HitBox_R_foot"
+target_world_size = Vector3(0.1, 0.1, 0.1)
+target_world_offset = Vector3(0, 0.1, 0)
+show_debug_mesh = false
+metadata/_custom_type_script = "uid://12yoflxygl6j"

@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://ct6ufttqsgq22" path="res://Assets/textures/grids/Orange/texture_04.png" id="3_yvsmj"]
 [ext_resource type="Texture2D" uid="uid://c7ks4lubwjoy3" path="res://Assets/textures/grids/Green/texture_04.png" id="4_hay4s"]
 [ext_resource type="PackedScene" uid="uid://sn1i8p8ggbwl" path="res://Scenes/NPCS/fighter_practice.tscn" id="5_yvsmj"]
-[ext_resource type="PackedScene" uid="uid://c3mr3orx2w8q6" path="res://Scenes/player.tscn" id="7_1a1k7"]
-[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/fight_cam_2d.tscn" id="7_hay4s"]
+[ext_resource type="PackedScene" uid="uid://c3mr3orx2w8q6" path="res://Scenes/Player/player.tscn" id="7_1a1k7"]
+[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/GameWide/fight_cam_2d.tscn" id="7_hay4s"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -38,11 +38,14 @@ uv1_triplanar = true
 
 [node name="world-park-practice" type="Node3D"]
 
-[node name="Fight_Cam-2D" parent="." node_paths=PackedStringArray("player_ref", "opponent_ref") instance=ExtResource("7_hay4s")]
-transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 2.62639, 1.26331, 1.19668)
+[node name="Fight_Cam-2D" parent="." node_paths=PackedStringArray("player_ref", "opponent_ref", "player_anchor", "opponent_anchor") instance=ExtResource("7_hay4s")]
+transform = Transform3D(-0.00169338, 0, 0.999999, 0, 1, 0, -0.999999, 0, -0.00169338, 2.62639, 1.26331, -0.568857)
+h_offset = 0.3
 player_ref = NodePath("../Player")
 opponent_ref = NodePath("../Temp_Enemy")
-min_distance = 3.0
+player_anchor = NodePath("../Player")
+opponent_anchor = NodePath("../Temp_Enemy")
+min_distance = 2.0
 max_distance = 60.0
 vertical_offset = 1.0
 horizontal_offset = 0.0
@@ -79,7 +82,8 @@ use_collision = true
 size = Vector3(2, 2, 2)
 
 [node name="Temp_Enemy" parent="." instance=ExtResource("5_yvsmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.632743, -0.00217247, -2.65658)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.632743, -0.00217247, -2.36012)
+player_path = NodePath("../Player")
 
 [node name="PlayerSpawn" type="Marker3D" parent="."]
 transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 5.04208, 1.26331, 0.672947)
