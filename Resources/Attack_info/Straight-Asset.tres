@@ -7,7 +7,7 @@
 script = ExtResource("1_l3ymf")
 move = &"Straight"
 data = ExtResource("1_cenfm")
-bone_names = []
+bone_names = ["mixamorig_RightHand"]
 node_name = &"HitBox_R_hand"
 target_world_size = Vector3(0.1, 0.1, 0.1)
 target_world_offset = Vector3(0, 0.1, 0)

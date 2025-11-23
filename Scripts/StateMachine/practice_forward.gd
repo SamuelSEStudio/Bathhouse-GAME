@@ -5,6 +5,8 @@ class_name PracticeForwardState
 @export var backwards_state: State
 @export var sidestep_state: State
 @export var fall_state: State
+@export var guard_state: State
+@export var dodge_state: State
 @export var combo_ref: ComboInput
 
 @export var neutral_kick_state: State
@@ -17,7 +19,7 @@ class_name PracticeForwardState
 var _locked_y: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	super()
 	_locked_y = player.visuals.global_rotation.y
 
@@ -64,4 +66,17 @@ func process_physics(delta: float) -> State:
 	
 	if !player.is_on_floor():
 		return fall_state
+	return null
+func process_frame(delta: float) -> State:
+	var p: Player = player as Player
+	if p != null and p.defence != null:
+		var d: DefenceInterpreter = p.defence
+		
+		if d.just_requested_dodge:
+			d.just_requested_dodge = false
+			return dodge_state
+
+		if d.wants_guard:
+			return guard_state
+
 	return null

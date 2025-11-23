@@ -7,7 +7,7 @@ class_name AttackFrontKick
 var _t: float = 0.0
 
 
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	_t = 0.0 
 	super()
 

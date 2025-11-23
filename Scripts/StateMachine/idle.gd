@@ -10,7 +10,7 @@ var jump_state: State
 var move_state: State
 var locked_rotation_y: float
 
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	super()
 	player.velocity.x = 0
 	player.velocity.z = 0

@@ -5,6 +5,8 @@ class_name PracticeBackwardState
 @export var forward_state: State
 @export var sidestep_state: State
 @export var fall_state: State
+@export var guard_state: State
+@export var dodge_state: State
 
 @export var jab_state: State
 @export var neutral_kick_state: State
@@ -16,7 +18,7 @@ class_name PracticeBackwardState
 
 var _locked_y: float = 0.0
 
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	super()
 	_locked_y = player.visuals.global_rotation.y
 
@@ -62,4 +64,18 @@ func process_physics(delta: float) -> State:
 
 	if !player.is_on_floor():
 		return fall_state
+	return null
+	
+func process_frame(delta: float) -> State:
+	var p: Player = player as Player
+	if p != null and p.defence != null:
+		var d: DefenceInterpreter = p.defence
+		
+		if d.just_requested_dodge:
+			d.just_requested_dodge = false
+			return dodge_state
+
+		if d.wants_guard:
+			return guard_state
+
 	return null

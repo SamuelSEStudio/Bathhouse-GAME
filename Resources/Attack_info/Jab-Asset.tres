@@ -7,7 +7,7 @@
 script = ExtResource("1_68h7a")
 move = &"Jab"
 data = ExtResource("1_q2wij")
-bone_names = ["mixamorig_Left_Hand"]
+bone_names = ["mixamorig_LeftHand"]
 node_name = &"HitBox_Lefthand"
 target_world_size = Vector3(0.1, 0.1, 0.1)
 target_world_offset = Vector3(0, 0.1, 0)

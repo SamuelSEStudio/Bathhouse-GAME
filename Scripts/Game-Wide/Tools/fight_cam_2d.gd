@@ -1,10 +1,10 @@
 extends Camera3D
 class_name FightCam2D
 
-@export var player_ref: Node3D
-@export var opponent_ref: Node3D
-@export var player_anchor: Node3D
-@export var opponent_anchor: Node3D
+@export var player_ref: Node3D # attach to player
+@export var opponent_ref: Node3D # Attach opponent
+@export var player_anchor: Node3D #attach to a point on player eg. chest area rather than root
+@export var opponent_anchor: Node3D #attach to point on opponent higher for smaller char, lower for larger
 	
 @export_range(0.05, 1.0, 0.01) var smooth_time: float = 0.15
 @export_range(1.0, 2.0, 0.01) var padding: float = 1.15              # how much empty frame around targets
@@ -26,7 +26,7 @@ class_name FightCam2D
 func _ready() -> void:
 	
 	#process_priority = 100
-	call_deferred("make_current")
+	call_deferred("make_current") #makes sure that this is the current camera in scene
 	#_refresh_targets()
 	
 func set_player(n: Node3D) -> void:
@@ -50,9 +50,9 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	var p: Vector3 = _target_pos(player_ref,player_anchor)
-	var center: Vector3 = p
+	var center: Vector3 = p # if no opponent ref defaults to centering on player
 	var have_enemy: bool =is_instance_valid(opponent_ref)
-	var e: Vector3 = p
+	var e: Vector3 = p #fallback center on player
 	if have_enemy:
 		e = _target_pos(opponent_ref,opponent_anchor)
 		center = (p+e) * 0.5
@@ -61,7 +61,7 @@ func _physics_process(delta: float) -> void:
 		#center = (player_ref.global_transform.origin + opponent_ref.global_transform.origin) * 0.5
 	#else:
 		#center = player_ref.global_transform.origin
-	var flat_right: Vector3 = Vector3(lane_right_world.x, 0.0, lane_right_world.z)
+	var flat_right: Vector3 = Vector3(lane_right_world.x, 0.0, lane_right_world.z) #ignore y so that camera is stable on jump
 	if flat_right.length() < 0.001:
 		flat_right = Vector3.RIGHT
 	else:

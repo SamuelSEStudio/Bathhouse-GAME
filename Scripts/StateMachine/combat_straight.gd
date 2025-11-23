@@ -7,7 +7,7 @@ class_name AttackStraightState
 var _t: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	_t = 0.0
 	super()
 

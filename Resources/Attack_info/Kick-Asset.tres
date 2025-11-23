@@ -7,7 +7,7 @@
 script = ExtResource("1_xhjep")
 move = &"Kick"
 data = ExtResource("1_rfrlw")
-bone_names = []
+bone_names = ["mixamorig_RightFoot"]
 node_name = &"HitBox_R_foot"
 target_world_size = Vector3(0.1, 0.1, 0.1)
 target_world_offset = Vector3(0, 0.1, 0)

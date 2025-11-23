@@ -6,6 +6,8 @@ class_name PracticeSidestepState
 @export var other_sidestep_state: State
 @export var backward_state: State
 @export var fall_state: State
+@export var dodge_state: State
+@export var guard_state: State
 
 @export var speed: float = 4.0
 @export var lock_visuals_y: bool = true
@@ -34,7 +36,7 @@ func _depth_axis_from_current_camera() -> Vector3:
 		#_side_sign = -1.0
 	## if both or neither, keep previous _side_sign (prevents jitter)
 
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	super()
 	_locked_y = player.visuals.global_rotation.y
 	
@@ -59,6 +61,20 @@ func process_input(event: InputEvent) -> State:
 
 	# Still sidestepping -> update side sign
 	#_pick_side_from_input()
+	return null
+	
+func process_frame(delta: float) -> State:
+	var p: Player = player as Player
+	if p != null and p.defence != null:
+		var d: DefenceInterpreter = p.defence
+		
+		if d.just_requested_dodge:
+			d.just_requested_dodge = false
+			return dodge_state
+
+		if d.wants_guard:
+			return guard_state
+
 	return null
 
 func process_physics(delta: float) -> State:

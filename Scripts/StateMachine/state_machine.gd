@@ -11,31 +11,36 @@ func init(Player: CharacterBody3D) -> void:
 		if child is State:
 			child.player = Player
 		
+
+
+	#change_state(starting_state)
 	#initialise default state
 	change_state(starting_state)
 	
 #Change to the new state by first calling any exit on the current state.
-func change_state(new_state: State)-> void:
+func change_state(new_state: State, payload: Variant = null)-> void:
 	if current_state:
 		current_state.exit()
 		
 	current_state = new_state
-	current_state.enter()
+	current_state.enter(payload)
+	print(current_state)
+	#TODO sometimes blockstate doesnt seem to work.
 	
 #Pass through functions for the Player to call.
 #handling state changes as needed.
 func process_physics(delta: float)-> void:
 	var new_state = current_state.process_physics(delta)
 	if new_state:
-		change_state(new_state)
+		change_state(new_state, null)
 		
 func process_input(event:InputEvent)-> void:
 	var new_state = current_state.process_input(event)
 	if new_state:
-		change_state(new_state)
+		change_state(new_state, null)
 		
 func process_frame(delta: float)-> void:
 	var new_state = current_state.process_frame(delta)
 	if new_state:
-		change_state(new_state)
+		change_state(new_state, null)
 		

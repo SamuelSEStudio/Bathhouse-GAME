@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody3D
 
+@onready
+var defence: DefenceInterpreter = $DefenseInterpreter
 @onready 
 var camera_mount: Node3D = $Camera_mount
 @onready 
@@ -96,7 +98,10 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if !can_move: #or target_enemy or is_attacking:
 		return
+	if defence != null:
+		defence.update_defence(delta)
 	#update_directional_target()
+	state_machine.process_frame(delta)
 	state_machine.process_physics(delta)
 	
 func _process(delta:float) -> void:

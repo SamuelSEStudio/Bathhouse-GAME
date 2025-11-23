@@ -10,7 +10,7 @@ var move_state: State
 @export
 var jump_velocity: float = 4.5
 
-func enter() -> void:
+func enter(payload: Variant = null) -> void:
 	super()
 	player.velocity.y = jump_velocity
 

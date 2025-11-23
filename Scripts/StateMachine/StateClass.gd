@@ -11,7 +11,8 @@ var gravity: int = ProjectSettings.get_setting("physics/3d/default_gravity")
 #reference to parent so that it(Player) can be controlled by the state
 var player: CharacterBody3D
 
-func enter() -> void:
+#accepts optional payload for HitContext
+func enter(payload: Variant = null) -> void:
 	player.animation_player.play(animation_name)
 
 func exit()-> void:

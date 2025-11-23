@@ -3,20 +3,31 @@ class_name Combatant
 
 @export var max_health: int = 100
 @export var team_id: int = 0 
+@export var if_player: bool = true # enemy has no state machine
+
 @export var body_path: NodePath
 var body: CharacterBody3D
 
-var health: int
+@export var state_machine: Node
+@export var hit_react_state: State
+@export var block_hit_react: State
+@export var ko_state: State
+#var state_machine: Node
+
+var health: int 
 var hitstun_frames: int = 0
 var is_blocking: bool = false
+var has_i_frames: bool = false
 
 signal health_changed(current: int, max : int)
 signal got_hit(damage: int)
-signal entered_hitstun(frames: int)
-signal left_hitstun()
+signal died()
+#signal entered_hitstun(frames: int)
+#signal left_hitstun()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#state_machine = get_node_or_null(state_machine_path)
 	body = get_node_or_null(body_path) as CharacterBody3D
 	health = max_health
 	
@@ -26,8 +37,42 @@ func _physics_process(delta: float) -> void:
 		hitstun_frames -= 1
 		if hitstun_frames == 0:
 			emit_signal("left_hitstun")
+func receive_hit_ctx(ctx: Variant) -> void:
+	# Expecting ctx.attack with damage/hitstun, plus attacker, etc.
+	if ctx == null or !"attack" in ctx or ctx.attack == null:
+		return
+		
+	if has_i_frames:
+		print("Ignoring hit due to i-frames")
+		# Completely ignore the hit while dodging
+		return
+
+	var dmg: int = int(ctx.attack.damage)
+	
+	if is_blocking:
+		dmg = roundi(float(dmg) * 0.2)
+
+	health = maxi(0, health - dmg)
+	emit_signal("health_changed", health, max_health)
+	emit_signal("got_hit", dmg)
+	print(health)
+	if if_player:
+		# KO routing
+		if health <= 0:
+			_change_state_safe(ko_state, ctx)
+			emit_signal("died")
+			return
+		if is_blocking and block_hit_react != null:
+			_change_state_safe(block_hit_react, ctx)
+		else:
+		# Enter HitReact with payload (ctx)
+			_change_state_safe(hit_react_state, ctx)
+# TODO later: you can route to different hit/guard-hit states here if you want
 
 func receive_hit(damage: int, knockback: Vector3, hitstun: int, hitstop: int) -> void:
+	if has_i_frames:
+		return
+	
 	var final_damage: int = damage
 	var final_hitstun: int  = hitstun
 	print("HIT")
@@ -35,21 +80,29 @@ func receive_hit(damage: int, knockback: Vector3, hitstun: int, hitstop: int) ->
 	if is_blocking:
 		final_damage = int(round(damage * 0.2))
 		final_hitstun = int(round(hitstun * 0.7))
+		
 	health = max(0, health - final_damage)
 	emit_signal("health_changed", health, max_health)
 	emit_signal("got_hit", final_damage)
+	print(health)
 	
-	_apply_hitstop(hitstop)
-	_apply_knockback(knockback)
-	_enter_hitstun(final_hitstun)
+	if health <= 0:
+		#_request_state("KO",null)
+		emit_signal("died")
+		return
+	#_apply_knockback(knockback)
+	if if_player:
+		print(health)
+		_change_state_safe(hit_react_state, null)
+	#_enter_hitstun(final_hitstun)
 
-func _apply_hitstop(frames:int)-> void:
-	pass
+func _change_state_safe(target: State, payload: Variant) -> void:
+	state_machine.change_state(target,payload)
 	
-func _apply_knockback(kb: Vector3)-> void:
-	if body:
-		body.velocity = kb
+#func _apply_knockback(kb: Vector3)-> void:
+	#if body:
+		#body.velocity = kb
 
-func _enter_hitstun(frames: int)-> void:
-	hitstun_frames = max(hitstun_frames, frames)
-	emit_signal("entered_hitstun", hitstun_frames)
+#func _enter_hitstun(frames: int)-> void:
+	#hitstun_frames = max(hitstun_frames, frames)
+	#emit_signal("entered_hitstun", hitstun_frames)

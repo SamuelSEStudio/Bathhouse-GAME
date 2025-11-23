@@ -17,11 +17,44 @@ const MASK_HITBOX: int = 1 << 6
 @export var remove_selected: bool: set = _remove_selected_btn
 @export var remove_all: bool: set = _remove_all_btn
 
-func _build_selected_btn(_v: bool) -> void:
-	if Engine.is_editor_hint() and selected_move != StringName():
-		var a := profile.find_by_move(selected_move)
-		if a: _build_asset(a)
+func _build_selected_btn(v: bool) -> void:
+	if not Engine.is_editor_hint():
+		return
+	if not v:
+		return  # ignore the reset edge
 
+	# auto-reset so the checkbox becomes clickable again
+	set_deferred("build_selected", false)
+
+	# --- diagnostics (optional) ---
+	# print("[HitboxAutoSetup] Build Selected clicked")
+	# print("selected_move=", String(selected_move))
+
+	# Validate inputs
+	if profile == null:
+		push_error("[HitboxAutoSetup] No profile assigned.")
+		return
+	if skel == null:
+		push_error("[HitboxAutoSetup] Skeleton not set.")
+		return
+	if hitbox_scene == null:
+		push_error("[HitboxAutoSetup] hitbox_scene not set.")
+		return
+	if String(selected_move) == "":
+		push_warning("[HitboxAutoSetup] selected_move is empty.")
+		return
+
+	var a: AttackAsset = _find_asset_loose(selected_move)
+	if a == null:
+		push_warning("[HitboxAutoSetup] No AttackAsset for move: \"%s\"" % String(selected_move))
+		return
+
+	var bone: StringName = _find_first_bone(skel, a.bone_names)
+	if String(bone) == "":
+		push_warning("[HitboxAutoSetup] Move \"%s\": none of these bones exist: %s" % [String(a.move), str(a.bone_names)])
+		return
+
+	_build_asset(a)
 func _build_all_btn(_v: bool) -> void:
 	if Engine.is_editor_hint():
 		for a in profile.all_for_build():
@@ -69,7 +102,7 @@ func _build_asset(a: AttackAsset) -> void:
 		box.resource_local_to_scene = true
 		col.shape = box
 		
-	print("[HurtboxAutoSetup] Built hitbox")
+	print("[HitboxAutoSetup] Built/updated hitbox for move \"%s\" at %s" % [String(a.move), hb.get_path()])
 
 func _remove_asset(a: AttackAsset) -> void:
 	var prefix := "BA_HIT_"
@@ -93,3 +126,28 @@ func _ensure_ba(s: Skeleton3D, bone: StringName) -> BoneAttachment3D:
 	ba.name = name; ba.bone_name = bone
 	s.add_child(ba, true); ba.owner = s.owner
 	return ba
+# List all move names in the assigned profile (for debugging)
+func _debug_list_moves() -> void:
+	if profile == null:
+		print("[HitboxAutoSetup] (no profile)")
+		return
+	var names: PackedStringArray = []
+	for a: AttackAsset in profile.all_for_build():
+		names.append(String(a.move))
+	print("[HitboxAutoSetup] Moves in profile: ", names)
+
+# Find an AttackAsset by move name, tolerant to StringName/String and case
+func _find_asset_loose(move: StringName) -> AttackAsset:
+	if profile == null:
+		return null
+	var target: String = String(move)
+	# exact match first
+	for a: AttackAsset in profile.all_for_build():
+		if String(a.move) == target:
+			return a
+	# case-insensitive fallback
+	var tl: String = target.to_lower()
+	for a: AttackAsset in profile.all_for_build():
+		if String(a.move).to_lower() == tl:
+			return a
+	return null
