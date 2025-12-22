@@ -1,3 +1,4 @@
+[style]
 do GameManager.change_selfie_cam("Player")
 Player: um... Excuse me
 do GameManager.change_selfie_cam("ConstructionWorker01")

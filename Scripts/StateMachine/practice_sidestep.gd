@@ -9,6 +9,7 @@ class_name PracticeSidestepState
 @export var dodge_state: State
 @export var guard_state: State
 
+@export var opponent_body: Node3D
 @export var speed: float = 4.0
 @export var lock_visuals_y: bool = true
 #@export var side_axis: Vector3 = Vector3.RIGHT
@@ -25,6 +26,33 @@ func _depth_axis_from_current_camera() -> Vector3:
 		var flat := Vector3(fwd.x, 0.0, fwd.z)
 		return flat.normalized() if flat.length() > 0.0001 else Vector3.FORWARD
 	return Vector3.FORWARD
+	
+func _get_lane_dir() -> Vector3:
+	# lane_dir = direction from player to opponent, flattened to ground
+	if opponent_body == null or player == null:
+		# Fallback: use camera depth so the state still works in practice scenes without an enemy
+		return _depth_axis_from_current_camera()
+
+	var p_pos: Vector3 = player.global_transform.origin
+	var e_pos: Vector3 = opponent_body.global_transform.origin
+
+	var lane: Vector3 = e_pos - p_pos
+	lane.y = 0.0
+
+	var length: float = lane.length()
+	if length <= 0.001:
+		return Vector3.FORWARD
+
+	return lane / length
+	
+func _get_side_dir(lane_dir: Vector3) -> Vector3:
+	# side_dir = axis we use for Tekken-style sidestep
+	var side: Vector3 = Vector3.UP.cross(lane_dir)
+	var length: float = side.length()
+	if length <= 0.001:
+		return Vector3.RIGHT
+	return side / length
+
 
 #func _pick_side_from_input() -> void:
 	#var fwd: bool = Input.is_action_pressed("Forward")
@@ -78,20 +106,47 @@ func process_frame(delta: float) -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	if lock_visuals_y:
-		player.visuals.global_rotation.y = _locked_y
-		
-	var depth: Vector3 = _depth_axis_from_current_camera()
-	var dir: Vector3 = (depth * depth_sign).normalized()
-	#var dir: Vector3 = (depth * _side_sign).normalized()
-	#var horiz: Vector3 = Vector3(dir.x, 0.0, dir.z)
+	# 1) Compute Tekken vs-space axes
+	var lane_dir: Vector3 = _get_lane_dir()
+	var side_dir: Vector3 = _get_side_dir(lane_dir)
 
+	# 2) Movement: circle around opponent along side axis
+	var dir: Vector3 = (side_dir * depth_sign).normalized()
 	player.velocity.x = dir.x * speed
 	player.velocity.z = dir.z * speed
 
+	# 3) Gravity + movement
 	player.velocity += player.get_gravity() * delta
 	player.move_and_slide()
 
+	# 4) Keep player facing opponent (Tekken-style)
+	if opponent_body != null and player != null:
+		var p_pos: Vector3 = player.visuals.global_transform.origin
+		var e_pos: Vector3 = opponent_body.global_transform.origin
+
+		# flatten so we only rotate around Y
+		var look_target: Vector3 = Vector3(e_pos.x, p_pos.y, e_pos.z)
+		player.visuals.look_at(look_target, Vector3.UP)
+
+	# 5) State exit conditions
 	if !player.is_on_floor():
 		return fall_state
-	return null
+
+	return null 
+	#if lock_visuals_y:
+		#player.visuals.global_rotation.y = _locked_y
+		#
+	#var depth: Vector3 = _depth_axis_from_current_camera()
+	#var dir: Vector3 = (depth * depth_sign).normalized()
+	##var dir: Vector3 = (depth * _side_sign).normalized()
+	##var horiz: Vector3 = Vector3(dir.x, 0.0, dir.z)
+#
+	#player.velocity.x = dir.x * speed
+	#player.velocity.z = dir.z * speed
+#
+	#player.velocity += player.get_gravity() * delta
+	#player.move_and_slide()
+#
+	#if !player.is_on_floor():
+		#return fall_state
+	#return null

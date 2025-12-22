@@ -1,0 +1,3 @@
+[style]
+do GameManager.change_selfie_cam("Player")
+Player: THIS WILL BE CHANGED TO A PROMPT 3*** "Phew im pretty tired, i think thats enough for today"

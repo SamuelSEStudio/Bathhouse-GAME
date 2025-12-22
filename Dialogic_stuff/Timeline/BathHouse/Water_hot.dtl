@@ -1,3 +1,4 @@
+[style]
 do GameManager.change_selfie_cam("Player")
 Player: Water hot enough?
 do GameManager.change_selfie_cam("BathGoer4")

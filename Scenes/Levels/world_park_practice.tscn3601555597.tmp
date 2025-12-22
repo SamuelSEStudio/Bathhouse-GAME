@@ -1,0 +1,183 @@
+[gd_scene load_steps=17 format=3 uid="uid://c38oj2n6qbcch"]
+
+[ext_resource type="Script" uid="uid://ct027umjascqy" path="res://Scenes/Levels/world_park_practice.gd" id="1_f1my7"]
+[ext_resource type="Texture2D" uid="uid://78pehu0r5g6w" path="res://Assets/textures/grids/Dark/texture_04.png" id="1_tm05i"]
+[ext_resource type="Texture2D" uid="uid://c6tbgl2cypvn5" path="res://Assets/textures/grids/Purple/texture_04.png" id="2_dexeq"]
+[ext_resource type="Texture2D" uid="uid://ct6ufttqsgq22" path="res://Assets/textures/grids/Orange/texture_04.png" id="3_yvsmj"]
+[ext_resource type="Texture2D" uid="uid://c7ks4lubwjoy3" path="res://Assets/textures/grids/Green/texture_04.png" id="4_hay4s"]
+[ext_resource type="PackedScene" uid="uid://sn1i8p8ggbwl" path="res://Scenes/NPCS/fighter_practice.tscn" id="5_yvsmj"]
+[ext_resource type="PackedScene" uid="uid://c3mr3orx2w8q6" path="res://Scenes/Player/player.tscn" id="7_1a1k7"]
+[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/GameWide/fight_cam_2d.tscn" id="7_hay4s"]
+[ext_resource type="PackedScene" uid="uid://cg2pldpkmepri" path="res://combat/thug_mid.tscn" id="9_j31tk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_hay4s"]
+sky_material = SubResource("ProceduralSkyMaterial_yvsmj")
+
+[sub_resource type="Environment" id="Environment_eb7qw"]
+background_mode = 2
+sky = SubResource("Sky_hay4s")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb7qw"]
+albedo_texture = ExtResource("1_tm05i")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amjer"]
+albedo_texture = ExtResource("2_dexeq")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prhq4"]
+albedo_texture = ExtResource("3_yvsmj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibogx"]
+albedo_texture = ExtResource("4_hay4s")
+uv1_triplanar = true
+
+[node name="world-park-practice" type="Node3D"]
+script = ExtResource("1_f1my7")
+
+[node name="Fight_Cam-2D" parent="." node_paths=PackedStringArray("player_ref", "opponent_ref", "player_anchor") instance=ExtResource("7_hay4s")]
+transform = Transform3D(-0.00169338, 0, 0.999999, 0, 1, 0, -0.999999, 0, -0.00169338, 2.62639, 1.26331, -0.568857)
+h_offset = 0.3
+player_ref = NodePath("../Player")
+opponent_ref = NodePath("../ThugMid")
+player_anchor = NodePath("../Player/Visuals/bluebot-root/main/Skeleton3D/BA_Torso_mixamorig_Spine2")
+min_distance = 2.0
+max_distance = 60.0
+vertical_offset = 0.5
+horizontal_offset = 0.0
+keep_player_on_left = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eb7qw")
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.502172, 0)
+material_override = SubResource("StandardMaterial3D_eb7qw")
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="Floor2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0520377, 10.3513)
+material_override = SubResource("StandardMaterial3D_eb7qw")
+use_collision = true
+size = Vector3(20, 1.90027, 0.782715)
+
+[node name="Floor3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0520377, -10.4535)
+material_override = SubResource("StandardMaterial3D_eb7qw")
+use_collision = true
+size = Vector3(20, 1.90027, 0.782715)
+
+[node name="purple_box" type="CSGBox3D" parent="."]
+transform = Transform3D(0.776311, 0, -0.630351, 0, 1, 0, 0.630351, 0, 0.776311, -6.90892, 0.400064, 1.85233)
+material_override = SubResource("StandardMaterial3D_amjer")
+use_collision = true
+
+[node name="Ornage_box" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.35682, 0, 0.934173, 0, 1, 0, -0.934173, 0, -0.35682, -5.24364, 0.958675, -3.02395)
+material_override = SubResource("StandardMaterial3D_prhq4")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="Green_box" type="CSGBox3D" parent="."]
+transform = Transform3D(0.86431, 0, 0.50296, 0, 1, 0, -0.50296, 0, 0.86431, -6.60778, 0.723854, 4.76955)
+material_override = SubResource("StandardMaterial3D_ibogx")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="Temp_Enemy" parent="." instance=ExtResource("5_yvsmj")]
+transform = Transform3D(-0.999772, 0, 0.0213613, 0, 1, 0, -0.0213613, 0, -0.999772, -0.632743, -0.00217247, -6.07976)
+player_path = NodePath("../Player")
+
+[node name="BA_Head_DEF-head" parent="Temp_Enemy/AnimationLibrary_Godot/Rig/Skeleton3D" index="1"]
+transform = Transform3D(0.926869, -0.351269, -0.132381, 0.282083, 0.884425, -0.371782, 0.247677, 0.307251, 0.918832, -0.0500994, 1.46126, 0.0323418)
+
+[node name="BA_Torso_DEF-spine_002" parent="Temp_Enemy/AnimationLibrary_Godot/Rig/Skeleton3D" index="2"]
+transform = Transform3D(0.882365, 0.0129637, -0.470387, 0.0545985, 0.990049, 0.129703, 0.467388, -0.140128, 0.872876, 0.0119564, 1.08362, -0.0122784)
+
+[node name="BA_Hips_DEF-hips" parent="Temp_Enemy/AnimationLibrary_Godot/Rig/Skeleton3D" index="3"]
+transform = Transform3D(0.933275, 0.0036691, -0.359143, 0.0423625, 0.991843, 0.120217, 0.356655, -0.127409, 0.925507, 0.00524563, 0.826505, 0.0358214)
+
+[node name="BA_HIT_DEF-hand_L" parent="Temp_Enemy/AnimationLibrary_Godot/Rig/Skeleton3D" index="4"]
+transform = Transform3D(-0.432213, -0.339081, -0.835593, -0.895276, 0.050334, 0.442659, -0.108038, 0.93941, -0.325327, 0.0964104, 1.3731, 0.714923)
+
+[node name="Combatant" parent="Temp_Enemy" index="5"]
+if_player = false
+
+[node name="Brain" parent="Temp_Enemy" index="6"]
+target_path = NodePath("../../Player")
+combatant_path = NodePath("../Combatant")
+anim_player_path = NodePath("../AnimationLibrary_Godot/AnimationPlayer")
+hitbox_path = NodePath("../AnimationLibrary_Godot/Rig/Skeleton3D/BA_HIT_DEF-hand_L/HitBox_leftHand")
+attack_anim = &"Punch_Jab"
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 5.04208, 1.26331, 0.672947)
+
+[node name="Player" parent="." node_paths=PackedStringArray("player_combat_cam") instance=ExtResource("7_1a1k7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709392, -0.00013489, 3.50544)
+start_in_practice = true
+use_internal_cam = false
+player_combat_cam = NodePath("../Fight_Cam-2D")
+
+[node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
+transform = Transform3D(0.999454, -0.0160753, 0.028865, -0.0288014, 0.00417485, 0.999576, -0.016189, -0.999862, 0.0037096, -0.754955, -0.115102, -111.756)
+
+[node name="BA_Torso_mixamorig_Spine2" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="3"]
+transform = Transform3D(0.999736, -0.0101155, 0.0206485, -0.0203921, 0.0248301, 0.999484, -0.0106229, -0.999641, 0.0246172, -0.559549, -4.75123, -86.5108)
+
+[node name="BA_Hips_mixamorig_Hips" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="4"]
+transform = Transform3D(0.99983, -0.0159855, 0.00923761, -0.00915456, 0.00526077, 0.999944, -0.0160332, -0.999858, 0.00511354, -0.0260454, -1.22212, -51.5046)
+
+[node name="BA_R_Hand_mixamorig_RightHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="5"]
+transform = Transform3D(0.342525, -0.0679263, 0.93705, 0.928399, 0.1774, -0.326503, -0.144055, 0.981792, 0.123827, -25.6037, 2.83811, -37.1354)
+
+[node name="BA_R_Foot_mixamorig_" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="6"]
+transform = Transform3D(-0.935574, 0.0194594, -0.352595, -0.234945, -0.779725, 0.580371, -0.263633, 0.62582, 0.734062, -12.0675, -39.4308, -15.4071)
+
+[node name="BA_HIT_mixamorig_LeftHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="7"]
+transform = Transform3D(0.291835, 0.0715307, -0.95379, -0.954985, 0.0773132, -0.286402, 0.053254, 0.994438, 0.0908734, 26.3995, 1.32317, -38.0412)
+
+[node name="BA_HIT_mixamorig_RightFoot" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="8"]
+transform = Transform3D(-0.935574, 0.0194594, -0.352595, -0.234945, -0.779725, 0.580371, -0.263633, 0.62582, 0.734062, -12.0675, -39.4308, -15.4071)
+
+[node name="ThugMid" parent="." instance=ExtResource("9_j31tk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.898437, -0.000454571, -1.15878)
+
+[node name="BA_Head_mixamorig_Head" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="2"]
+transform = Transform3D(0.992318, 0.0114123, -0.123188, 0.105879, 0.436718, 0.893346, 0.0639935, -0.899526, 0.432155, 2.66139, 28.9344, -144.468)
+
+[node name="BA_Torso_mixamorig_Spine2" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="3"]
+transform = Transform3D(0.821992, -0.0997985, -0.560687, 0.547152, 0.411485, 0.728907, 0.15797, -0.905936, 0.392842, 6.80904, 15.2179, -124.627)
+
+[node name="BA_Hips_mixamorig_Hips" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="4"]
+transform = Transform3D(0.718833, 0.0333066, -0.694385, 0.682308, 0.157547, 0.713887, 0.133175, -0.98695, 0.0905246, 4.50838, 9.55209, -90.0892)
+
+[node name="BA_HIT_mixamorig_LeftHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="5"]
+transform = Transform3D(0.149322, -0.477956, -0.865599, 0.756212, 0.619216, -0.211459, 0.637061, -0.623001, 0.453898, 7.69256, 56.0488, -116.599)
+
+[node name="BA_HIT_mixamorig_RightHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="6"]
+transform = Transform3D(0.416937, 0.029624, 0.908452, -0.639663, 0.719633, 0.270109, -0.645751, -0.693722, 0.318991, -20.3569, 32.6555, -128.798)
+
+[node name="AnimationPlayer" parent="ThugMid/Visuals/mixamo_base" index="1"]
+playback_default_blend_time = 0.03
+
+[node name="E-Combat_Attack_light" parent="ThugMid/controllers/state_machine" index="2"]
+attack_duration = 1.0
+
+[node name="AI_brain" parent="ThugMid" index="3" node_paths=PackedStringArray("target")]
+target = NodePath("../../Player")
+
+[editable path="Temp_Enemy"]
+[editable path="Player"]
+[editable path="ThugMid"]

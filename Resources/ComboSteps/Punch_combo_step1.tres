@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="StringComboStep" load_steps=2 format=3 uid="uid://t4gjwjnvef5a"]
+
+[ext_resource type="Script" uid="uid://bwh3t4vhxqxbf" path="res://Resources/StringComboStep.gd" id="1_adg5q"]
+
+[resource]
+script = ExtResource("1_adg5q")
+animation_name = &"anims_again/Low_jab"
+move_id = &"Jab"
+total_time = 0.61
+cancel_open = 0.36
+cancel_close = 0.45
+next_on_p = 1
+next_on_k = 3
+next_on_p_forward = -1
+next_on_p_back = -1
+next_on_k_forward = -1
+next_on_k_back = -1
+metadata/_custom_type_script = "uid://bwh3t4vhxqxbf"

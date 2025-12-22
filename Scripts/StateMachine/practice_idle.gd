@@ -13,6 +13,7 @@ class_name PracticeIdleState
 @export var combo_ref: ComboInput
 @export var straight_state: State
 @export var neutral_kick_state: State
+@export var punch_string_state: State
 
 var _locked_rotation_y := 0.0
 

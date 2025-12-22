@@ -1,3 +1,4 @@
+[style]
 do GameManager.change_cinematic_cam("Cinematic_Cam")
 do GameManager.play_anim("Player", "idle")
 [wait time="1.5"]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="HitProfile" load_steps=5 format=3 uid="uid://bairmscpduu3k"]
+
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_ivuw2"]
+[ext_resource type="Resource" uid="uid://44rg57k6jynq" path="res://Resources/Attack_info/Jab-Asset.tres" id="2_iixoh"]
+[ext_resource type="Script" uid="uid://b0ryejqiu0w5" path="res://Scripts/Game-Wide/Hitboxes/HitProfile.gd" id="2_jw7nw"]
+[ext_resource type="Resource" uid="uid://b54or43xo4470" path="res://Resources/Attack_info/Straight-Asset.tres" id="3_dmrh7"]
+
+[resource]
+script = ExtResource("2_jw7nw")
+attacks = Array[ExtResource("1_ivuw2")]([ExtResource("2_iixoh"), ExtResource("3_dmrh7")])
+metadata/_custom_type_script = "uid://b0ryejqiu0w5"

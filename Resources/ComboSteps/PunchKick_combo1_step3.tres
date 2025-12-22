@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StringComboStep" load_steps=2 format=3 uid="uid://ci58u4vnsduv3"]
+
+[ext_resource type="Script" uid="uid://bwh3t4vhxqxbf" path="res://Resources/StringComboStep.gd" id="1_ye6ri"]
+
+[resource]
+script = ExtResource("1_ye6ri")
+animation_name = &"anims_again/Back_kick"
+move_id = &"backKick"
+total_time = 1.41
+cancel_open = 0.47
+cancel_close = 1.01
+next_on_p = -1
+next_on_k = -1
+metadata/_custom_type_script = "uid://bwh3t4vhxqxbf"

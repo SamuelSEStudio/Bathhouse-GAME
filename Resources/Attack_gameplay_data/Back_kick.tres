@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://cjef3h3xw0har"]
+
+[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Hitboxes/Attack_data.gd" id="1_dmroi"]
+
+[resource]
+script = ExtResource("1_dmroi")
+name = &"backKick"
+damage = 15
+hitstun_frames = 18
+hitstop_frames = 6
+knockback = Vector3(0, 0.3, 0.3)
+can_multi_hit = false
+max_hits_per_target = 1
+owner_team = 0
+hit_level = 1
+hit_strength = 1
+reaction_id = &"HURT_HEAVY"
+block_knockback_scale = 1.0
+camera_shake_mag = 0.06
+camera_shake_dur = 0.08
+hitstop_sec = 0.06
+hitstop_scale = 0.05
+metadata/_custom_type_script = "uid://dbdkh6cikc0ga"

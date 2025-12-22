@@ -37,36 +37,50 @@ func _physics_process(delta: float) -> void:
 		hitstun_frames -= 1
 		if hitstun_frames == 0:
 			emit_signal("left_hitstun")
-func receive_hit_ctx(ctx: Variant) -> void:
+			
+func receive_hit_ctx(ctx: HitContext) -> void:
 	# Expecting ctx.attack with damage/hitstun, plus attacker, etc.
-	if ctx == null or !"attack" in ctx or ctx.attack == null:
+	if ctx == null or ctx.attack == null:
 		return
-		
+
+	# Ignore hits during invincibility (e.g. dodge)
 	if has_i_frames:
 		print("Ignoring hit due to i-frames")
-		# Completely ignore the hit while dodging
 		return
 
+	# --- Base damage from AttackData ---
 	var dmg: int = int(ctx.attack.damage)
-	
-	if is_blocking:
+
+	# --- Block scaling ---
+	var blocking: bool = is_blocking
+	print(blocking)
+	if blocking:
 		dmg = roundi(float(dmg) * 0.2)
 
+	# Clamp and apply
 	health = maxi(0, health - dmg)
+
+	# Signals are still useful for UI / SFX / debugging
 	emit_signal("health_changed", health, max_health)
 	emit_signal("got_hit", dmg)
 	print(health)
-	if if_player:
-		# KO routing
-		if health <= 0:
-			_change_state_safe(ko_state, ctx)
-			emit_signal("died")
-			return
-		if is_blocking and block_hit_react != null:
-			_change_state_safe(block_hit_react, ctx)
-		else:
-		# Enter HitReact with payload (ctx)
-			_change_state_safe(hit_react_state, ctx)
+
+	# --- KO routing (any character) ---
+	if health <= 0 and ko_state != null:
+		_change_state_safe(ko_state, ctx)
+		emit_signal("died")
+		return
+
+	# --- Blocked hit → BlockHitState, if available ---
+	if blocking and block_hit_react != null:
+		_change_state_safe(block_hit_react, ctx)
+		return
+
+	# --- Normal hit react ---
+	if hit_react_state != null:
+		_change_state_safe(hit_react_state, ctx)
+		return
+
 # TODO later: you can route to different hit/guard-hit states here if you want
 
 func receive_hit(damage: int, knockback: Vector3, hitstun: int, hitstop: int) -> void:

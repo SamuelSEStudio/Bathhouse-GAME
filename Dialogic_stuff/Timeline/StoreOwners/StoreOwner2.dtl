@@ -1,3 +1,4 @@
+[style]
 do GameManager.change_selfie_cam("Player")
 Player: Still keeping the shop?
 do GameManager.change_selfie_cam("StorePerson")

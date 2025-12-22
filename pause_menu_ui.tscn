@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://jr2lnd03a8hp"]
+
+[ext_resource type="Script" uid="uid://bgwqdbf5q8e7d" path="res://pause_menu_ui.gd" id="1_g2uxf"]
+
+[node name="PauseMenuUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g2uxf")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.0
+offset_top = -81.5
+offset_right = 53.0
+offset_bottom = 81.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "PAUSE MENU"
+
+[node name="ResumeButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="ResetButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reset Game"
+
+[node name="ExitMenuButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit to Menu
+"
+
+[node name="ExitGameButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit Game"

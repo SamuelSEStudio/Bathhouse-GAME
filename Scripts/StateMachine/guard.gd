@@ -8,6 +8,9 @@ class_name PracticeGuardState
 @export var sidestep_stateO: State
 @export var fall_state: State
 
+@export var depth_axis: Vector3 = Vector3.FORWARD
+@export var combo_ref: ComboInput
+
 @export var guard_move_speed: float = 1.5
 @export var release_recovery_time: float = 0.05
 
@@ -90,29 +93,27 @@ func process_frame(delta: float) -> State:
 
 
 func process_physics(delta: float) -> State:
-	# Simple slow movement while guarding (still respecting lane + sidestep)
+	# Keep facing locked while in guard
 	player.visuals.global_rotation.y = _locked_rotation_y
 
 	if not _releasing:
-		# Slow guard movement along the same lane logic as before
-		var input_vec: Vector2 = Input.get_vector("Left", "Right", "Forward", "Backward")
+		# --- Combat-style forward/back while guarding ---
 
-		var cam: Camera3D = (player as Player).default_cam
-		
-		var depth: Vector3 = -cam.global_transform.basis.z
-		depth.y = 0.0
-		depth = depth.normalized()
+		var p: Player = player as Player
+		var dir: Vector3 = Vector3.ZERO
 
-		var lane: Vector3 = cam.global_transform.basis.x
-		lane.y = 0.0
-		lane = lane.normalized()
+		if p != null and combo_ref != null:
+			# Use the same "forward/back" interpretation as the combat system
+			if combo_ref._is_forward_held():
+				dir = depth_axis.normalized()
+			elif combo_ref._is_back_held():
+				dir = -depth_axis.normalized()
 
-		var desired: Vector3 = (lane * input_vec.x + depth * input_vec.y).normalized()
-
-		if desired != Vector3.ZERO:
-			player.velocity.x = desired.x * guard_move_speed
-			player.velocity.z = desired.z * guard_move_speed
+		if dir != Vector3.ZERO:
+			player.velocity.x = dir.x * guard_move_speed
+			player.velocity.z = dir.z * guard_move_speed
 		else:
+			# No combat forward/back input while guarding → stand still
 			player.velocity.x = 0.0
 			player.velocity.z = 0.0
 	else:

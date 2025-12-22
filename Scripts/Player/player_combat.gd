@@ -16,7 +16,7 @@ enum AxisLocal { X = 0, Z_NEG = 1 }
 @export var back_kick_state: State
 @export var inside_kick_state: State
 @export var head_kick_state: State            # FF + Kick
-
+@export var punch_string_combo: State 
 
 # ring buffer of recent Inputs [(input, time)]
 var _buf: Array[Dictionary] = []  # [{i: StringName, s: float}]
@@ -78,7 +78,7 @@ func resolve_attack(button: StringName) -> State:
 	if _is_back_held():
 		if button == &"K" and back_kick_state: return back_kick_state
 		
-	if button == &"P" and jab_state: return jab_state
+	if button == &"P" and jab_state: return punch_string_combo
 	if button == &"K" and neutral_kick_state: return neutral_kick_state
 	return null
 	

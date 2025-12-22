@@ -21,6 +21,15 @@ class_name BlockHitState
 var _t: float = 0.0
 var _stun_time: float = 0.0
 var _knockback_velocity: Vector3 = Vector3.ZERO
+	
+func _play_block_animation(hit_strength: int) -> void:
+	# AttackData.hit_strength enum: 0=Light, 1=Medium, 2=Heavy, 3=Launcher
+	var anim: StringName = default_block_anim
+
+	if hit_strength >= 2 and heavy_block_anim != StringName():
+		anim = heavy_block_anim
+
+	animation_name = anim
 
 func enter(payload: Variant = null) -> void:
 	_t = 0.0
@@ -70,15 +79,6 @@ func enter(payload: Variant = null) -> void:
 		_knockback_velocity = Vector3.ZERO
 
 	super(payload)
-	
-func _play_block_animation(hit_strength: int) -> void:
-	# AttackData.hit_strength enum: 0=Light, 1=Medium, 2=Heavy, 3=Launcher
-	var anim: StringName = default_block_anim
-
-	if hit_strength >= 2 and heavy_block_anim != StringName():
-		anim = heavy_block_anim
-
-	animation_name = anim
 
 
 func process_physics(delta: float) -> State:

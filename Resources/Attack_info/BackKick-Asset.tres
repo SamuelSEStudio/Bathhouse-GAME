@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackAsset" load_steps=3 format=3 uid="uid://bp0jk5d5st6kf"]
+
+[ext_resource type="Resource" uid="uid://cjef3h3xw0har" path="res://Resources/Attack_gameplay_data/Back_kick.tres" id="1_76dva"]
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_vakis"]
+
+[resource]
+script = ExtResource("1_vakis")
+move = &"BackKick"
+data = ExtResource("1_76dva")
+bone_names = ["mixamorig_RightFoot"]
+node_name = &"HitBox_R_foot_back_kick"
+target_world_size = Vector3(0.1, 0.1, 0.1)
+target_world_offset = Vector3(0, 0.1, 0)
+show_debug_mesh = false
+metadata/_custom_type_script = "uid://12yoflxygl6j"

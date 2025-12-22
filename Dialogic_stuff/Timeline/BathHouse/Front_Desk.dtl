@@ -1,3 +1,4 @@
+[style]
 do GameManager.play_anim("Player", "idle")
 do GameManager.change_selfie_cam("Npc-Worker")
 FrontDesk: Welcome sir!

@@ -26,6 +26,7 @@ var head: Node3D = $Visuals/Head
 @export var default_idle_state: Node
 @export var start_in_practice: bool = false
 @export var use_internal_cam: bool = true
+@export var combat_target: Node3D
 
 #var SPEED = 3.0
 #const JUMP_VELOCITY = 4.5
@@ -60,11 +61,13 @@ var attack_timer
 @export var attack_standoff: float = 0.9 #stop this far from target (prevents overlap)
 
 @onready var player_combat: ComboInput = $"Player-combat"
-@onready var attack_cooldown: Timer = $AttackCooldown
-@onready var dir_cast: ShapeCast3D = $Dir_cast
+@onready var attack_cooldown: Timer = $"Player-combat/AttackCooldown"
+@onready var dir_cast: ShapeCast3D = $"Player-combat/Dir_cast"
 
 var target_enemy: Node3D = null
 var is_attacking_enemy: bool = false
+var _input_lock_count: int = 0
+var _combo_was_processing: bool = true
 
 const ATK_RIGHT := "Right"
 const ATK_LEFT := "Left"
@@ -84,8 +87,16 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	set_default_cam()
 	#stops the player moving when a convo starts and then move again once finished
-	Dialogic.timeline_started.connect(func(): can_move = false; in_talk = true)
-	Dialogic.timeline_ended.connect(func(): can_move = true; in_talk = false)
+	Dialogic.timeline_started.connect(func():
+		can_move = false
+		in_talk = true
+		_update_input_locking()
+		)
+	Dialogic.timeline_ended.connect(func():
+		can_move = true
+		in_talk = false
+		_update_input_locking()
+		)
 	_apply_default_cam_auto()
 	if start_in_practice:
 		state_machine.call_deferred("change_state",practice_idle_state)
@@ -93,20 +104,20 @@ func _ready():
 			player_combat.set_camera(player_combat_cam)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_input_locked() or in_talk or !can_move:
+		return
 	state_machine.process_input(event)
 	
 func _physics_process(delta: float) -> void:
-	if !can_move: #or target_enemy or is_attacking:
+	if is_input_locked() or !can_move:
 		return
 	if defence != null:
 		defence.update_defence(delta)
-	#update_directional_target()
 	state_machine.process_frame(delta)
 	state_machine.process_physics(delta)
 	
-func _process(delta:float) -> void:
-	#if in_movie: return
-	if in_talk:
+func _process(delta: float) -> void:
+	if in_talk or is_input_locked():
 		return
 	_process_joystick_look()
 	if !can_move:
@@ -114,6 +125,29 @@ func _process(delta:float) -> void:
 	state_machine.process_frame(delta)
 	
 	
+func lock_input() -> void:
+	var was_locked: bool = is_input_locked()
+	_input_lock_count += 1
+	if !was_locked:
+		# stop any drift the instant the UI opens
+		velocity.x = 0.0
+		velocity.z = 0.0
+	_update_input_locking()
+
+func unlock_input() -> void:
+	_input_lock_count = max(_input_lock_count - 1, 0)
+	_update_input_locking()
+
+func is_input_locked() -> bool:
+	return _input_lock_count > 0
+
+func _update_input_locking() -> void:
+	# Disable ComboInput polling while *any* lock is active
+	# (this stops Kick/Punch being read while UI is open / Dialogic etc.)
+	if is_instance_valid(player_combat):
+		var should_process: bool = !is_input_locked() and can_move and !in_talk
+		player_combat.set_process(should_process)
+		
 func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
 	#update camera angles
 	camera_angle.x -= yaw_delta * sense_horizontal
@@ -130,6 +164,17 @@ func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
 	if first_person:
 		head.rotation.x = deg_to_rad(camera_angle.y)
 	camera_mount.rotation.x = deg_to_rad(camera_angle.y)
+	
+func update_facing_to_combat_target() -> void:
+	if combat_target == null or visuals == null:
+		return
+
+	var my_pos: Vector3 = visuals.global_transform.origin
+	var t_pos: Vector3 = combat_target.global_transform.origin
+
+	# Flatten so we only rotate around Y
+	var look_target: Vector3 = Vector3(t_pos.x, my_pos.y, t_pos.z)
+	visuals.look_at(look_target, Vector3.UP)
 	
 func _input(event):
 #controls the camera via the mouse input rotate_y controls side to side

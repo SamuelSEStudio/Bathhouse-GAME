@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://8rio60mfip36"]
+
+[ext_resource type="Script" uid="uid://cwco7kl4uca27" path="res://Scripts/Menu/training_prompt_ui.gd" id="1_k7fv5"]
+
+[node name="TrainingPromptUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_k7fv5")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 28.749
+anchor_bottom = 16.112
+offset_left = 399.0
+offset_top = 280.0
+offset_right = -379.96
+offset_bottom = -306.48
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Keep Training?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="YesButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "YES
+"
+
+[node name="NoButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "NO
+"
