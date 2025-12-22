@@ -103,7 +103,9 @@ func process_physics(delta: float) -> State:
 	# --- 4. Exit conditions ---
 	if !player.is_on_floor():
 		return fall_state
-
+	var p: Player = player as Player
+	if p != null:
+		p.update_facing_to_combat_target()
 	return null
 	##Forward only no diagonal movemnt zero X -> push strictly along depth 
 	#var dir: Vector3 = depth_axis.normalized()

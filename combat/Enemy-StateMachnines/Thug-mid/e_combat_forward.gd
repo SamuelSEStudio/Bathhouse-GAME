@@ -46,17 +46,20 @@ func process_physics(delta: float) -> State:
 
 	# --- Move forward along the lane ---
 
-	# Use lane/depth axis, ignore Y
-	var dir: Vector3 = depth_axis.normalized()
-	var horiz: Vector3 = Vector3(dir.x, 0.0, dir.z)
+	var depth: Vector3 = thug.lane_axis
+	if depth.length_squared() < 0.0001:
+		depth = depth_axis  # fallback
+	depth.y = 0.0
+	depth = depth.normalized()
 
-	player.velocity.x = horiz.x * speed
-	player.velocity.z = horiz.z * speed
+	player.velocity.x = depth.x * speed
+	player.velocity.z = depth.z * speed
 
 	# Apply gravity & slide
 	player.velocity += player.get_gravity() * delta
 	player.move_and_slide()
-
+	if thug != null:
+		thug.update_facing_to_combat_target()
 	# If we walk off a ledge, transition to fall
 	if not player.is_on_floor():
 		return fall_state

@@ -99,7 +99,9 @@ func process_physics(delta: float) -> State:
 
 	if !player.is_on_floor():
 		return fall_state
-
+	var p: Player = player as Player
+	if p != null:
+		p.update_facing_to_combat_target()
 	return null
 	## Backward only (no diagonal)
 	#var dir: Vector3 = (-depth_axis).normalized()

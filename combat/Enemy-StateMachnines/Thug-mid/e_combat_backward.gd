@@ -41,16 +41,23 @@ func process_physics(delta: float) -> State:
 
 	# --- Move backwards along the lane ---
 
-	# dir_scalar is negative, so this naturally flips direction
-	var dir: Vector3 = -depth_axis.normalized()
+	var depth: Vector3 = thug.lane_axis
+	if depth.length_squared() < 0.0001:
+		depth = depth_axis  # fallback
+	depth.y = 0.0
+	depth = depth.normalized()
+
+	# dir_scalar is negative in this state, so flip direction naturally
+	var dir: Vector3 = depth * dir_scalar
 	var horiz: Vector3 = Vector3(dir.x, 0.0, dir.z)
 
 	player.velocity.x = horiz.x * speed
 	player.velocity.z = horiz.z * speed
-
+	
 	player.velocity += player.get_gravity() * delta
 	player.move_and_slide()
-
+	if thug != null:
+		thug.update_facing_to_combat_target()
 	if not player.is_on_floor():
 		return fall_state
 

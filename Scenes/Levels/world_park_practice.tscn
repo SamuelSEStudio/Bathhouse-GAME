@@ -101,10 +101,11 @@ size = Vector3(2, 2, 2)
 [node name="PlayerSpawn" type="Marker3D" parent="."]
 transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 5.04208, 1.26331, 0.672947)
 
-[node name="Player" parent="." node_paths=PackedStringArray("player_combat_cam") instance=ExtResource("7_1a1k7")]
+[node name="Player" parent="." node_paths=PackedStringArray("combat_target", "player_combat_cam") instance=ExtResource("7_1a1k7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709392, -0.00013489, 3.50544)
 start_in_practice = true
 use_internal_cam = false
+combat_target = NodePath("../ThugMid")
 player_combat_cam = NodePath("../Fight_Cam-2D")
 
 [node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
@@ -140,9 +141,10 @@ opponent_body = NodePath("../../../../ThugMid")
 [node name="practice-sidestepI" parent="Player/controllers/state_machine" index="11" node_paths=PackedStringArray("opponent_body")]
 opponent_body = NodePath("../../../../ThugMid")
 
-[node name="ThugMid" parent="." instance=ExtResource("9_j31tk")]
+[node name="ThugMid" parent="." node_paths=PackedStringArray("combat_target") instance=ExtResource("9_j31tk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.898437, -0.000454571, -1.15878)
 control_mode = 4
+combat_target = NodePath("../Player")
 
 [node name="BA_Head_mixamorig_Head" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="2"]
 transform = Transform3D(0.9498, -0.181621, -0.254742, 0.307146, 0.386438, 0.869671, -0.0595086, -0.904256, 0.422823, -5.48906, 19.9372, -144.543)

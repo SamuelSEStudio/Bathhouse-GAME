@@ -29,12 +29,22 @@ func _depth_axis_from_current_camera() -> Vector3:
 	
 func _get_lane_dir() -> Vector3:
 	# lane_dir = direction from player to opponent, flattened to ground
-	if opponent_body == null or player == null:
-		# Fallback: use camera depth so the state still works in practice scenes without an enemy
+	if player == null:
+		return _depth_axis_from_current_camera()
+
+	var target: Node3D = opponent_body
+
+	# Prefer the Player's combat_target if available
+	var p: Player = player as Player
+	if p != null and p.combat_target != null:
+		target = p.combat_target
+
+	if target == null:
+		# Fallback: use camera depth so state still works in solo practice
 		return _depth_axis_from_current_camera()
 
 	var p_pos: Vector3 = player.global_transform.origin
-	var e_pos: Vector3 = opponent_body.global_transform.origin
+	var e_pos: Vector3 = target.global_transform.origin
 
 	var lane: Vector3 = e_pos - p_pos
 	lane.y = 0.0
@@ -120,14 +130,10 @@ func process_physics(delta: float) -> State:
 	player.move_and_slide()
 
 	# 4) Keep player facing opponent (Tekken-style)
-	if opponent_body != null and player != null:
-		var p_pos: Vector3 = player.visuals.global_transform.origin
-		var e_pos: Vector3 = opponent_body.global_transform.origin
-
-		# flatten so we only rotate around Y
-		var look_target: Vector3 = Vector3(e_pos.x, p_pos.y, e_pos.z)
-		player.visuals.look_at(look_target, Vector3.UP)
-
+	var p: Player = player as Player
+	if p != null:
+		p.update_facing_to_combat_target()
+		
 	# 5) State exit conditions
 	if !player.is_on_floor():
 		return fall_state

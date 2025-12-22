@@ -27,12 +27,14 @@ func process_physics(delta: float) -> State:
 	# Basic gravity & floor check (same as your other states)
 	player.velocity += player.get_gravity() * delta
 	player.move_and_slide()
-
+	var thug: ThugMid = player as ThugMid
+	if thug != null:
+		thug.update_facing_to_combat_target()
 	if not player.is_on_floor():
 		return fall_state
 
 	# --- AI intent → which move state? ---
-	var thug: ThugMid = player as ThugMid
+	
 	if thug == null:
 		return null
 	

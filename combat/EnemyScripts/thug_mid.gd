@@ -21,7 +21,8 @@ enum MovementMode {
 
 @export var control_mode: ControlMode = ControlMode.AI_PROFILE_2
 @export var movement_mode: MovementMode = MovementMode.LANE
-
+@export var combat_target: Node3D
+@export var invert_facing: bool = true
 # --- AI "intent" fields (brain writes into these) ---
 
 ## -1.0 = move back, 0.0 = stand still, +1.0 = move forward (along lane)
@@ -64,7 +65,18 @@ func set_desired_lane_dir(dir: float) -> void:
 func clear_desired_lane_dir() -> void:
 	desired_lane_dir = 0.0
 
+func update_facing_to_combat_target() -> void:
+	if combat_target == null or visuals == null:
+		return
 
+	var my_pos: Vector3 = visuals.global_transform.origin
+	var t_pos: Vector3 = combat_target.global_transform.origin
+
+	var look_target: Vector3 = Vector3(t_pos.x, my_pos.y, t_pos.z)
+	visuals.look_at(look_target, Vector3.UP)
+	if invert_facing:
+		visuals.rotate_y(PI) 
+	
 func request_attack(role: StringName) -> void:
 	pending_attack_role = role
 

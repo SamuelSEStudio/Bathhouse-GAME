@@ -77,13 +77,34 @@ func _physics_process(delta: float) -> void:
 
 
 func _think(_delta: float) -> void:
-	if character == null or target == null:
+	if character == null:
 		return
-	
-	# --- Measure distance to player along the lane ---
 
-	var to_target: Vector3 = target.global_transform.origin - character.global_transform.origin
-	var lane_dir: Vector3 = depth_axis.normalized()
+	# Decide which target we use: explicit export or character.combat_target
+	var target_node: Node3D = target
+	if target_node == null:
+		target_node = character.combat_target
+	if target_node == null:
+		# No target – stand still
+		character.set_desired_lane_dir(0.0)
+		character.set_guarding(false)
+		return
+
+	# --- Compute dynamic lane axis from thug -> target ---
+
+	var to_target: Vector3 = target_node.global_transform.origin - character.global_transform.origin
+	var lane_dir: Vector3 = Vector3(to_target.x, 0.0, to_target.z)
+
+	if lane_dir.length_squared() < 0.0001:
+		# Fallback to previous lane_axis or depth_axis if we're on top of each other
+		lane_dir = character.lane_axis
+		if lane_dir.length_squared() < 0.0001:
+			lane_dir = depth_axis
+	else:
+		lane_dir = lane_dir.normalized()
+
+	# Store for states to use
+	character.lane_axis = lane_dir
 
 	# Positive if target is "forward" along lane_dir, negative if behind
 	var depth_distance: float = to_target.dot(lane_dir)
@@ -93,10 +114,10 @@ func _think(_delta: float) -> void:
 
 	if abs_depth > mid_range:
 		# FAR: approach along lane toward the target
-		var dir_scalar: float = 1.0
+		var dir_scalar_far: float = 1.0
 		if depth_distance < 0.0:
-			dir_scalar = -1.0
-		character.set_desired_lane_dir(dir_scalar)
+			dir_scalar_far = -1.0
+		character.set_desired_lane_dir(dir_scalar_far)
 
 	elif abs_depth < close_range:
 		# CLOSE: sometimes retreat, sometimes hold ground
@@ -108,12 +129,11 @@ func _think(_delta: float) -> void:
 				dir_scalar_close = -1.0
 			else:
 				dir_scalar_close = 1.0
-		# else dir_scalar_close stays 0.0 (stand still)
 
 		character.set_desired_lane_dir(dir_scalar_close)
 
 	else:
-		# MID: approach; later we can add more nuance
+		# MID: approach
 		var dir_scalar_mid: float = 1.0
 		if depth_distance < 0.0:
 			dir_scalar_mid = -1.0
