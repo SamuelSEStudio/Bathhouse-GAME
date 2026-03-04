@@ -18,6 +18,9 @@ var health: int
 var hitstun_frames: int = 0
 var is_blocking: bool = false
 var has_i_frames: bool = false
+var is_ko: bool = false
+var movement_locked: bool = false
+var combat_locked: bool = false
 
 signal health_changed(current: int, max : int)
 signal got_hit(damage: int)
@@ -33,6 +36,9 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	if is_ko and body != null:
+		body.velocity = Vector3.ZERO
+		
 	if hitstun_frames > 0:
 		hitstun_frames -= 1
 		if hitstun_frames == 0:
@@ -67,6 +73,7 @@ func receive_hit_ctx(ctx: HitContext) -> void:
 
 	# --- KO routing (any character) ---
 	if health <= 0 and ko_state != null:
+		lock_ko(true, false)
 		_change_state_safe(ko_state, ctx)
 		emit_signal("died")
 		return
@@ -83,36 +90,47 @@ func receive_hit_ctx(ctx: HitContext) -> void:
 
 # TODO later: you can route to different hit/guard-hit states here if you want
 
-func receive_hit(damage: int, knockback: Vector3, hitstun: int, hitstop: int) -> void:
-	if has_i_frames:
-		return
-	
-	var final_damage: int = damage
-	var final_hitstun: int  = hitstun
-	print("HIT")
-	#simple blocking example
-	if is_blocking:
-		final_damage = int(round(damage * 0.2))
-		final_hitstun = int(round(hitstun * 0.7))
-		
-	health = max(0, health - final_damage)
-	emit_signal("health_changed", health, max_health)
-	emit_signal("got_hit", final_damage)
-	print(health)
-	
-	if health <= 0:
-		#_request_state("KO",null)
-		emit_signal("died")
-		return
-	#_apply_knockback(knockback)
-	if if_player:
-		print(health)
-		_change_state_safe(hit_react_state, null)
-	#_enter_hitstun(final_hitstun)
-
 func _change_state_safe(target: State, payload: Variant) -> void:
 	state_machine.change_state(target,payload)
 	
+func can_move() -> bool:
+	return (not is_ko) and (not movement_locked)
+
+func can_fight() -> bool:
+	return (not is_ko) and (not combat_locked)
+
+func lock_ko(disable_hit_areas: bool = true, disable_body_collisions: bool = false) -> void:
+	if is_ko:
+		return
+
+	is_ko = true
+	movement_locked = true
+	combat_locked = true
+	has_i_frames = true # optional, prevents further hits after KO
+
+	if body != null:
+		body.velocity = Vector3.ZERO
+
+	if disable_hit_areas:
+		_set_area_group_enabled(&"HitBoxes", false)
+		_set_area_group_enabled(&"HurtBoxes", false)
+
+	if disable_body_collisions and body != null:
+		body.collision_layer = 0
+		body.collision_mask = 0
+
+func _set_area_group_enabled(group_name: StringName, enabled: bool) -> void:
+	# Only affect this combatant subtree
+	var stack: Array[Node] = [self]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if n.is_in_group(group_name):
+			var a: Area3D = n as Area3D
+			if a != null:
+				a.monitoring = enabled
+				a.monitorable = enabled
+		for c: Node in n.get_children():
+			stack.push_back(c)
 #func _apply_knockback(kb: Vector3)-> void:
 	#if body:
 		#body.velocity = kb

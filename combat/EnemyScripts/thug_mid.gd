@@ -75,7 +75,7 @@ func update_facing_to_combat_target() -> void:
 	var look_target: Vector3 = Vector3(t_pos.x, my_pos.y, t_pos.z)
 	visuals.look_at(look_target, Vector3.UP)
 	if invert_facing:
-		visuals.rotate_y(PI) 
+		visuals.rotate_y(PI)
 	
 func request_attack(role: StringName) -> void:
 	pending_attack_role = role

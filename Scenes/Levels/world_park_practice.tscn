@@ -108,27 +108,6 @@ use_internal_cam = false
 combat_target = NodePath("../ThugMid")
 player_combat_cam = NodePath("../Fight_Cam-2D")
 
-[node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
-transform = Transform3D(0.993376, -0.0866358, -0.0754862, 0.0964, 0.270803, 0.957796, -0.0625376, -0.958728, 0.27736, -8.69761, 10.7094, -148.531)
-
-[node name="BA_Torso_mixamorig_Spine2" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="3"]
-transform = Transform3D(0.868344, -0.20177, -0.453065, 0.489008, 0.195861, 0.850006, -0.0827675, -0.95965, 0.268742, -2.1626, 2.41086, -125.097)
-
-[node name="BA_Hips_mixamorig_Hips" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="4"]
-transform = Transform3D(0.815386, -0.0313318, -0.578069, 0.576521, 0.134695, 0.805903, 0.0526125, -0.990391, 0.127892, -0.125721, 0.524142, -90.0925)
-
-[node name="BA_R_Hand_mixamorig_RightHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="5"]
-transform = Transform3D(0.203152, 0.364333, 0.90884, -0.907571, 0.418426, 0.0351313, -0.367483, -0.831974, 0.415662, -21.4248, 26.8808, -131.518)
-
-[node name="BA_R_Foot_mixamorig_" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="6"]
-transform = Transform3D(-0.418568, -0.738967, -0.527948, -0.900028, 0.259779, 0.349948, -0.12145, 0.621645, -0.773826, -12.4963, -35.0421, -13.5061)
-
-[node name="BA_HIT_mixamorig_LeftHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="7"]
-transform = Transform3D(0.363171, -0.588738, -0.722145, 0.861497, 0.507384, 0.0196007, 0.354865, -0.629244, 0.691464, 3.66432, 45.6786, -132.361)
-
-[node name="BA_HIT_mixamorig_RightFoot" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="8"]
-transform = Transform3D(-0.418568, -0.738967, -0.527948, -0.900028, 0.259779, 0.349948, -0.12145, 0.621645, -0.773826, -12.4963, -35.0421, -13.5061)
-
 [node name="practice-forward" parent="Player/controllers/state_machine" index="8" node_paths=PackedStringArray("opponent_body")]
 opponent_body = NodePath("../../../../ThugMid")
 
