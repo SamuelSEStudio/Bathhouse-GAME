@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody3D
 
+#######PLUGINS##########
 @onready
 var defence: DefenceInterpreter = $DefenseInterpreter
 @onready 
@@ -21,33 +22,22 @@ var ray_cast_3d: RayCast3D = $Visuals/RayCast3D
 var inspector_cam: Camera3D = $Visuals/Head/Inspector_cam
 @onready 
 var head: Node3D = $Visuals/Head
+@onready 
+var player_combat: ComboInput = $"Player-combat"
+@onready 
+var attack_cooldown: Timer = $"Player-combat/AttackCooldown"
+@onready 
+var dir_cast: ShapeCast3D = $"Player-combat/Dir_cast"
+###############################################
 
+#### Editor variables Plug-ins ###############
 @export var practice_idle_state: Node
 @export var default_idle_state: Node
 @export var start_in_practice: bool = false
 @export var use_internal_cam: bool = true
 @export var combat_target: Node3D
 
-#var SPEED = 3.0
-#const JUMP_VELOCITY = 4.5
-#
-#var walking_speed = 3.0
-#var running_speed = 5.0
-#var running = false
-var in_talk = false
-var first_person = false
-var can_move = true
-var in_fight = false
-
-var camera_angle := Vector2.ZERO #yaw,pitch in DEG
-
-var detection_radius: float = 10.0
-var input_threshold: float = 0.1
-
-var attack_move_speed: float = 8.0
-
-var attack_timer
-
+#--Floats etc---
 #sensitivity of the mouse movement captured
 @export var sense_horizontal = 0.2
 @export var sense_vertical = 0.2
@@ -60,24 +50,43 @@ var attack_timer
 @export var attack_cooldown_time: float = 0.3 #seconds before next attack coroutine analogue
 @export var attack_standoff: float = 0.9 #stop this far from target (prevents overlap)
 
-@onready var player_combat: ComboInput = $"Player-combat"
-@onready var attack_cooldown: Timer = $"Player-combat/AttackCooldown"
-@onready var dir_cast: ShapeCast3D = $"Player-combat/Dir_cast"
-
+##############################################
+#var SPEED = 3.0
+#const JUMP_VELOCITY = 4.5
+#
+#var walking_speed = 3.0
+#var running_speed = 5.0
+#var running = false
+##### Variables#################
+#--Bools--#
+var in_talk = false
+var first_person = false
+var can_move = true
+var in_fight = false
 var target_enemy: Node3D = null
 var is_attacking_enemy: bool = false
-var _input_lock_count: int = 0
 var _combo_was_processing: bool = true
 
+#--camera--
+var camera_angle := Vector2.ZERO #yaw,pitch in DEG
+#--floats--
+var _input_lock_count: int = 0
+var detection_radius: float = 10.0
+var input_threshold: float = 0.1
+var attack_move_speed: float = 8.0
+var attack_timer
+##############################
+
+########const###########
 const ATK_RIGHT := "Right"
 const ATK_LEFT := "Left"
 const ATK_FWD := "Forward"
 const ATK_BACK := "Back"
 
+##################### Player Body #####################
 
 func _ready():
-	#adds player to group for camera access
-	add_to_group("player")
+	add_to_group("player") # adds player to griup for camera access
 	#initilaize state machine, passing a reference of the player to the states,
 	#that way they can move and act accordingly
 	#dir_cast.target_position=Vector3.FORWARD * cast_distance
@@ -103,11 +112,13 @@ func _ready():
 		if is_instance_valid(player_combat):
 			player_combat.set_camera(player_combat_cam)
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if is_input_locked() or in_talk or !can_move:
 		return
 	state_machine.process_input(event)
-	
+
+
 func _physics_process(delta: float) -> void:
 	if is_input_locked() or !can_move:
 		return
@@ -115,7 +126,8 @@ func _physics_process(delta: float) -> void:
 		defence.update_defence(delta)
 	state_machine.process_frame(delta)
 	state_machine.process_physics(delta)
-	
+
+
 func _process(delta: float) -> void:
 	if in_talk or is_input_locked():
 		return
@@ -123,8 +135,9 @@ func _process(delta: float) -> void:
 	if !can_move:
 		return
 	state_machine.process_frame(delta)
-	
-	
+
+##################################################################################
+##--INPUT LOCKING--##
 func lock_input() -> void:
 	var was_locked: bool = is_input_locked()
 	_input_lock_count += 1
@@ -147,7 +160,9 @@ func _update_input_locking() -> void:
 	if is_instance_valid(player_combat):
 		var should_process: bool = !is_input_locked() and can_move and !in_talk
 		player_combat.set_process(should_process)
-		
+
+################################################################
+
 func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
 	#update camera angles
 	camera_angle.x -= yaw_delta * sense_horizontal
@@ -155,8 +170,7 @@ func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
 		camera_angle.y - pitch_delta * sense_vertical,
 		-max_vertical_angle,max_vertical_angle
 	)
-	#apply to player and camera mount
-	rotation.y = deg_to_rad(camera_angle.x)
+	rotation.y = deg_to_rad(camera_angle.x)#apply to player and camera mount
 	if state_machine.current_state is IdleState:
 		pass
 		#visuals.rotation.y = (deg_to_rad(-camera_angle.x))
@@ -164,18 +178,15 @@ func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
 	if first_person:
 		head.rotation.x = deg_to_rad(camera_angle.y)
 	camera_mount.rotation.x = deg_to_rad(camera_angle.y)
-	
+
 func update_facing_to_combat_target() -> void:
 	if combat_target == null or visuals == null:
 		return
-
 	var my_pos: Vector3 = visuals.global_transform.origin
 	var t_pos: Vector3 = combat_target.global_transform.origin
-
-	# Flatten so we only rotate around Y
-	var look_target: Vector3 = Vector3(t_pos.x, my_pos.y, t_pos.z)
+	var look_target: Vector3 = Vector3(t_pos.x, my_pos.y, t_pos.z)# Flatten so we only rotate around Y
 	visuals.look_at(look_target, Vector3.UP)
-	
+
 func _input(event):
 #controls the camera via the mouse input rotate_y controls side to side
 #camera mount controls updown movement-unclamped(can 360 spin)
@@ -212,6 +223,8 @@ func _process_joystick_look() -> void:
 	
 	if look_x != 0 or look_y !=0:
 		set_camera_rotation(look_x*10,look_y*10)
+
+
 #basic animation for Dialogic will be moved to a state soon.
 func play_animation(anim_name: String) -> void:
 	animation_player.play(anim_name)
@@ -227,6 +240,8 @@ func _in_fight():
 func _on_attack_cooldown_timeout() -> void:
 	is_attacking_enemy = false
 	#_move_blocked = false
+###############################################################################
+##################PRACTICE MODE###############################################
 func enter_practice() -> void:
 	in_fight = true
 	# Snap into the practice FSM branch
@@ -249,6 +264,8 @@ func exit_practice() -> void:
 	#var practice_move := practice_idle_state.get_node_or_null("../PracticeMoveState")
 	#if practice_move and practice_move.has_method("cleanup"):
 		#practice_move.cleanup()
+###################################################################################
+
 func _apply_default_cam_auto()-> void:
 	if !is_instance_valid(default_cam):
 		return
@@ -256,6 +273,7 @@ func _apply_default_cam_auto()-> void:
 		default_cam.make_current()
 	else:
 		default_cam.current = false
+		
 #func update_directional_target()-> void:
 	#if is_attacking_enemy:
 		#return

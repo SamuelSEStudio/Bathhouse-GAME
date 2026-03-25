@@ -108,6 +108,27 @@ use_internal_cam = false
 combat_target = NodePath("../ThugMid")
 player_combat_cam = NodePath("../Fight_Cam-2D")
 
+[node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
+transform = Transform3D(0.943334, 0.00794487, -0.33175, 0.321585, 0.22479, 0.919811, 0.0818821, -0.974375, 0.209497, -3.99011, 4.43011, -146.955)
+
+[node name="BA_Torso_mixamorig_Spine2" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="3"]
+transform = Transform3D(0.816696, -0.214771, -0.535612, 0.576947, 0.284942, 0.765467, -0.0117814, -0.934174, 0.356622, 3.41819, -5.57735, -124.448)
+
+[node name="BA_Hips_mixamorig_Hips" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="4"]
+transform = Transform3D(0.809576, -0.00380751, -0.587002, 0.586974, 0.0170439, 0.809427, 0.0069229, -0.999847, 0.0160333, 4.50131, -7.11698, -89.5148)
+
+[node name="BA_R_Hand_mixamorig_RightHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="5"]
+transform = Transform3D(0.424976, 0.602944, 0.67517, -0.896006, 0.386259, 0.219039, -0.128722, -0.698042, 0.704392, -23.6524, 14.2142, -139.078)
+
+[node name="BA_R_Foot_mixamorig_" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="6"]
+transform = Transform3D(-0.66111, -0.682004, -0.312737, -0.748392, 0.569798, 0.33947, -0.0533231, 0.458477, -0.887105, -9.76913, -28.8256, -10.5033)
+
+[node name="BA_HIT_mixamorig_LeftHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="7"]
+transform = Transform3D(-0.0681099, -0.440368, -0.89523, 0.973492, -0.225714, 0.0369656, -0.218345, -0.868982, 0.444068, 7.1403, 39.5019, -140.934)
+
+[node name="BA_HIT_mixamorig_RightFoot" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="8"]
+transform = Transform3D(-0.66111, -0.682004, -0.312737, -0.748392, 0.569798, 0.33947, -0.0533231, 0.458477, -0.887105, -9.76913, -28.8256, -10.5033)
+
 [node name="practice-forward" parent="Player/controllers/state_machine" index="8" node_paths=PackedStringArray("opponent_body")]
 opponent_body = NodePath("../../../../ThugMid")
 
