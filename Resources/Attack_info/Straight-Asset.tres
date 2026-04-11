@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AttackAsset" load_steps=3 format=3 uid="uid://b54or43xo4470"]
 
 [ext_resource type="Resource" uid="uid://do43a42malsm5" path="res://Resources/Attack_gameplay_data/Straight.tres" id="1_cenfm"]
-[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_l3ymf"]
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Combat/AttackAsset.gd" id="1_l3ymf"]
 
 [resource]
 script = ExtResource("1_l3ymf")

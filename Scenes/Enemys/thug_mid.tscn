@@ -18,12 +18,12 @@
 [ext_resource type="Script" uid="uid://xgspx0rnf7xi" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxRegionSpec.gd" id="13_85jlx"]
 [ext_resource type="Script" uid="uid://b2lscw3jpbnyj" path="res://Scripts/Enemys/Enemy-StateMachnines/Thug-mid/e_combat_guard.gd" id="14_g2eh0"]
 [ext_resource type="Script" uid="uid://dbqtswr3svu36" path="res://Scripts/Enemys/Enemy-StateMachnines/Thug-mid/e_combat_block_hit_state.gd" id="14_gr7rm"]
-[ext_resource type="Script" uid="uid://bwc72pvriuuxf" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxProfile.gd" id="14_wrnyv"]
+[ext_resource type="Script" uid="uid://bwc72pvriuuxf" path="res://Scripts/Game-Wide/Combat/HurtboxProfile.gd" id="14_wrnyv"]
 [ext_resource type="PackedScene" uid="uid://dg3vbgdejvxqm" path="res://Scenes/GameWide/Hitboxes/hitbox_auto_setup.tscn" id="15_g2eh0"]
 [ext_resource type="Script" uid="uid://n5djahnqk30" path="res://Scripts/Enemys/Enemy-StateMachnines/Thug-mid/e_combat_hit_react.gd" id="16_gr7rm"]
 [ext_resource type="PackedScene" uid="uid://tt8qs1rvu5uq" path="res://Scenes/CharacterNodes/hit_box.tscn" id="16_k7tef"]
 [ext_resource type="Script" uid="uid://chuwnw135pxh4" path="res://Scripts/Enemys/Enemy-StateMachnines/Thug-mid/e_combat_dodge.gd" id="16_oc0ct"]
-[ext_resource type="Resource" uid="uid://bairmscpduu3k" path="res://Resources/MoveSets/Thug-mid.tres" id="20_bkulq"]
+[ext_resource type="Resource" uid="uid://bairmscpduu3k" path="res://Resources/Character-MoveSet_Profiles/Thug-mid.tres" id="20_bkulq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1mvln"]
 resource_name = "Beta_Joints_MAT1"

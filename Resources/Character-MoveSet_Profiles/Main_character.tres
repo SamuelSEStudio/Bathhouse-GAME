@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="HitProfile" load_steps=7 format=3 uid="uid://ddxsosb1jde2b"]
 
-[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_vppl6"]
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Combat/AttackAsset.gd" id="1_vppl6"]
 [ext_resource type="Resource" uid="uid://44rg57k6jynq" path="res://Resources/Attack_info/Jab-Asset.tres" id="2_2asbh"]
-[ext_resource type="Script" uid="uid://b0ryejqiu0w5" path="res://Scripts/Game-Wide/Hitboxes/HitProfile.gd" id="2_11wvf"]
+[ext_resource type="Script" uid="uid://b0ryejqiu0w5" path="res://Scripts/Game-Wide/Combat/HitProfile.gd" id="2_11wvf"]
 [ext_resource type="Resource" uid="uid://b54or43xo4470" path="res://Resources/Attack_info/Straight-Asset.tres" id="3_fgufd"]
 [ext_resource type="Resource" uid="uid://m15i7mtu12a8" path="res://Resources/Attack_info/Kick-Asset.tres" id="4_hjcx3"]
 [ext_resource type="Resource" uid="uid://bp0jk5d5st6kf" path="res://Resources/Attack_info/BackKick-Asset.tres" id="5_fgufd"]

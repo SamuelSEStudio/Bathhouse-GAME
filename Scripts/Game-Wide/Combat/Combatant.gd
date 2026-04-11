@@ -4,16 +4,13 @@ class_name Combatant
 @export var max_health: int = 100
 @export var team_id: int = 0 
 @export var if_player: bool = true # enemy has no state machine
-
 @export var body_path: NodePath
-var body: CharacterBody3D
-
 @export var state_machine: Node
 @export var hit_react_state: State
 @export var block_hit_react: State
 @export var ko_state: State
 #var state_machine: Node
-
+var body: CharacterBody3D
 var health: int 
 var hitstun_frames: int = 0
 var is_blocking: bool = false
@@ -131,6 +128,8 @@ func _set_area_group_enabled(group_name: StringName, enabled: bool) -> void:
 				a.monitorable = enabled
 		for c: Node in n.get_children():
 			stack.push_back(c)
+
+
 #func _apply_knockback(kb: Vector3)-> void:
 	#if body:
 		#body.velocity = kb

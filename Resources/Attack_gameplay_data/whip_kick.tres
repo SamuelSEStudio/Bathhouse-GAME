@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://d1j2iec84dp3m"]
 
-[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Hitboxes/Attack_data.gd" id="1_ut3nj"]
+[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Combat/Attack_data.gd" id="1_ut3nj"]
 
 [resource]
 script = ExtResource("1_ut3nj")

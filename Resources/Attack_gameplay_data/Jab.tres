@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://cajmrno8wry3q"]
 
-[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Hitboxes/Attack_data.gd" id="1_hgcjv"]
+[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Combat/Attack_data.gd" id="1_hgcjv"]
 
 [resource]
 script = ExtResource("1_hgcjv")
@@ -18,6 +18,6 @@ reaction_id = &""
 block_knockback_scale = 1.0
 camera_shake_mag = 0.06
 camera_shake_dur = 0.08
-hitstop_sec = 0.1
+hitstop_sec = 0.06
 hitstop_scale = 0.05
 metadata/_custom_type_script = "uid://dbdkh6cikc0ga"

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="HitProfile" load_steps=6 format=3 uid="uid://bvuvhk63hty37"]
 
-[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_p2epl"]
-[ext_resource type="Script" uid="uid://b0ryejqiu0w5" path="res://Scripts/Game-Wide/Hitboxes/HitProfile.gd" id="2_3hhu1"]
-[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Hitboxes/Attack_data.gd" id="2_a05vg"]
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Combat/AttackAsset.gd" id="1_p2epl"]
+[ext_resource type="Script" uid="uid://b0ryejqiu0w5" path="res://Scripts/Game-Wide/Combat/HitProfile.gd" id="2_3hhu1"]
+[ext_resource type="Script" uid="uid://dbdkh6cikc0ga" path="res://Scripts/Game-Wide/Combat/Attack_data.gd" id="2_a05vg"]
 
 [sub_resource type="Resource" id="Resource_3j0qm"]
 script = ExtResource("2_a05vg")

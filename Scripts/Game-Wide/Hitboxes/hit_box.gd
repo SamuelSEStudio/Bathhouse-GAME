@@ -5,12 +5,11 @@ signal hit_landed(hitbox: HitBox, target: HurtBox, world_pos: Vector3)
 
 @export var data: AttackData
 @export var owner_combatant_path: NodePath
-#@export var debug_mesh: MeshInstance3d
-
 @export var target_world_size: Vector3 = Vector3(0.35, 0.25, 0.25)
 @export var target_world_offset: Vector3 = Vector3(0.20, 0.10, 0.40)
 @export var enforce_world_space: bool = true
 @export var show_debug_mesh: bool = false
+#@export var debug_mesh: MeshInstance3d#@export var debug_mesh: MeshInstance3d
 
 var combatant: Combatant
 var _active: bool = false
@@ -29,17 +28,17 @@ func _ready() -> void:
 	_apply_world_targets()
 	area_entered.connect(_on_area_entered)
 	_update_debug_visuals()
-	#var hb: HitBox = self as HitBox
-	#if hb != null:
-		#hb.hit_landed.connect(_on_hit_landed)
+	var hb: HitBox = self as HitBox
+	if hb != null:
+		hb.hit_landed.connect(_on_hit_landed)
 		
 func _enter_tree() -> void:
 	add_to_group("HitBoxes", true)
 	
-#func _on_hit_landed(hitbox: HitBox, target: HurtBox, world_pos: Vector3) -> void:
-	#print("JAB HIT! hitbox=", hitbox.get_path(), " target=", target.get_path(), " pos=", world_pos)
-	#Hitstop_Loader.apply(data.hitstop_sec,data.hitstop_scale)
-	#CameraShake_Loader.kick(data.camera_shake_dur,data.camera_shake_mag)
+func _on_hit_landed(hitbox: HitBox, target: HurtBox, world_pos: Vector3) -> void:
+	print("JAB HIT! hitbox=", hitbox.get_path(), " target=", target.get_path(), " pos=", world_pos)
+	Hitstop_Loader.apply(data.hitstop_sec,data.hitstop_scale)
+	CameraShake_Loader.kick(data.camera_shake_dur,data.camera_shake_mag)
 	#
 func _update_debug_visuals()-> void:
 	if dbg != null:
@@ -135,18 +134,8 @@ func _on_area_entered(other: Area3D) -> void:
 	ctx.knockback_local_from_attacker = data.knockback  # author in ATTACKER-LOCAL space
 	ctx.hitstun_frames = data.hitstun_frames            # base hitstun frames
 	ctx.world_contact = global_transform.origin         # simple contact point (or use a real collision point)
-
-
-## apply effects
-	#if data != null and hb.combatant != null:
-		#hb.combatant.receive_hit(
-		#data.damage,
-		#data.knockback,
-		#data.hitstun_frames,
-		#data.hitstop_frames
-	#)
-	hb.combatant.receive_hit_ctx(ctx)
 	
+	hb.combatant.receive_hit_ctx(ctx)
 	emit_signal("hit_landed",self, hb, ctx.world_contact)
 	
 #func set_debug_visible(v: bool)-> void:

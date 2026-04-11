@@ -108,6 +108,27 @@ use_internal_cam = false
 combat_target = NodePath("../ThugMid")
 player_combat_cam = NodePath("../Fight_Cam-2D")
 
+[node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
+transform = Transform3D(0.943334, 0.00794487, -0.33175, 0.321585, 0.22479, 0.919811, 0.0818821, -0.974375, 0.209497, -3.99011, 4.43011, -146.955)
+
+[node name="BA_Torso_mixamorig_Spine2" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="3"]
+transform = Transform3D(0.816696, -0.214771, -0.535612, 0.576947, 0.284942, 0.765467, -0.0117814, -0.934174, 0.356622, 3.41819, -5.57735, -124.448)
+
+[node name="BA_Hips_mixamorig_Hips" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="4"]
+transform = Transform3D(0.809576, -0.00380751, -0.587002, 0.586974, 0.0170439, 0.809427, 0.0069229, -0.999847, 0.0160333, 4.50131, -7.11698, -89.5148)
+
+[node name="BA_R_Hand_mixamorig_RightHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="5"]
+transform = Transform3D(0.424976, 0.602944, 0.67517, -0.896006, 0.386259, 0.219039, -0.128722, -0.698042, 0.704392, -23.6524, 14.2142, -139.078)
+
+[node name="BA_R_Foot_mixamorig_" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="6"]
+transform = Transform3D(-0.66111, -0.682004, -0.312737, -0.748392, 0.569798, 0.33947, -0.0533231, 0.458477, -0.887105, -9.76913, -28.8256, -10.5033)
+
+[node name="BA_HIT_mixamorig_LeftHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="7"]
+transform = Transform3D(-0.0681099, -0.440368, -0.89523, 0.973492, -0.225714, 0.0369656, -0.218345, -0.868982, 0.444068, 7.1403, 39.5019, -140.934)
+
+[node name="BA_HIT_mixamorig_RightFoot" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="8"]
+transform = Transform3D(-0.66111, -0.682004, -0.312737, -0.748392, 0.569798, 0.33947, -0.0533231, 0.458477, -0.887105, -9.76913, -28.8256, -10.5033)
+
 [node name="practice-forward" parent="Player/controllers/state_machine" index="7" node_paths=PackedStringArray("opponent_body")]
 opponent_body = NodePath("../../../../ThugMid")
 
@@ -124,6 +145,21 @@ opponent_body = NodePath("../../../../ThugMid")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.898437, -0.000454571, -1.15878)
 control_mode = 4
 combat_target = NodePath("../Player")
+
+[node name="BA_Head_mixamorig_Head" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="2"]
+transform = Transform3D(0.9498, -0.181621, -0.254742, 0.307146, 0.386438, 0.869671, -0.0595086, -0.904256, 0.422823, -5.48906, 19.9372, -144.543)
+
+[node name="BA_Torso_mixamorig_Spine2" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="3"]
+transform = Transform3D(0.940103, -0.191597, -0.281952, 0.33162, 0.322436, 0.886602, -0.0789589, -0.926998, 0.36666, 0.56881, 6.84291, -123.722)
+
+[node name="BA_Hips_mixamorig_Hips" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="4"]
+transform = Transform3D(0.861823, 0.0575423, -0.503934, 0.506893, -0.13278, 0.851721, -0.0179023, -0.989474, -0.1436, 0.535382, 9.01185, -89.0014)
+
+[node name="BA_HIT_mixamorig_LeftHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="5"]
+transform = Transform3D(-0.297934, 0.0538963, -0.953064, 0.913464, 0.305981, -0.268251, 0.277161, -0.950511, -0.140394, 2.7031, 42.1244, -130.198)
+
+[node name="BA_HIT_mixamorig_RightHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="6"]
+transform = Transform3D(0.343441, -0.0463022, 0.938032, -0.897231, 0.278972, 0.342273, -0.277533, -0.959182, 0.0542667, -16.0557, 41.4829, -129.809)
 
 [node name="AnimationPlayer" parent="ThugMid/Visuals/mixamo_base" index="1"]
 playback_default_blend_time = 0.03

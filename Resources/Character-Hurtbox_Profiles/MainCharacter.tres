@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="HurtProfile" load_steps=6 format=3 uid="uid://cnvgckigld2nd"]
 
 [ext_resource type="Script" uid="uid://xgspx0rnf7xi" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxRegionSpec.gd" id="1_picwq"]
-[ext_resource type="Script" uid="uid://bwc72pvriuuxf" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxProfile.gd" id="2_os1sg"]
+[ext_resource type="Script" uid="uid://bwc72pvriuuxf" path="res://Scripts/Game-Wide/Combat/HurtboxProfile.gd" id="2_os1sg"]
 
 [sub_resource type="Resource" id="Resource_picwq"]
 script = ExtResource("1_picwq")

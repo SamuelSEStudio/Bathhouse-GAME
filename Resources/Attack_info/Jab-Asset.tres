@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AttackAsset" load_steps=3 format=3 uid="uid://44rg57k6jynq"]
 
-[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Hitboxes/AttackAsset.gd" id="1_68h7a"]
+[ext_resource type="Script" uid="uid://12yoflxygl6j" path="res://Scripts/Game-Wide/Combat/AttackAsset.gd" id="1_68h7a"]
 [ext_resource type="Resource" uid="uid://cajmrno8wry3q" path="res://Resources/Attack_gameplay_data/Jab.tres" id="1_q2wij"]
 
 [resource]
