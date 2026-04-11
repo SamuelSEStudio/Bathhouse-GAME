@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d15v3hgo6gwf5"]
 
-[ext_resource type="Script" uid="uid://digwqfnuk3ec5" path="res://Scripts/Game-Wide/HurtBoxes/hurt_box.gd" id="1_1e3k5"]
+[ext_resource type="Script" uid="uid://digwqfnuk3ec5" path="res://Scripts/Game-Wide/HurtBoxes/Hurtbox.gd" id="1_1e3k5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2ktet"]
 

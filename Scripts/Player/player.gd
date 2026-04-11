@@ -51,12 +51,6 @@ var dir_cast: ShapeCast3D = $"Player-combat/Dir_cast"
 @export var attack_standoff: float = 0.9 #stop this far from target (prevents overlap)
 
 ##############################################
-#var SPEED = 3.0
-#const JUMP_VELOCITY = 4.5
-#
-#var walking_speed = 3.0
-#var running_speed = 5.0
-#var running = false
 ##### Variables#################
 #--Bools--#
 var in_talk = false
@@ -87,12 +81,11 @@ const ATK_BACK := "Back"
 
 func _ready():
 	add_to_group("player") # adds player to griup for camera access
-	#initilaize state machine, passing a reference of the player to the states,
-	#that way they can move and act accordingly
+	
 	#dir_cast.target_position=Vector3.FORWARD * cast_distance
 	#if !attack_cooldown.is_connected("timeout",_on_attack_cooldown_timeout()):
 		#attack_cooldown.timeout.connect(_on_attack_cooldown_timeout)
-	state_machine.init(self)
+	state_machine.init(self) #initilaize state machine, passing a reference of the player to the states,
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	set_default_cam()
 	#stops the player moving when a convo starts and then move again once finished
@@ -162,7 +155,7 @@ func _update_input_locking() -> void:
 		player_combat.set_process(should_process)
 
 ################################################################
-
+###################Camera conrtrol - 
 func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
 	#update camera angles
 	camera_angle.x -= yaw_delta * sense_horizontal
@@ -186,7 +179,7 @@ func update_facing_to_combat_target() -> void:
 	var t_pos: Vector3 = combat_target.global_transform.origin
 	var look_target: Vector3 = Vector3(t_pos.x, my_pos.y, t_pos.z)# Flatten so we only rotate around Y
 	visuals.look_at(look_target, Vector3.UP)
-
+## how all inputs are processed 
 func _input(event):
 #controls the camera via the mouse input rotate_y controls side to side
 #camera mount controls updown movement-unclamped(can 360 spin)
@@ -274,88 +267,3 @@ func _apply_default_cam_auto()-> void:
 	else:
 		default_cam.current = false
 		
-#func update_directional_target()-> void:
-	#if is_attacking_enemy:
-		#return
-	#var stick = Vector2(
-		#Input.get_action_strength("Right") - Input.get_action_strength("Left"),
-		#Input.get_action_strength("Forward") - Input.get_action_strength("Backward")
-	#)
-	#if stick.length() < 0.1: # deadzone dont change_target 
-		#return
-	#var cam_basis:= default_cam.global_transform.basis
-	#var cam_f:= (-cam_basis.z).normalized()
-	#var cam_r:= (-cam_basis.x).normalized()
-	#var world_dir: Vector3 = (cam_f * stick.y + cam_r * stick.x).normalized()
-	#
-	##dir_cast.global_transform = Transform3D(dir_cast.global_transform.basis,global_position)
-	##dir_cast.target_position = world_dir*cast_distance
-	##dir_cast.force_shapecast_update()
-	#
-	#var best: Node3D = null
-	#var best_score:= -INF
-	#for i in dir_cast.get_collision_count():
-		#var col:=dir_cast.get_collider(i)
-		#if col and col is Node3D and col.is_in_group("enemy"):
-			#var to_enemy: Vector3 = (col.global_position - global_position)
-			#var dist :=to_enemy.length()
-			#var dir_dot := world_dir.dot(to_enemy/max(dist,0.0001))
-			#if dir_dot>select_dot_threshold:
-				#var score: float = dir_dot + 0.25 * (1.0/max(dist,0.0001))
-				#if score>best_score:
-					#best_score = score
-					#best = col
-	#target_enemy = best
-	#print(target_enemy)
-			
-			
-	
-	
-				#
-	#if !animation_player.is_playing():
-		#is_locked = false
-		#
-	#if Input.is_action_just_pressed("kick"):
-		#if animation_player.current_animation != "kick":
-			#animation_player.play("kick")
-			#is_locked = true
-	#if Input.is_action_pressed("Run"):
-		#SPEED = running_speed
-		#running = true
-	#else:
-		#SPEED = walking_speed
-		#running = false
-	## Add the gravity.
-	#if not is_on_floor():
-		#velocity += get_gravity() * delta
-#
-	## Handle jump.
-	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		#velocity.y = JUMP_VELOCITY
-#
-	## Get the input direction  and handle the movement/deceleration.
-	## As good practice, you should replace UI actions with custom gameplay actions.
-	#var input_dir := Input.get_vector("Left", "Right", "Foward", "Backward")
-	#var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	#if direction:
-		#if!is_locked:
-			#if running:
-				#if animation_player.current_animation != "running":
-					#animation_player.play("running")
-			#else: 
-				#if animation_player.current_animation != "walking":
-					#animation_player.play("walking")
-		##rotates the Visual aspect of the 3Dmodel to look in the direction we are moving 
-			#visuals.look_at(position + direction)
-		#
-		#velocity.x = direction.x * SPEED
-		#velocity.z = direction.z * SPEED
-	#else:
-		#if!is_locked:
-			#if animation_player.current_animation != "idle":
-				#animation_player.play("idle")
-				#
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
-		#velocity.z = move_toward(velocity.z, 0, SPEED)
-	#if !is_locked:
-		#move_and_slide()

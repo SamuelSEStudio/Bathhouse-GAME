@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://tstbkvxkvtc8"]
 
-[ext_resource type="Script" uid="uid://ily5ka3ptuvn" path="res://Combatant.gd" id="1_owe54"]
+[ext_resource type="Script" uid="uid://ily5ka3ptuvn" path="res://Scripts/Game-Wide/Combat/Combatant.gd" id="1_owe54"]
 
 [node name="Combatant" type="Node3D"]
 script = ExtResource("1_owe54")

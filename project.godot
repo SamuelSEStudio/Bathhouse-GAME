@@ -19,10 +19,10 @@ config/icon="res://icon.svg"
 
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GameManager="*res://Autoloads/game_manager.gd"
-Hitstop_Loader="*res://Autoloads/Hitstop.gd"
-CameraShake_Loader="*res://Autoloads/CameraShake.gd"
-CombatFx_Loader="*res://Autoloads/CombatFX.gd"
-TrainingFlow="*res://Autoloads/training_flow.gd"
+Hitstop_Loader="*res://Autoloads/Combat/Hitstop.gd"
+CameraShake_Loader="*res://Autoloads/Combat/CameraShake.gd"
+CombatFx_Loader="*res://Autoloads/Combat/CombatFX.gd"
+TrainingFlow="*res://Autoloads/Combat/training_flow.gd"
 
 [dialogic]
 

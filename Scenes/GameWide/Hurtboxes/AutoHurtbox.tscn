@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcn4g5t6ur0b0"]
 
-[ext_resource type="Script" uid="uid://lpm5mn57c1q0" path="res://HB-Autosetup.gd" id="1_b8uin"]
+[ext_resource type="Script" uid="uid://lpm5mn57c1q0" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxAutoSetup.gd" id="1_b8uin"]
 
 [node name="Hurt-Auto" type="Node"]
 script = ExtResource("1_b8uin")

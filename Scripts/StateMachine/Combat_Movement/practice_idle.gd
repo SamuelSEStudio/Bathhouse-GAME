@@ -45,19 +45,6 @@ func process_input(event: InputEvent) -> State:
 		return jump_state
 	#if Input.is_action_just_pressed("Guard"):
 		#return dodge_state
-	#if punch:
-		#if combo_ref:
-			#combo_ref.push_punch()  # ensure A is recorded now
-			##var ok: bool = combo_ref.match([&"F",&"F",&"A"],combo_ref.tap_grace * 2.0)
-			##if combo_ref.match([&"F",&"F",&"A"], combo_ref.tap_grace * 2.0):
-			#var next: State = combo_ref.resolve_attack()
-			#if next != null:
-				#return next
-			##print ("idle resolver: FFA match=", ok)
-			##if ok:
-				##combo_ref.clear_recent(combo_ref.tap_grace * 2.0)
-				##return straight_state
-		#return jab_state
 	
 		# No diagonals allowed: if both axes are down, prefer sidestep
 	if has_fb and (fwd != back):
