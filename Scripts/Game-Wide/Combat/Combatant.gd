@@ -9,7 +9,7 @@ class_name Combatant
 @export var hit_react_state: State
 @export var block_hit_react: State
 @export var ko_state: State
-#var state_machine: Node
+
 var body: CharacterBody3D
 var health: int 
 var hitstun_frames: int = 0

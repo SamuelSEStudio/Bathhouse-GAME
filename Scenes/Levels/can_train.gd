@@ -2,8 +2,8 @@ extends Area3D
 class_name TrainingEntranceArea
 
 @export var entrance_id: StringName = &"park_train_01"
-
 @export_file("*.tscn")
+
 var practice_scene_path: String = "res://Scenes/Levels/world_park_practice.tscn"
 
 @export var practice_timeline: StringName = &"Train_Park"

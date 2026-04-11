@@ -5,23 +5,20 @@ class_name BlockHitState
 @export var guard_state: State
 @export var total_time: float = 0.12
 @export var freeze_motion_xz: bool = true
-
 # Anim(s) you can wire in the inspector
 @export var default_block_anim: StringName = &"block_hit"
 @export var heavy_block_anim: StringName = &"block_hit_heavy"
-
 # How quickly knockback velocity eases to zero
 @export var knockback_damping: float = 10.0
-
 # How much of hitstun to use when blocking (0.5 = half as long as on hit)
 @export var block_stun_scale: float = 0.5
 @export var min_block_stun_sec: float = 0.06   # minimum blockstun
 
-
 var _t: float = 0.0
 var _stun_time: float = 0.0
 var _knockback_velocity: Vector3 = Vector3.ZERO
-	
+
+
 func _play_block_animation(hit_strength: int) -> void:
 	# AttackData.hit_strength enum: 0=Light, 1=Medium, 2=Heavy, 3=Launcher
 	var anim: StringName = default_block_anim
