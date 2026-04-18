@@ -16,8 +16,8 @@ class_name ThugMidAIBrain
 @export var guard_chance_close: float = 0.4              # 0–1
 @export var guard_min_duration: float = 0.4
 @export var guard_max_duration: float = 1.0
-
 var _guard_timer: float = 0.0
+
 @export var jab_weight: float = 0.6
 @export var heavy_weight: float = 0.4
 @export var dodge_weight: float = 0.2

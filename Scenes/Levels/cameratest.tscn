@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dw1pxs55g26wu"]
 
-[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/GameWide/fight_cam_2d.tscn" id="1_1c0q1"]
+[ext_resource type="PackedScene" uid="uid://c77y1ke4fhlki" path="res://Scenes/Cameras/fight_cam_2d.tscn" id="1_1c0q1"]
 [ext_resource type="Script" uid="uid://beocb4fs5w1uo" path="res://Scripts/Game-Wide/Tools/map-cameratest.gd" id="2_sp3if"]
 [ext_resource type="PackedScene" uid="uid://c3mr3orx2w8q6" path="res://Scenes/Player/player.tscn" id="3_sp3if"]
 

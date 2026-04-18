@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StringComboStep" load_steps=2 format=3 uid="uid://d263sgilm2006"]
 
-[ext_resource type="Script" uid="uid://bwh3t4vhxqxbf" path="res://Resources/StringComboStep.gd" id="1_ehv41"]
+[ext_resource type="Script" uid="uid://bwh3t4vhxqxbf" path="res://Scripts/Game-Wide/Combat/StringComboStep.gd" id="1_ehv41"]
 
 [resource]
 script = ExtResource("1_ehv41")
