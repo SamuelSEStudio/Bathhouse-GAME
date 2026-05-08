@@ -787,7 +787,7 @@ mesh = SubResource("ArrayMesh_2cgtn")
 skin = SubResource("Skin_iu5hg")
 
 [node name="BA_Head_mixamorig_Head" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.998179, -0.0537383, -0.02739, 0.0150873, -0.217218, 0.976007, -0.0583985, -0.974643, -0.216011, 1.24738, -3.61132, -158.263)
+transform = Transform3D(0.998179, -0.0537383, -0.02739, 0.0150874, -0.217217, 0.976007, -0.0583985, -0.974643, -0.216011, 1.24738, -3.61131, -158.263)
 bone_name = "mixamorig_Head"
 bone_idx = 5
 
@@ -800,7 +800,7 @@ target_world_size = Vector3(0.32, 0.32, 0.32)
 target_world_offset = Vector3(0, 0.18, 0)
 
 [node name="BA_Torso_mixamorig_Spine2" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.999405, -0.00995898, -0.0330373, 0.0322706, -0.0692317, 0.997079, -0.0122171, -0.997551, -0.0688691, 1.63836, -6.0358, -132.739)
+transform = Transform3D(0.999405, -0.00995898, -0.0330374, 0.0322706, -0.0692315, 0.997078, -0.0122171, -0.997551, -0.0688688, 1.63836, -6.03579, -132.739)
 bone_name = "mixamorig_Spine2"
 bone_idx = 3
 
@@ -813,7 +813,7 @@ target_world_size = Vector3(0.44, 0.6, 0.36)
 target_world_offset = Vector3(0, 0.1, 0)
 
 [node name="BA_Hips_mixamorig_Hips" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.998773, 0.0206169, -0.0450352, 0.046391, -0.0708467, 0.996408, 0.0173523, -0.997274, -0.0717162, 1.08888, 0.655372, -98.1971)
+transform = Transform3D(0.998773, 0.0206169, -0.0450352, 0.046391, -0.0708464, 0.996408, 0.0173523, -0.997274, -0.071716, 1.08888, 0.655372, -98.1971)
 bone_name = "mixamorig_Hips"
 bone_idx = 0
 
@@ -825,7 +825,7 @@ region = &"Hips"
 target_world_size = Vector3(0.5, 0.4, 0.4)
 
 [node name="BA_HIT_mixamorig_LeftHand" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.110111, 0.124897, -0.986041, -0.952099, 0.298003, -0.0685738, 0.285279, 0.946359, 0.151727, 24.2669, 6.81768, -88.5045)
+transform = Transform3D(0.110111, 0.124897, -0.986041, -0.952099, 0.298003, -0.0685737, 0.285278, 0.946359, 0.151727, 24.2669, 6.81768, -88.5045)
 bone_name = "mixamorig_LeftHand"
 bone_idx = 34
 
@@ -836,7 +836,7 @@ target_world_offset = Vector3(0, 0.1, 0)
 show_debug_mesh = true
 
 [node name="BA_HIT_mixamorig_RightHand" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.432543, -0.0384929, 0.900791, 0.830625, 0.405593, -0.381519, -0.350668, 0.913243, 0.207409, -23.9831, 8.3673, -89.5726)
+transform = Transform3D(0.432543, -0.0384929, 0.900791, 0.830625, 0.405592, -0.381519, -0.350668, 0.913243, 0.207409, -23.9831, 8.36729, -89.5726)
 bone_name = "mixamorig_RightHand"
 bone_idx = 10
 

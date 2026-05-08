@@ -11,8 +11,8 @@ class_name PracticeDodgeState
 @export var neutral_dodge_anim: StringName = &"dodge_neutral"
 @export var forward_dodge_anim: StringName = &"dodge_forward"
 @export var back_dodge_anim: StringName = &"dodge_back"
-@export var left_dodge_anim: StringName = &"dodge_left"
-@export var right_dodge_anim: StringName = &"dodge_right"
+@export var side_in_dodge_anim: StringName = &"dodge_side_in"
+@export var side_out_dodge_anim: StringName = &"dodge_side_out"
 
 @export var invincibility_start: float = 0.05
 @export var invincibility_end: float = 0.20
@@ -23,6 +23,7 @@ var _combatant: Combatant = null
 
 
 func enter(payload: Variant = null) -> void:
+	animation_name = String(_get_dodge_animation())
 	super(payload)
 
 	_time_left = dodge_duration
@@ -33,10 +34,9 @@ func enter(payload: Variant = null) -> void:
 
 	if _combatant == null:
 		_combatant = player.get_node_or_null("Combatant") as Combatant
+
 	if _combatant != null:
 		_combatant.has_i_frames = false
-
-	_play_dodge_animation()
 
 
 func exit() -> void:
@@ -48,24 +48,25 @@ func exit() -> void:
 		_combatant.has_i_frames = false
 
 
-func _play_dodge_animation() -> void:
-	var anim: StringName = neutral_dodge_anim
-
+func _get_dodge_animation() -> StringName:
 	var left: bool = Input.is_action_pressed("Left")
 	var right: bool = Input.is_action_pressed("Right")
 	var fwd: bool = Input.is_action_pressed("Forward")
 	var back: bool = Input.is_action_pressed("Backward")
 
-	if fwd and not back:
-		anim = forward_dodge_anim
-	elif back and not fwd:
-		anim = back_dodge_anim
-	elif left and not right:
-		anim = left_dodge_anim
-	elif right and not left:
-		anim = right_dodge_anim
+	var has_lr: bool = left or right
+	var has_fb: bool = fwd or back
 
-	animation_name = anim
+	# Match C_idle movement routing:
+	# Forward / Backward inputs are sidestep controls in combat.
+	if has_fb and (fwd != back):
+		return side_in_dodge_anim if fwd else side_out_dodge_anim
+
+	# Left / Right inputs are forward/back movement controls in combat.
+	if has_lr and (left != right):
+		return forward_dodge_anim if right else back_dodge_anim
+
+	return neutral_dodge_anim
 
 
 func _update_invincibility() -> void:
@@ -97,15 +98,16 @@ func process_physics(delta: float) -> State:
 			Input.is_action_pressed("Forward")
 			or Input.is_action_pressed("Backward")
 		)
+
 		var left_right: bool = (
 			Input.is_action_pressed("Left")
 			or Input.is_action_pressed("Right")
 		)
 
-		if forward_back and forward_state != null:
-			return forward_state
-		elif left_right and sidestep_state != null:
+		if forward_back and sidestep_state != null:
 			return sidestep_state
+		elif left_right and forward_state != null:
+			return forward_state
 		else:
 			return idle_state
 

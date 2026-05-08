@@ -13,7 +13,8 @@ var player: CharacterBody3D
 
 #accepts optional payload for HitContext
 func enter(payload: Variant = null) -> void:
-	player.animation_player.play(animation_name)
+	play_state_animation(animation_name)
+
 
 func exit()-> void:
 	pass
@@ -26,3 +27,10 @@ func process_frame(delta: float) -> State:
 
 func process_physics(delta: float) -> State:
 	return null
+	
+func play_state_animation(anim_to_play: String) -> void:
+	var anim_key: StringName = StringName(anim_to_play)
+	if player.animation_player.current_animation == anim_to_play:
+		return
+
+	player.animation_player.play(anim_key)

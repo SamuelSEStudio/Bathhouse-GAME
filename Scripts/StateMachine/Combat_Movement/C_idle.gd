@@ -23,7 +23,18 @@ func enter(payload: Variant = null) -> void:
 	player.velocity.x = 0
 	player.velocity.z = 0
 	
+	var p: Player = player as Player
+	if p != null:
+		p.clear_guard_modifier()
+		
+func _has_movement_input() -> bool:
+	var left: bool = Input.is_action_pressed("Left")
+	var right: bool = Input.is_action_pressed("Right")
+	var fwd: bool = Input.is_action_pressed("Forward")
+	var back: bool = Input.is_action_pressed("Backward")
 
+	return left or right or fwd or back
+	
 func process_input(event: InputEvent) -> State:
 	
 	var left: bool = Input.is_action_pressed("Left")
@@ -35,12 +46,15 @@ func process_input(event: InputEvent) -> State:
 	
 	var has_lr: bool = left or right
 	var has_fb: bool = fwd or back
+	
 	if punch:
 		combo_ref.push_punch()
 		return combo_ref.resolve_attack(&"P")
+	
 	if kick:
 		combo_ref.push_kick()
 		return combo_ref.resolve_attack(&"K")
+	
 	if Input.is_action_just_pressed("ui_accept") and player.is_on_floor():
 		return jump_state
 	#if Input.is_action_just_pressed("Guard"):
@@ -72,7 +86,7 @@ func process_frame(delta: float) -> State:
 			d.just_requested_dodge = false
 			return dodge_state
 
-		if d.wants_guard:
+		if d.wants_guard and !_has_movement_input():
 			return guard_state
 
 	return null

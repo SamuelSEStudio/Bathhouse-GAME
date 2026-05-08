@@ -16,6 +16,7 @@ class_name PracticeForwardState
 @export var lock_visuals_y: bool = true
 @export var depth_axis: Vector3 = Vector3.FORWARD #world forward
 @export var direction_sign: float = 1.0   # +1 = forward, -1 = backward
+@export var guarded_animation_name: String = "default_guard"
 
 @export var opponent_body: Node3D
 var _locked_y: float = 0.0
@@ -47,8 +48,15 @@ func _get_lane_dir() -> Vector3:
 	return depth_axis.normalized()
 # Called when the node enters the scene tree for the first time.
 func enter(payload: Variant = null) -> void:
-	super()
+	super(payload)
 	_locked_y = player.visuals.global_rotation.y
+
+func exit() -> void:
+	super()
+
+	var p: Player = player as Player
+	if p != null:
+		p.clear_guard_modifier()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func process_input(event: InputEvent) -> State:
@@ -78,7 +86,16 @@ func process_input(event: InputEvent) -> State:
 	if !right: return idle_state
 	return null
 	
+func _refresh_guard_animation() -> void:
+	var p: Player = player as Player
+	if p != null and p.is_guarding():
+		play_state_animation(guarded_animation_name)
+	else:
+		play_state_animation(animation_name)
+		
 func process_physics(delta: float) -> State:
+	_refresh_guard_animation()
+
 	if lock_visuals_y:
 		player.visuals.global_rotation.y = _locked_y
 	# OPTIONAL: For Tekken boss fights, you might want them to always face the opponent.
@@ -92,20 +109,26 @@ func process_physics(delta: float) -> State:
 	if dir.length() > 0.0001:
 		dir = dir.normalized()
 
-	player.velocity.x = dir.x * speed
-	player.velocity.z = dir.z * speed
+	var p: Player = player as Player
+	var current_speed: float = speed
 
-	# --- 3. Gravity + movement ---
+	if p != null:
+		current_speed = p.get_guard_modified_speed(speed)
+
+	player.velocity.x = dir.x * current_speed
+	player.velocity.z = dir.z * current_speed
+
 	player.velocity += player.get_gravity() * delta
 	player.move_and_slide()
 
-	# --- 4. Exit conditions ---
 	if !player.is_on_floor():
 		return fall_state
-	var p: Player = player as Player
+
 	if p != null:
 		p.update_facing_to_combat_target()
+
 	return null
+
 	##Forward only no diagonal movemnt zero X -> push strictly along depth 
 	#var dir: Vector3 = depth_axis.normalized()
 	#var horiz: Vector3 = Vector3(dir.x,0.0,dir.z)
@@ -127,8 +150,5 @@ func process_frame(delta: float) -> State:
 		if d.just_requested_dodge:
 			d.just_requested_dodge = false
 			return dodge_state
-
-		if d.wants_guard:
-			return guard_state
 
 	return null

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://8rio60mfip36"]
 
-[ext_resource type="Script" uid="uid://cwco7kl4uca27" path="res://Scripts/Menu/training_prompt_ui.gd" id="1_k7fv5"]
+[ext_resource type="Script" uid="uid://cwco7kl4uca27" path="res://Scripts/Menu_UI/training_prompt_ui.gd" id="1_k7fv5"]
 
 [node name="TrainingPromptUI" type="Control"]
 layout_mode = 3

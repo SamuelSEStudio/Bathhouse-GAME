@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody3D
 
+
 #######PLUGINS##########
 @onready
 var defence: DefenceInterpreter = $DefenseInterpreter
@@ -49,7 +50,8 @@ var dir_cast: ShapeCast3D = $"Player-combat/Dir_cast"
 @export var attack_travel_time: float = 0.20 #seconds for the lunge 
 @export var attack_cooldown_time: float = 0.3 #seconds before next attack coroutine analogue
 @export var attack_standoff: float = 0.9 #stop this far from target (prevents overlap)
-
+@export_group("Guard")
+@export var guarded_combat_speed: float = 1.5
 ##############################################
 ##### Variables#################
 #--Bools--#
@@ -153,7 +155,30 @@ func _update_input_locking() -> void:
 	if is_instance_valid(player_combat):
 		var should_process: bool = !is_input_locked() and can_move and !in_talk
 		player_combat.set_process(should_process)
+##################################################################################
+##--GUARD MODIFIER--##
 
+func is_guarding() -> bool:
+	return defence != null and defence.wants_guard
+
+
+func set_combat_blocking(enabled: bool) -> void:
+	var combatant: Combatant = get_node_or_null("Combatant") as Combatant
+	if combatant != null:
+		combatant.is_blocking = enabled
+
+
+func clear_guard_modifier() -> void:
+	set_combat_blocking(false)
+
+
+func get_guard_modified_speed(normal_speed: float) -> float:
+	if is_guarding():
+		set_combat_blocking(true)
+		return guarded_combat_speed
+
+	set_combat_blocking(false)
+	return normal_speed
 ################################################################
 ###################Camera conrtrol - 
 func set_camera_rotation(yaw_delta: float, pitch_delta: float) ->void:
