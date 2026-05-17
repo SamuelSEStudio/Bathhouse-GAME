@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c38oj2n6qbcch"]
+[gd_scene load_steps=20 format=3 uid="uid://c38oj2n6qbcch"]
 
 [ext_resource type="Script" uid="uid://ct027umjascqy" path="res://Scenes/Levels/world_park_practice.gd" id="1_f1my7"]
 [ext_resource type="Texture2D" uid="uid://78pehu0r5g6w" path="res://Assets/textures/grids/Dark/texture_04.png" id="1_tm05i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dyfk1hbj4ru7q" path="res://Scenes/Levels/practice_timer.gd" id="10_wybu2"]
 [ext_resource type="PackedScene" uid="uid://cg2pldpkmepri" path="res://Scenes/Enemys/thug_mid.tscn" id="10_x1toi"]
 [ext_resource type="PackedScene" uid="uid://8rio60mfip36" path="res://Scenes/Menus_UI/training_prompt_ui.tscn" id="11_2jqxp"]
+[ext_resource type="Script" uid="uid://cy7pmii3ge7gg" path="res://Scripts/Game-Wide/Encounter/practice_encounter.gd" id="12_2jqxp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -119,6 +120,9 @@ use_internal_cam = false
 combat_target = NodePath("../ThugMid")
 player_combat_cam = NodePath("../Fight_Cam-2D")
 
+[node name="Combatant" parent="Player" index="1"]
+max_health = 10000
+
 [node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
 transform = Transform3D(0.320386, -0.750818, -0.577603, -0.130109, -0.638844, 0.758255, -0.938309, -0.167783, -0.302364, -49.692, -184.897, -12.6514)
 
@@ -155,22 +159,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.421243, -0.000454571, -2.22
 combat_target = NodePath("../Player")
 
 [node name="BA_Head_mixamorig_Head" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="2"]
-transform = Transform3D(0.998179, -0.0537383, -0.02739, 0.0150874, -0.217217, 0.976007, -0.0583985, -0.974643, -0.216011, 1.24738, -3.61131, -158.263)
+transform = Transform3D(0.984293, -0.175485, -0.0192976, 0.0607584, 0.23409, 0.970315, -0.165758, -0.956246, 0.241076, -12.4088, 214.569, -143.564)
 
 [node name="BA_Torso_mixamorig_Spine2" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="3"]
-transform = Transform3D(0.999405, -0.00995898, -0.0330374, 0.0322706, -0.0692315, 0.997078, -0.0122171, -0.997551, -0.0688688, 1.63836, -6.03579, -132.739)
+transform = Transform3D(0.802833, -0.112146, -0.585562, 0.595814, 0.115398, 0.794789, -0.0215593, -0.986969, 0.159463, -7.35387, 208.721, -120.182)
 
 [node name="BA_Hips_mixamorig_Hips" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="4"]
-transform = Transform3D(0.998773, 0.0206169, -0.0450352, 0.046391, -0.0708464, 0.996408, 0.0173523, -0.997274, -0.071716, 1.08888, 0.655372, -98.1971)
+transform = Transform3D(0.691438, 0.000534236, -0.722436, 0.719304, -0.0935311, 0.688371, -0.0672024, -0.995616, -0.0650553, -7.6158, 211.332, -85.2178)
 
 [node name="BA_HIT_mixamorig_LeftHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="5"]
-transform = Transform3D(0.110111, 0.124897, -0.986041, -0.952099, 0.298003, -0.0685737, 0.285278, 0.946359, 0.151727, 24.2669, 6.81768, -88.5045)
+transform = Transform3D(0.123242, -0.556059, -0.821955, 0.933644, 0.345684, -0.09387, 0.336334, -0.755844, 0.561764, 5.84063, 250.982, -132.24)
 
 [node name="BA_HIT_mixamorig_RightHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="6"]
-transform = Transform3D(0.432543, -0.0384929, 0.900791, 0.830625, 0.405592, -0.381519, -0.350668, 0.913243, 0.207409, -23.9831, 8.36729, -89.5726)
+transform = Transform3D(0.0786494, 0.427599, 0.900541, -0.916008, 0.387452, -0.103971, -0.393374, -0.816726, 0.422157, -27.2479, 232.422, -128.257)
 
 [node name="AI_brain" parent="ThugMid" index="3" node_paths=PackedStringArray("target")]
 target = NodePath("../../Player")
+
+[node name="PracticeEncounter" type="Node" parent="." node_paths=PackedStringArray("player_combatant", "enemy_combatants")]
+script = ExtResource("12_2jqxp")
+encounter_id = &"P_en"
+player_combatant = NodePath("../Player/Combatant")
+enemy_combatants = [NodePath("../ThugMid/Combatant")]
+win_condition = 1
+game_over_scene = "uid://b4xhlahiorjsr"
 
 [editable path="Player"]
 [editable path="ThugMid"]
