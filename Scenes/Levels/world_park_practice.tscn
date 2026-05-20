@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c38oj2n6qbcch"]
+[gd_scene format=3 uid="uid://c38oj2n6qbcch"]
 
 [ext_resource type="Script" uid="uid://ct027umjascqy" path="res://Scenes/Levels/world_park_practice.gd" id="1_f1my7"]
 [ext_resource type="Texture2D" uid="uid://78pehu0r5g6w" path="res://Assets/textures/grids/Dark/texture_04.png" id="1_tm05i"]
@@ -41,20 +41,20 @@ albedo_texture = ExtResource("3_yvsmj")
 albedo_texture = ExtResource("4_hay4s")
 uv1_triplanar = true
 
-[node name="world-park-practice" type="Node3D"]
+[node name="world-park-practice" type="Node3D" unique_id=2122239308]
 script = ExtResource("1_f1my7")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1742020126]
 
-[node name="Control2" parent="CanvasLayer" instance=ExtResource("2_wybu2")]
+[node name="Control2" parent="CanvasLayer" unique_id=247739447 instance=ExtResource("2_wybu2")]
 anchors_preset = -1
 offset_top = 93.0
 combatant_path = NodePath("../../ThugMid/Combatant")
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource("2_wybu2")]
+[node name="Control" parent="CanvasLayer" unique_id=1166510447 instance=ExtResource("2_wybu2")]
 combatant_path = NodePath("../../Player/Combatant")
 
-[node name="Fight_Cam-2D" parent="." node_paths=PackedStringArray("player_ref", "opponent_ref", "player_anchor") instance=ExtResource("7_hay4s")]
+[node name="Fight_Cam-2D" parent="." unique_id=314444299 node_paths=PackedStringArray("player_ref", "opponent_ref", "player_anchor") instance=ExtResource("7_hay4s")]
 transform = Transform3D(-0.00169338, 0, 0.999999, 0, 1, 0, -0.999999, 0, -0.00169338, 2.62639, 1.26331, -0.568857)
 h_offset = 0.3
 player_ref = NodePath("../Player")
@@ -68,52 +68,52 @@ vertical_offset = 0.5
 horizontal_offset = -0.515
 keep_player_on_left = true
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=612393441]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1073342224]
 environment = SubResource("Environment_eb7qw")
 
-[node name="Floor" type="CSGBox3D" parent="."]
+[node name="Floor" type="CSGBox3D" parent="." unique_id=632277123]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.502172, 0)
 material_override = SubResource("StandardMaterial3D_eb7qw")
 use_collision = true
 size = Vector3(20, 1, 20)
 
-[node name="Floor2" type="CSGBox3D" parent="."]
+[node name="Floor2" type="CSGBox3D" parent="." unique_id=1245939666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0520377, 10.3513)
 material_override = SubResource("StandardMaterial3D_eb7qw")
 use_collision = true
 size = Vector3(20, 1.90027, 0.782715)
 
-[node name="Floor3" type="CSGBox3D" parent="."]
+[node name="Floor3" type="CSGBox3D" parent="." unique_id=1460895657]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0520377, -10.4535)
 material_override = SubResource("StandardMaterial3D_eb7qw")
 use_collision = true
 size = Vector3(20, 1.90027, 0.782715)
 
-[node name="purple_box" type="CSGBox3D" parent="."]
+[node name="purple_box" type="CSGBox3D" parent="." unique_id=1097585997]
 transform = Transform3D(0.776311, 0, -0.630351, 0, 1, 0, 0.630351, 0, 0.776311, -6.90892, 0.400064, 1.85233)
 material_override = SubResource("StandardMaterial3D_amjer")
 use_collision = true
 
-[node name="Ornage_box" type="CSGBox3D" parent="."]
+[node name="Ornage_box" type="CSGBox3D" parent="." unique_id=1393986707]
 transform = Transform3D(-0.35682, 0, 0.934173, 0, 1, 0, -0.934173, 0, -0.35682, -5.24364, 0.958675, -3.02395)
 material_override = SubResource("StandardMaterial3D_prhq4")
 use_collision = true
 size = Vector3(2, 2, 2)
 
-[node name="Green_box" type="CSGBox3D" parent="."]
+[node name="Green_box" type="CSGBox3D" parent="." unique_id=1987476936]
 transform = Transform3D(0.86431, 0, 0.50296, 0, 1, 0, -0.50296, 0, 0.86431, -6.60778, 0.723854, 4.76955)
 material_override = SubResource("StandardMaterial3D_ibogx")
 use_collision = true
 size = Vector3(2, 2, 2)
 
-[node name="PlayerSpawn" type="Marker3D" parent="."]
+[node name="PlayerSpawn" type="Marker3D" parent="." unique_id=1820274149]
 transform = Transform3D(-0.173236, 0, 0.98488, 0, 1, 0, -0.98488, 0, -0.173236, 5.04208, 1.26331, 0.672947)
 
-[node name="Player" parent="." node_paths=PackedStringArray("combat_target", "player_combat_cam") instance=ExtResource("7_1a1k7")]
+[node name="Player" parent="." unique_id=1577914003 node_paths=PackedStringArray("combat_target", "player_combat_cam") instance=ExtResource("7_1a1k7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709392, -0.00013489, 3.50544)
 start_in_practice = true
 use_internal_cam = false
@@ -124,59 +124,62 @@ player_combat_cam = NodePath("../Fight_Cam-2D")
 max_health = 10000
 
 [node name="BA_Head_mixamorig_Head" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="2"]
-transform = Transform3D(0.320386, -0.750818, -0.577603, -0.130109, -0.638844, 0.758255, -0.938309, -0.167783, -0.302364, -49.692, -184.897, -12.6514)
+transform = Transform3D(0.3203859, -0.75081795, -0.57760316, -0.13010874, -0.63884383, 0.75825477, -0.9383094, -0.1677829, -0.30236447, -49.692036, -184.89742, -12.651361)
 
 [node name="BA_Torso_mixamorig_Spine2" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="3"]
-transform = Transform3D(0.910273, -0.405853, -0.0817725, -0.395762, -0.911003, 0.115957, -0.121556, -0.0731897, -0.989882, -37.6552, -162.888, -7.35133)
+transform = Transform3D(0.9102729, -0.40585297, -0.08177254, -0.3957618, -0.9110031, 0.11595662, -0.12155638, -0.073189706, -0.9898824, -37.655193, -162.88814, -7.351331)
 
 [node name="BA_Hips_mixamorig_Hips" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="4"]
-transform = Transform3D(0.954232, -0.239608, -0.178965, -0.248886, -0.968037, -0.0309861, -0.16582, 0.0741099, -0.983367, -27.2081, -129.687, -11.8888)
+transform = Transform3D(0.9542324, -0.23960818, -0.17896508, -0.24888594, -0.968037, -0.030986134, -0.16582029, 0.07410987, -0.9833673, -27.2081, -129.687, -11.8888)
 
 [node name="BA_R_Hand_mixamorig_RightHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="5"]
-transform = Transform3D(-0.458073, -0.878877, -0.133205, -0.882941, 0.432516, 0.182605, -0.102874, 0.201259, -0.974121, -100.906, -129.644, -4.76929)
+transform = Transform3D(-0.4580735, -0.87887716, -0.13320538, -0.8829415, 0.43251565, 0.1826052, -0.10287401, 0.2012591, -0.9741209, -100.90553, -129.64378, -4.769286)
 
 [node name="BA_R_Foot_mixamorig_" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="6"]
-transform = Transform3D(-0.180505, -0.289145, -0.940113, 0.156885, 0.935112, -0.317729, 0.970982, -0.204841, -0.12343, -33.4941, -49.4097, -8.07737)
+transform = Transform3D(-0.18050466, -0.2891447, -0.9401134, 0.15688491, 0.9351124, -0.31772906, 0.97098154, -0.2048412, -0.123429716, -33.49411, -49.40972, -8.077371)
 
 [node name="BA_HIT_mixamorig_LeftHand" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="7"]
-transform = Transform3D(0.869525, -0.476953, -0.128227, 0.470528, 0.878894, -0.0784157, 0.150098, 0.00784993, 0.98864, -20.5776, -131.3, -26.6227)
+transform = Transform3D(0.86952513, -0.47695327, -0.128227, 0.47052848, 0.8788936, -0.07841566, 0.15009849, 0.007849932, 0.98863995, -20.577597, -131.30011, -26.622719)
 
 [node name="BA_HIT_mixamorig_RightFoot" parent="Player/Visuals/bluebot-root/main/Skeleton3D" index="8"]
-transform = Transform3D(-0.180505, -0.289145, -0.940113, 0.156885, 0.935112, -0.317729, 0.970982, -0.204841, -0.12343, -33.4941, -49.4097, -8.07737)
+transform = Transform3D(-0.18050466, -0.2891447, -0.9401134, 0.15688491, 0.9351124, -0.31772906, 0.97098154, -0.2048412, -0.123429716, -33.49411, -49.40972, -8.077371)
 
 [node name="dodge" parent="Player/controllers/state_machine" index="24"]
 side_in_dodge_anim = &"animations_extra/Running_scared"
 side_out_dodge_anim = &"anims_again/Inside_leg_L"
 
-[node name="PracticeTimer" type="Node" parent="."]
+[node name="PracticeTimer" type="Node" parent="." unique_id=2023191804]
 script = ExtResource("10_wybu2")
 max_sessions = 2
 forced_exit_timeline = &"training_keep_going"
 prompt_ui_scene = ExtResource("11_2jqxp")
 
-[node name="ThugMid" parent="." node_paths=PackedStringArray("combat_target") instance=ExtResource("10_x1toi")]
+[node name="ThugMid" parent="." unique_id=1499457437 node_paths=PackedStringArray("combat_target") instance=ExtResource("10_x1toi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.421243, -0.000454571, -2.2206)
 combat_target = NodePath("../Player")
 
 [node name="BA_Head_mixamorig_Head" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="2"]
-transform = Transform3D(0.984293, -0.175485, -0.0192976, 0.0607584, 0.23409, 0.970315, -0.165758, -0.956246, 0.241076, -12.4088, 214.569, -143.564)
+transform = Transform3D(0.984293, -0.17548507, -0.0192976, 0.06075844, 0.23409033, 0.97031456, -0.16575825, -0.9562462, 0.24107565, -12.408777, 214.56894, -143.5639)
 
 [node name="BA_Torso_mixamorig_Spine2" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="3"]
-transform = Transform3D(0.802833, -0.112146, -0.585562, 0.595814, 0.115398, 0.794789, -0.0215593, -0.986969, 0.159463, -7.35387, 208.721, -120.182)
+transform = Transform3D(0.8028331, -0.11214556, -0.5855617, 0.59581405, 0.11539807, 0.7947887, -0.02155927, -0.9869685, 0.15946326, -7.3538685, 208.72098, -120.18171)
 
 [node name="BA_Hips_mixamorig_Hips" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="4"]
-transform = Transform3D(0.691438, 0.000534236, -0.722436, 0.719304, -0.0935311, 0.688371, -0.0672024, -0.995616, -0.0650553, -7.6158, 211.332, -85.2178)
+transform = Transform3D(0.6914376, 0.00053423643, -0.722436, 0.7193037, -0.09353113, 0.68837065, -0.06720245, -0.99561626, -0.06505525, -7.6158, 211.332, -85.2178)
 
 [node name="BA_HIT_mixamorig_LeftHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="5"]
-transform = Transform3D(0.123242, -0.556059, -0.821955, 0.933644, 0.345684, -0.09387, 0.336334, -0.755844, 0.561764, 5.84063, 250.982, -132.24)
+transform = Transform3D(0.12324192, -0.5560595, -0.8219547, 0.9336438, 0.34568432, -0.093870014, 0.3363341, -0.75584424, 0.56176424, 5.8406296, 250.9825, -132.23988)
 
 [node name="BA_HIT_mixamorig_RightHand" parent="ThugMid/Visuals/mixamo_base/main/Skeleton3D" index="6"]
-transform = Transform3D(0.0786494, 0.427599, 0.900541, -0.916008, 0.387452, -0.103971, -0.393374, -0.816726, 0.422157, -27.2479, 232.422, -128.257)
+transform = Transform3D(0.07864943, 0.4275985, 0.90054095, -0.9160084, 0.38745153, -0.10397101, -0.39337373, -0.8167257, 0.42215666, -27.247856, 232.42178, -128.25732)
+
+[node name="AnimationPlayer" parent="ThugMid/Visuals/mixamo_base" index="1"]
+autoplay = &"anims_again/Fight_idle"
 
 [node name="AI_brain" parent="ThugMid" index="3" node_paths=PackedStringArray("target")]
 target = NodePath("../../Player")
 
-[node name="PracticeEncounter" type="Node" parent="." node_paths=PackedStringArray("player_combatant", "enemy_combatants")]
+[node name="PracticeEncounter" type="Node" parent="." unique_id=1401889867 node_paths=PackedStringArray("player_combatant", "enemy_combatants")]
 script = ExtResource("12_2jqxp")
 encounter_id = &"P_en"
 player_combatant = NodePath("../Player/Combatant")

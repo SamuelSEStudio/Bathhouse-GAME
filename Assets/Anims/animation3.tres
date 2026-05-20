@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=8 format=3 uid="uid://chjgb723f7mhs"]
+[gd_resource type="AnimationLibrary" format=3 uid="uid://chjgb723f7mhs"]
 
 [sub_resource type="Animation" id="Animation_wx4x6"]
 resource_name = "Defeat"

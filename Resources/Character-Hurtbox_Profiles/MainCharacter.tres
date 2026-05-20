@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="HurtProfile" load_steps=6 format=3 uid="uid://cnvgckigld2nd"]
+[gd_resource type="Resource" script_class="HurtProfile" format=3 uid="uid://cnvgckigld2nd"]
 
 [ext_resource type="Script" uid="uid://xgspx0rnf7xi" path="res://Scripts/Game-Wide/HurtBoxes/HurtboxRegionSpec.gd" id="1_picwq"]
 [ext_resource type="Script" uid="uid://bwc72pvriuuxf" path="res://Scripts/Game-Wide/Combat/HurtboxProfile.gd" id="2_os1sg"]
@@ -24,7 +24,6 @@ script = ExtResource("1_picwq")
 region = &"Hips"
 bone_names = ["mixamorig_Hips"]
 target_world_size = Vector3(0.5, 0.4, 0.4)
-target_world_offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://xgspx0rnf7xi"
 
 [resource]

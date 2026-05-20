@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Bathhouse-GAME"
 run/main_scene="uid://b8e8bseuynjvd"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +27,7 @@ Hitstop_Loader="*res://Autoloads/Combat/Hitstop.gd"
 CameraShake_Loader="*res://Autoloads/Combat/CameraShake.gd"
 CombatFx_Loader="*res://Autoloads/Combat/CombatFX.gd"
 TrainingFlow="*res://Autoloads/Combat/training_flow.gd"
+World_State="*res://Autoloads/WorldState/world_state.gd"
 
 [dialogic]
 

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NPCProfile" format=3 uid="uid://dcnyb62j4i4vt"]
+
+[ext_resource type="Script" uid="uid://dedrk12jjdsyp" path="res://Scripts/NPCS/NPCProfile.gd" id="1_hvagd"]
+
+[resource]
+script = ExtResource("1_hvagd")
+npc_id = &"Fisherman"
+display_name = "Fisherman Joe"
+role = "Local Old-timer"
+personality_type = 3
+default_timeline = &"Townspeople/Fisherman"
+first_meeting_timeline = &"Townspeople/Hello"
+repeat_timeline = &"Townspeople/Fisherman"
+metadata/_custom_type_script = "uid://dedrk12jjdsyp"

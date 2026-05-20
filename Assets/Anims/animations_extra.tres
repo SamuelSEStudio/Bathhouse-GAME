@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=36 format=3 uid="uid://ntuymsgutce3"]
+[gd_resource type="AnimationLibrary" format=3 uid="uid://ntuymsgutce3"]
 
 [sub_resource type="Animation" id="Animation_tscoq"]
 resource_name = "Action"
