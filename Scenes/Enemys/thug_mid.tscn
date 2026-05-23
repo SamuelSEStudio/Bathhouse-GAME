@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://cg2pldpkmepri"]
+[gd_scene format=4 uid="uid://cg2pldpkmepri"]
 
 [ext_resource type="Script" uid="uid://gn16xlrpkk5n" path="res://Scripts/Enemys/EnemyScripts/Thug_mid/thug_mid.gd" id="1_ki7k2"]
 [ext_resource type="AnimationLibrary" uid="uid://ntuymsgutce3" path="res://Assets/Anims/animations_extra.tres" id="2_8a8qg"]
@@ -281,7 +281,6 @@ blend_shape_mode = 0
 [sub_resource type="Resource" id="Resource_gr7rm"]
 script = ExtResource("13_85jlx")
 region = &"Head"
-bone_names = []
 target_world_size = Vector3(0.32, 0.32, 0.32)
 target_world_offset = Vector3(0, 0.18, 0)
 metadata/_custom_type_script = "uid://xgspx0rnf7xi"
@@ -289,7 +288,6 @@ metadata/_custom_type_script = "uid://xgspx0rnf7xi"
 [sub_resource type="Resource" id="Resource_oc0ct"]
 script = ExtResource("13_85jlx")
 region = &"Torso"
-bone_names = []
 target_world_size = Vector3(0.44, 0.6, 0.36)
 target_world_offset = Vector3(0, 0.1, 0)
 metadata/_custom_type_script = "uid://xgspx0rnf7xi"
@@ -297,9 +295,7 @@ metadata/_custom_type_script = "uid://xgspx0rnf7xi"
 [sub_resource type="Resource" id="Resource_bkulq"]
 script = ExtResource("13_85jlx")
 region = &"Hips"
-bone_names = []
 target_world_size = Vector3(0.5, 0.4, 0.4)
-target_world_offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://xgspx0rnf7xi"
 
 [sub_resource type="Resource" id="Resource_82rwx"]
@@ -311,17 +307,19 @@ metadata/_custom_type_script = "uid://bwc72pvriuuxf"
 radius = 0.258333
 height = 1.72206
 
-[node name="ThugMid" type="CharacterBody3D"]
+[node name="ThugMid" type="CharacterBody3D" unique_id=836138803]
+collision_layer = 16
+collision_mask = 3
 script = ExtResource("1_ki7k2")
 
-[node name="Visuals" type="Node3D" parent="."]
+[node name="Visuals" type="Node3D" parent="." unique_id=538013615]
 
-[node name="mixamo_base" type="Node3D" parent="Visuals"]
+[node name="mixamo_base" type="Node3D" parent="Visuals" unique_id=2139704665]
 
-[node name="main" type="Node3D" parent="Visuals/mixamo_base"]
+[node name="main" type="Node3D" parent="Visuals/mixamo_base" unique_id=2067750640]
 transform = Transform3D(0.01, 0, 0, 0, -1.19209e-09, -0.01, 0, 0.01, -1.19209e-09, 0, 0, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Visuals/mixamo_base/main"]
+[node name="Skeleton3D" type="Skeleton3D" parent="Visuals/mixamo_base/main" unique_id=1572393599]
 bones/0/name = "mixamorig_Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(0.995185, 0.0944064, 0.0263392, -0.025964, -0.00520039, 0.999649, 0.0945103, -0.99552, -0.00272418, 0.488853, 1.55639, -101.607)
@@ -778,20 +776,20 @@ bones/64/position = Vector3(-5.36442e-07, 10, 1.78814e-07)
 bones/64/rotation = Quaternion(-1.67117e-08, -0.0118691, -4.98073e-10, 0.99993)
 bones/64/scale = Vector3(1, 1, 1)
 
-[node name="Beta_Joints" type="MeshInstance3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
+[node name="Beta_Joints" type="MeshInstance3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=1272156360]
 mesh = SubResource("ArrayMesh_1yo3k")
 skin = SubResource("Skin_iu5hg")
 
-[node name="Beta_Surface" type="MeshInstance3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
+[node name="Beta_Surface" type="MeshInstance3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=1876362702]
 mesh = SubResource("ArrayMesh_2cgtn")
 skin = SubResource("Skin_iu5hg")
 
-[node name="BA_Head_mixamorig_Head" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.984293, -0.175485, -0.0192976, 0.0607584, 0.23409, 0.970315, -0.165758, -0.956246, 0.241076, -12.4088, 214.569, -143.564)
+[node name="BA_Head_mixamorig_Head" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=1375093906]
+transform = Transform3D(0.984293, -0.17548507, -0.0192976, 0.06075844, 0.23409033, 0.97031456, -0.16575825, -0.9562462, 0.24107565, -12.408777, 214.56894, -143.5639)
 bone_name = "mixamorig_Head"
 bone_idx = 5
 
-[node name="HurtBox" parent="Visuals/mixamo_base/main/Skeleton3D/BA_Head_mixamorig_Head" instance=ExtResource("2_62luq")]
+[node name="HurtBox" parent="Visuals/mixamo_base/main/Skeleton3D/BA_Head_mixamorig_Head" unique_id=2025623726 instance=ExtResource("2_62luq")]
 collision_mask = 128
 owner_combatant_path = NodePath("../../../../../../Combatant")
 owner_team = 1
@@ -799,12 +797,12 @@ region = &"Head"
 target_world_size = Vector3(0.32, 0.32, 0.32)
 target_world_offset = Vector3(0, 0.18, 0)
 
-[node name="BA_Torso_mixamorig_Spine2" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.802833, -0.112146, -0.585562, 0.595814, 0.115398, 0.794789, -0.0215593, -0.986969, 0.159463, -7.35387, 208.721, -120.182)
+[node name="BA_Torso_mixamorig_Spine2" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=4432383]
+transform = Transform3D(0.8028331, -0.11214556, -0.5855617, 0.59581405, 0.11539807, 0.7947887, -0.02155927, -0.9869685, 0.15946326, -7.3538685, 208.72098, -120.18171)
 bone_name = "mixamorig_Spine2"
 bone_idx = 3
 
-[node name="HurtBox" parent="Visuals/mixamo_base/main/Skeleton3D/BA_Torso_mixamorig_Spine2" instance=ExtResource("2_62luq")]
+[node name="HurtBox" parent="Visuals/mixamo_base/main/Skeleton3D/BA_Torso_mixamorig_Spine2" unique_id=955947102 instance=ExtResource("2_62luq")]
 collision_mask = 128
 owner_combatant_path = NodePath("../../../../../../Combatant")
 owner_team = 1
@@ -812,55 +810,53 @@ region = &"Torso"
 target_world_size = Vector3(0.44, 0.6, 0.36)
 target_world_offset = Vector3(0, 0.1, 0)
 
-[node name="BA_Hips_mixamorig_Hips" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.691438, 0.000534236, -0.722436, 0.719304, -0.0935311, 0.688371, -0.0672024, -0.995616, -0.0650553, -7.6158, 211.332, -85.2178)
+[node name="BA_Hips_mixamorig_Hips" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=10718918]
+transform = Transform3D(0.6914376, 0.00053423643, -0.722436, 0.7193037, -0.09353113, 0.68837065, -0.06720245, -0.99561626, -0.06505525, -7.6158, 211.332, -85.2178)
 bone_name = "mixamorig_Hips"
 bone_idx = 0
 
-[node name="HurtBox" parent="Visuals/mixamo_base/main/Skeleton3D/BA_Hips_mixamorig_Hips" instance=ExtResource("2_62luq")]
+[node name="HurtBox" parent="Visuals/mixamo_base/main/Skeleton3D/BA_Hips_mixamorig_Hips" unique_id=1233439261 instance=ExtResource("2_62luq")]
 collision_mask = 128
 owner_combatant_path = NodePath("../../../../../../Combatant")
 owner_team = 1
 region = &"Hips"
 target_world_size = Vector3(0.5, 0.4, 0.4)
 
-[node name="BA_HIT_mixamorig_LeftHand" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.123242, -0.556059, -0.821955, 0.933644, 0.345684, -0.09387, 0.336334, -0.755844, 0.561764, 5.84063, 250.982, -132.24)
+[node name="BA_HIT_mixamorig_LeftHand" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=1006239116]
+transform = Transform3D(0.12324192, -0.5560595, -0.8219547, 0.9336438, 0.34568432, -0.093870014, 0.3363341, -0.75584424, 0.56176424, 5.8406296, 250.9825, -132.23988)
 bone_name = "mixamorig_LeftHand"
 bone_idx = 34
 
-[node name="HitBox_Lefthand" parent="Visuals/mixamo_base/main/Skeleton3D/BA_HIT_mixamorig_LeftHand" instance=ExtResource("16_k7tef")]
+[node name="HitBox_Lefthand" parent="Visuals/mixamo_base/main/Skeleton3D/BA_HIT_mixamorig_LeftHand" unique_id=254805763 instance=ExtResource("16_k7tef")]
 data = ExtResource("6_gr7rm")
 owner_combatant_path = NodePath("../../../../../../Combatant")
 target_world_offset = Vector3(0, 0.1, 0)
 show_debug_mesh = true
 
-[node name="BA_HIT_mixamorig_RightHand" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D"]
-transform = Transform3D(0.0786494, 0.427599, 0.900541, -0.916008, 0.387452, -0.103971, -0.393374, -0.816726, 0.422157, -27.2479, 232.422, -128.257)
+[node name="BA_HIT_mixamorig_RightHand" type="BoneAttachment3D" parent="Visuals/mixamo_base/main/Skeleton3D" unique_id=180650619]
+transform = Transform3D(0.07864943, 0.4275985, 0.90054095, -0.9160084, 0.38745153, -0.10397101, -0.39337373, -0.8167257, 0.42215666, -27.247856, 232.42178, -128.25732)
 bone_name = "mixamorig_RightHand"
 bone_idx = 10
 
-[node name="HitBox_R_hand" parent="Visuals/mixamo_base/main/Skeleton3D/BA_HIT_mixamorig_RightHand" instance=ExtResource("16_k7tef")]
+[node name="HitBox_R_hand" parent="Visuals/mixamo_base/main/Skeleton3D/BA_HIT_mixamorig_RightHand" unique_id=2032123750 instance=ExtResource("16_k7tef")]
 data = ExtResource("7_oc0ct")
 owner_combatant_path = NodePath("../../../../../../Combatant")
 target_world_offset = Vector3(0, 0.1, 0)
 show_debug_mesh = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/mixamo_base"]
-libraries = {
-&"animations_extra": ExtResource("2_8a8qg"),
-&"anims_again": ExtResource("3_8bw4g")
-}
-autoplay = "anims_again/Fight_idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/mixamo_base" unique_id=785816389]
+libraries/animations_extra = ExtResource("2_8a8qg")
+libraries/anims_again = ExtResource("3_8bw4g")
+autoplay = &"anims_again/Fight_idle"
 playback_default_blend_time = 0.2
 
-[node name="controllers" type="Node" parent="."]
+[node name="controllers" type="Node" parent="." unique_id=130242468]
 
-[node name="state_machine" type="Node" parent="controllers" node_paths=PackedStringArray("starting_state")]
+[node name="state_machine" type="Node" parent="controllers" unique_id=1499588780 node_paths=PackedStringArray("starting_state")]
 script = ExtResource("4_4pr27")
 starting_state = NodePath("E-Combat_Idle")
 
-[node name="E-Combat_Idle" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("forward_state", "back_state", "attack_light_state", "attack_heavy_state", "guard_state", "dodge_state")]
+[node name="E-Combat_Idle" type="Node" parent="controllers/state_machine" unique_id=1428361211 node_paths=PackedStringArray("forward_state", "back_state", "attack_light_state", "attack_heavy_state", "guard_state", "dodge_state")]
 script = ExtResource("5_y38qe")
 forward_state = NodePath("../E-Combat_Forward")
 back_state = NodePath("../E-Combat_Backward")
@@ -870,7 +866,7 @@ guard_state = NodePath("../E-Combat_Guard")
 dodge_state = NodePath("../E-Combat_Dodge")
 animation_name = "anims_again/Fight_idle"
 
-[node name="E-Combat_Forward" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state", "backwards_state")]
+[node name="E-Combat_Forward" type="Node" parent="controllers/state_machine" unique_id=431534399 node_paths=PackedStringArray("idle_state", "backwards_state")]
 script = ExtResource("6_y38qe")
 idle_state = NodePath("../E-Combat_Idle")
 backwards_state = NodePath("../E-Combat_Backward")
@@ -878,18 +874,18 @@ speed = 2.0
 depth_axis = Vector3(0, 0, 1)
 animation_name = "anims_again/Forward"
 
-[node name="E-Combat_Attack_light" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state")]
+[node name="E-Combat_Attack_light" type="Node" parent="controllers/state_machine" unique_id=1979731784 node_paths=PackedStringArray("idle_state")]
 script = ExtResource("7_u8uf4")
 idle_state = NodePath("../E-Combat_Idle")
 attack_duration = 0.6
 animation_name = "anims_again/Jab"
 
-[node name="E-Combat_Attack_Heavy" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state")]
+[node name="E-Combat_Attack_Heavy" type="Node" parent="controllers/state_machine" unique_id=2020755324 node_paths=PackedStringArray("idle_state")]
 script = ExtResource("8_uh27n")
 idle_state = NodePath("../E-Combat_Idle")
 animation_name = "anims_again/Flying Kick"
 
-[node name="E-Combat_Backward" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state", "forward_state")]
+[node name="E-Combat_Backward" type="Node" parent="controllers/state_machine" unique_id=1330640171 node_paths=PackedStringArray("idle_state", "forward_state")]
 script = ExtResource("7_4kruj")
 idle_state = NodePath("../E-Combat_Idle")
 forward_state = NodePath("../E-Combat_Forward")
@@ -897,7 +893,7 @@ speed = 2.0
 depth_axis = Vector3(0, 0, 1)
 animation_name = "animations_extra/Step_backwards"
 
-[node name="E-Combat_Block_HiState" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state", "guard_state")]
+[node name="E-Combat_Block_HiState" type="Node" parent="controllers/state_machine" unique_id=1848874741 node_paths=PackedStringArray("idle_state", "guard_state")]
 script = ExtResource("14_gr7rm")
 idle_state = NodePath("../E-Combat_Idle")
 guard_state = NodePath("../E-Combat_Guard")
@@ -905,19 +901,19 @@ default_block_anim = &"animations_extra/Block_impact"
 heavy_block_anim = &"animations_extra/Cow_milking"
 animation_name = "animations_extra/Block_impact"
 
-[node name="E-Combat_Guard" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state", "forward_state", "back_state")]
+[node name="E-Combat_Guard" type="Node" parent="controllers/state_machine" unique_id=1351924134 node_paths=PackedStringArray("idle_state", "forward_state", "back_state")]
 script = ExtResource("14_g2eh0")
 idle_state = NodePath("../E-Combat_Idle")
 forward_state = NodePath("../E-Combat_Forward")
 back_state = NodePath("../E-Combat_Backward")
 animation_name = "animations_extra/Blocking"
 
-[node name="E-Combat_Dodge" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state")]
+[node name="E-Combat_Dodge" type="Node" parent="controllers/state_machine" unique_id=433057283 node_paths=PackedStringArray("idle_state")]
 script = ExtResource("16_oc0ct")
 idle_state = NodePath("../E-Combat_Idle")
 animation_name = "animations_extra/Crouch"
 
-[node name="E-Combat_Hit_react" type="Node" parent="controllers/state_machine" node_paths=PackedStringArray("idle_state")]
+[node name="E-Combat_Hit_react" type="Node" parent="controllers/state_machine" unique_id=1140948021 node_paths=PackedStringArray("idle_state")]
 script = ExtResource("16_gr7rm")
 idle_state = NodePath("../E-Combat_Idle")
 freeze_motion_xz = false
@@ -927,11 +923,11 @@ light_side_anim = &"animations_extra/Body_hit_left"
 heavy_anim = &"animations_extra/Hit_hard_right"
 animation_name = "animations_extra/Hit-middle"
 
-[node name="E-Combat_Knocked_out" type="Node" parent="controllers/state_machine"]
+[node name="E-Combat_Knocked_out" type="Node" parent="controllers/state_machine" unique_id=1985841999]
 script = ExtResource("18_17vtg")
 animation_name = "animations_extra/Dissapointed"
 
-[node name="Hurt-Auto" parent="controllers" node_paths=PackedStringArray("skel") instance=ExtResource("12_2cx70")]
+[node name="Hurt-Auto" parent="controllers" unique_id=38185100 node_paths=PackedStringArray("skel") instance=ExtResource("12_2cx70")]
 hurtbox_scene = ExtResource("2_62luq")
 skel = NodePath("../../Visuals/mixamo_base/main/Skeleton3D")
 profile = SubResource("Resource_82rwx")
@@ -943,14 +939,14 @@ region_bones = {
 "Torso": PackedStringArray("mixamorig_Spine2", "Spine1", "Spine", "Chest", "chest")
 }
 
-[node name="HitboxAutoSetup" parent="controllers" node_paths=PackedStringArray("skel") instance=ExtResource("15_g2eh0")]
+[node name="HitboxAutoSetup" parent="controllers" unique_id=53606848 node_paths=PackedStringArray("skel") instance=ExtResource("15_g2eh0")]
 hitbox_scene = ExtResource("16_k7tef")
 skel = NodePath("../../Visuals/mixamo_base/main/Skeleton3D")
 profile = ExtResource("20_bkulq")
 owner_combatant_path = NodePath("../../Combatant")
 selected_move = &"Straight"
 
-[node name="Combatant" type="Node3D" parent="." node_paths=PackedStringArray("state_machine", "hit_react_state", "block_hit_react", "ko_state")]
+[node name="Combatant" type="Node3D" parent="." unique_id=740841139 node_paths=PackedStringArray("state_machine", "hit_react_state", "block_hit_react", "ko_state")]
 script = ExtResource("5_rpdwg")
 team_id = 1
 if_player = false
@@ -960,12 +956,12 @@ hit_react_state = NodePath("../controllers/state_machine/E-Combat_Hit_react")
 block_hit_react = NodePath("../controllers/state_machine/E-Combat_Block_HiState")
 ko_state = NodePath("../controllers/state_machine/E-Combat_Knocked_out")
 
-[node name="AI_brain" type="Node" parent="." node_paths=PackedStringArray("character")]
+[node name="AI_brain" type="Node" parent="." unique_id=1349601638 node_paths=PackedStringArray("character")]
 script = ExtResource("6_4pr27")
 character = NodePath("..")
 depth_axis = Vector3(0, 0, 1)
 think_interval = 1.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1995181235]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.858824, 0)
 shape = SubResource("CapsuleShape3D_rpdwg")

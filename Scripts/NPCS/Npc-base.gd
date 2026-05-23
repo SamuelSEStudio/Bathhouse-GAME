@@ -10,9 +10,18 @@ signal interaction_finished(npc: NPCBase)
 
 @export_group("Node Paths")
 @export var animation_player_path: NodePath
-@export var selfie_cam_path: NodePath
 @export var cooldown_timer_path: NodePath
 @export var convo_area_path: NodePath
+
+@export_group("Dialogue Cameras")
+@export var default_dialogue_camera_path: NodePath
+@export var close_dialogue_camera_path: NodePath
+@export var side_dialogue_camera_path: NodePath
+@export var dramatic_dialogue_camera_path: NodePath
+
+# Legacy fallback.
+# Existing scenes like Fisherman already have selfie_cam_path assigned.
+@export var selfie_cam_path: NodePath
 
 @export_group("Animation")
 @export var default_anim_name: StringName = &""
@@ -20,13 +29,15 @@ signal interaction_finished(npc: NPCBase)
 @export_group("Interaction")
 @export var face_player_on_interact: bool = true
 @export var use_interaction_cooldown: bool = true
+@export var auto_interact_on_body_entered: bool = false
 
-var animation_player: AnimationPlayer
-var selfie_cam: Camera3D
-var cinematic_cooldown_timer: Timer
-var convo_area: Area3D
+var animation_player: AnimationPlayer = null
+var cinematic_cooldown_timer: Timer = null
+var convo_area: Area3D = null
 
 var can_cinematic: bool = true
+
+var _dialogue_cameras: Dictionary = {}
 var _is_currently_interacting: bool = false
 var _current_timeline_name: StringName = &""
 
@@ -40,10 +51,47 @@ func _ready() -> void:
 
 
 func _resolve_nodes() -> void:
-	animation_player = get_node_or_null(animation_player_path) as AnimationPlayer
-	selfie_cam = get_node_or_null(selfie_cam_path) as Camera3D
-	cinematic_cooldown_timer = get_node_or_null(cooldown_timer_path) as Timer
-	convo_area = get_node_or_null(convo_area_path) as Area3D
+	animation_player = _get_node_from_path(animation_player_path) as AnimationPlayer
+	cinematic_cooldown_timer = _get_node_from_path(cooldown_timer_path) as Timer
+	convo_area = _get_node_from_path(convo_area_path) as Area3D
+
+	_resolve_dialogue_cameras()
+
+
+func _get_node_from_path(path: NodePath) -> Node:
+	if String(path) == "":
+		return null
+
+	return get_node_or_null(path)
+
+
+func _resolve_dialogue_cameras() -> void:
+	_dialogue_cameras.clear()
+
+	var default_path: NodePath = default_dialogue_camera_path
+
+	# If you have not filled the new default camera path yet,
+	# use the old selfie_cam_path so existing NPC scenes still work.
+	if String(default_path) == "" and String(selfie_cam_path) != "":
+		default_path = selfie_cam_path
+
+	_add_dialogue_camera(&"default", default_path)
+	_add_dialogue_camera(&"close", close_dialogue_camera_path)
+	_add_dialogue_camera(&"side", side_dialogue_camera_path)
+	_add_dialogue_camera(&"dramatic", dramatic_dialogue_camera_path)
+
+
+func _add_dialogue_camera(slot_name: StringName, camera_path: NodePath) -> void:
+	if String(camera_path) == "":
+		return
+
+	var camera: Camera3D = get_node_or_null(camera_path) as Camera3D
+
+	if camera == null:
+		push_warning("%s has invalid dialogue camera path for slot '%s': %s" % [name, String(slot_name), String(camera_path)])
+		return
+
+	_dialogue_cameras[slot_name] = camera
 
 
 func _cache_default_animation() -> void:
@@ -83,8 +131,13 @@ func interact() -> void:
 		face_player()
 
 	_register_npc_interaction()
+	_register_active_dialogue_npc(selected_timeline)
 
 	interaction_started.emit(self, selected_timeline)
+
+	# Important:
+	# NPCBase does NOT switch cameras here.
+	# Dialogic controls when cameras change by calling GameManager.change_dialogue_cam(...)
 	Dialogic.start_timeline(String(selected_timeline))
 
 
@@ -95,6 +148,20 @@ func can_interact() -> bool:
 	return true
 
 
+func _register_active_dialogue_npc(selected_timeline: StringName) -> void:
+	var game_manager: Node = get_tree().root.get_node_or_null("GameManager")
+
+	if game_manager == null:
+		push_warning("GameManager autoload was not found. NPC camera routing will not work.")
+		return
+
+	if game_manager.has_method("begin_npc_dialogue") == false:
+		push_warning("GameManager has no begin_npc_dialogue method.")
+		return
+
+	game_manager.call("begin_npc_dialogue", self, selected_timeline)
+
+
 func _register_npc_interaction() -> void:
 	if npc_profile == null:
 		return
@@ -103,6 +170,7 @@ func _register_npc_interaction() -> void:
 		return
 
 	var world_state: WorldState = _get_world_state()
+
 	if world_state == null:
 		return
 
@@ -111,8 +179,22 @@ func _register_npc_interaction() -> void:
 
 
 func _get_world_state() -> WorldState:
-	var node: Node = get_tree().root.get_node_or_null("World_State")
-	return node as WorldState
+	var root: Window = get_tree().root
+
+	# Your current code used World_State.
+	# These fallbacks prevent a hard crash if the autoload name changes casing later.
+	var possible_names: Array[StringName] = [
+		&"World_State",
+		&"World_state",
+		&"WorldStateGlobal"
+	]
+
+	for autoload_name: StringName in possible_names:
+		var node: Node = root.get_node_or_null(String(autoload_name))
+		if node is WorldState:
+			return node as WorldState
+
+	return null
 
 
 func face_player() -> void:
@@ -141,11 +223,36 @@ func play_animation(anim_name: String) -> void:
 	animation_player.play(anim_name)
 
 
-func set_selfie_cam() -> void:
-	if selfie_cam == null:
-		return
+func get_dialogue_camera(slot_name: StringName = &"default") -> Camera3D:
+	var normalised_slot: StringName = StringName(String(slot_name).strip_edges().to_lower())
 
-	selfie_cam.set_current(true)
+	if normalised_slot == &"" or normalised_slot == &"npc" or normalised_slot == &"selfie":
+		normalised_slot = &"default"
+
+	if _dialogue_cameras.has(normalised_slot):
+		return _dialogue_cameras[normalised_slot] as Camera3D
+
+	return null
+
+
+func set_dialogue_cam(slot_name: StringName = &"default") -> bool:
+	var camera: Camera3D = get_dialogue_camera(slot_name)
+
+	if camera == null and slot_name != &"default":
+		camera = get_dialogue_camera(&"default")
+
+	if camera == null:
+		push_warning("%s has no dialogue camera for slot: %s" % [name, String(slot_name)])
+		return false
+
+	camera.make_current()
+	return true
+
+
+# Legacy function.
+# Old GameManager.change_selfie_cam(...) calls still route here.
+func set_selfie_cam() -> void:
+	set_dialogue_cam(&"default")
 
 
 func _on_dialogic_timeline_ended() -> void:
@@ -168,3 +275,13 @@ func _on_dialogic_timeline_ended() -> void:
 
 func _on_cinematic_cooldown_timeout() -> void:
 	can_cinematic = true
+
+
+# Keep this method because your NPC scenes already have Convo_area.body_entered
+# connected to this method.
+func _on_convo_area_body_entered(body: Node3D) -> void:
+	if auto_interact_on_body_entered == false:
+		return
+
+	if body is Player:
+		interact()
