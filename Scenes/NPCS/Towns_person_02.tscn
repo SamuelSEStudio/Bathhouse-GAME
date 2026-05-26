@@ -1,6 +1,7 @@
-[gd_scene load_steps=136 format=4 uid="uid://mfv3ahh2mvh4"]
+[gd_scene format=4 uid="uid://mfv3ahh2mvh4"]
 
-[ext_resource type="Script" uid="uid://ht7gm4k0wx8f" path="res://Scripts/NPCS/Towns_person_02.gd" id="1_yoyqw"]
+[ext_resource type="Script" uid="uid://45bx8gphkq6o" path="res://Scripts/NPCS/NPC-base.gd" id="1_yoyqw"]
+[ext_resource type="Resource" uid="uid://cvadbxaylo2oo" path="res://Resources/NPCprofiles/Townsfolk/Townsperson1.tres" id="2_wl4oh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q4nwi"]
 size = Vector3(0.741699, 1.79578, 1)
@@ -48918,27 +48919,26 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_qg4uj"]
 size = Vector3(1.83942, 1, 1.85791)
 
-[node name="Townsperson-02" type="Node3D"]
+[node name="Townsperson-02" type="Node3D" unique_id=493999845]
 script = ExtResource("1_yoyqw")
+npc_profile = ExtResource("2_wl4oh")
 animation_player_path = NodePath("AnimationLibrary_Godot/AnimationPlayer")
+default_dialogue_camera_path = NodePath("Selfie_cam")
 selfie_cam_path = NodePath("Selfie_cam")
-cooldown_timer_path = NodePath("cinematic_cooldown")
-convo_area_path = NodePath("Convo_area")
-default_anim_name = "Fixing_Kneeling"
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=951909610]
 collision_layer = 9
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=895277213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0197754, 0.943568, 0)
 shape = SubResource("BoxShape3D_q4nwi")
 
-[node name="AnimationLibrary_Godot" type="Node3D" parent="."]
+[node name="AnimationLibrary_Godot" type="Node3D" parent="." unique_id=1663494676]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0165764, 0, 0.0612304)
 
-[node name="Rig" type="Node3D" parent="AnimationLibrary_Godot"]
+[node name="Rig" type="Node3D" parent="AnimationLibrary_Godot" unique_id=660451966]
 
-[node name="Skeleton3D" type="Skeleton3D" parent="AnimationLibrary_Godot/Rig"]
+[node name="Skeleton3D" type="Skeleton3D" parent="AnimationLibrary_Godot/Rig" unique_id=13123227]
 bones/0/name = "root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
@@ -49311,28 +49311,26 @@ bones/52/position = Vector3(-3.53066e-09, 0.173301, -8.18545e-09)
 bones/52/rotation = Quaternion(-0.000137181, 0.964307, -0.264787, -0.00049941)
 bones/52/scale = Vector3(1, 1, 1)
 
-[node name="Mannequin" type="MeshInstance3D" parent="AnimationLibrary_Godot/Rig/Skeleton3D"]
+[node name="Mannequin" type="MeshInstance3D" parent="AnimationLibrary_Godot/Rig/Skeleton3D" unique_id=523291568]
 mesh = SubResource("ArrayMesh_yguud")
 skin = SubResource("Skin_86ccw")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationLibrary_Godot"]
-libraries = {
-&"": SubResource("AnimationLibrary_4a7c5")
-}
-autoplay = "Fixing_Kneeling"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationLibrary_Godot" unique_id=192051295]
+libraries/ = SubResource("AnimationLibrary_4a7c5")
+autoplay = &"Fixing_Kneeling"
 
-[node name="Convo_area" type="Area3D" parent="."]
+[node name="Convo_area" type="Area3D" parent="." unique_id=1104459353]
 collision_layer = 8
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Convo_area"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Convo_area" unique_id=1484490042]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0416565, 0.559403, -0.455798)
 shape = SubResource("BoxShape3D_qg4uj")
 
-[node name="Selfie_cam" type="Camera3D" parent="."]
+[node name="Selfie_cam" type="Camera3D" parent="." unique_id=2135950963]
 transform = Transform3D(-0.999081, 0, -0.0428697, 0, 1, 0, 0.0428697, 0, -0.999081, -0.0416565, 1.20779, -0.268994)
 
-[node name="cinematic_cooldown" type="Timer" parent="."]
+[node name="cinematic_cooldown" type="Timer" parent="." unique_id=245878936]
 
 [connection signal="body_entered" from="Convo_area" to="." method="_on_convo_area_body_entered"]
 [connection signal="timeout" from="cinematic_cooldown" to="." method="_on_cinematic_cooldown_timeout"]

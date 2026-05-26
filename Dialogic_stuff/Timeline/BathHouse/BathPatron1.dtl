@@ -1,5 +1,5 @@
 [style]
-do GameManager.change_selfie_cam("Player")
+do GameManager.change_dialogue_cam("Player")
 Player: Steven!
 do GameManager.change_selfie_cam("BathGoer1")
 BathGoerq: Oh Charlie!

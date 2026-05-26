@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ct027umjascqy" path="res://Scenes/Levels/world_park_practice.gd" id="1_f1my7"]
 [ext_resource type="Texture2D" uid="uid://78pehu0r5g6w" path="res://Assets/textures/grids/Dark/texture_04.png" id="1_tm05i"]
+[ext_resource type="PackedScene" uid="uid://jr2lnd03a8hp" path="res://Menus/pause_menu_ui.tscn" id="2_bpidc"]
 [ext_resource type="Texture2D" uid="uid://c6tbgl2cypvn5" path="res://Assets/textures/grids/Purple/texture_04.png" id="2_dexeq"]
 [ext_resource type="PackedScene" uid="uid://duks2pofalycp" path="res://Scenes/Menus_UI/HealthDisplay.tscn" id="2_wybu2"]
 [ext_resource type="Texture2D" uid="uid://ct6ufttqsgq22" path="res://Assets/textures/grids/Orange/texture_04.png" id="3_yvsmj"]
@@ -45,6 +46,9 @@ uv1_triplanar = true
 script = ExtResource("1_f1my7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1742020126]
+
+[node name="PauseMenuUI" parent="CanvasLayer" unique_id=1979027768 instance=ExtResource("2_bpidc")]
+metadata/_edit_use_anchors_ = true
 
 [node name="Control2" parent="CanvasLayer" unique_id=247739447 instance=ExtResource("2_wybu2")]
 anchors_preset = -1

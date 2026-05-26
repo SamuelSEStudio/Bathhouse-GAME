@@ -31,12 +31,12 @@
 [ext_resource type="PackedScene" uid="uid://bjqd6vjd3j5pi" path="res://Scenes/Prototype-models/cube_5.tscn" id="25_2e38x"]
 [ext_resource type="PackedScene" uid="uid://ct7hwrnhf1c0h" path="res://Scenes/NPCS/Store_person.tscn" id="25_e307x"]
 [ext_resource type="PackedScene" uid="uid://6kssajbp0ju8" path="res://Scenes/NPCS/Store_person_2.tscn" id="26_0wmvb"]
-[ext_resource type="Script" uid="uid://45bx8gphkq6o" path="res://Scripts/NPCS/Npc-base.gd" id="26_1wecw"]
-[ext_resource type="Resource" uid="uid://dcnyb62j4i4vt" path="res://Resources/NPCprofiles/Fisherman.tres" id="26_7ga42"]
 [ext_resource type="PackedScene" uid="uid://bfdjy2iww0c8f" path="res://Scenes/Prototype-models/stairs.tscn" id="26_7gqom"]
 [ext_resource type="PackedScene" uid="uid://bo8xld762mi72" path="res://Scenes/Prototype-models/stairs_1.tscn" id="27_xf0i5"]
 [ext_resource type="PackedScene" uid="uid://bvqj5a4rk3nex" path="res://Scenes/Prototype-models/fence_2.tscn" id="28_qjbfq"]
 [ext_resource type="PackedScene" uid="uid://ddixt50xy6hnp" path="res://Scenes/Prototype-models/tree.tscn" id="29_kufwt"]
+[ext_resource type="PackedScene" uid="uid://gmxaxbppfpyy" path="res://Scenes/NPCS/NPC_Generic.tscn" id="30_7ga42"]
+[ext_resource type="Resource" uid="uid://dcnyb62j4i4vt" path="res://Resources/NPCprofiles/Townsfolk/Fisherman.tres" id="31_1wecw"]
 [ext_resource type="Texture2D" uid="uid://cq6qfkywkcth6" path="res://Assets/models/levels_Screenshot 2025-04-04 180811.png" id="34_0wmvb"]
 [ext_resource type="Texture2D" uid="uid://cy1m22cppomrb" path="res://Assets/models/levels_Image_0.jpg" id="35_ndx01"]
 [ext_resource type="PackedScene" uid="uid://8m2xjjwwssu5" path="res://Assets/models/Buildings/Building_yellow.glb" id="36_ma83d"]
@@ -4684,12 +4684,7 @@ script = null
 
 [node name="Fisherman" parent="Characters" unique_id=225589646 instance=ExtResource("23_nrngf")]
 transform = Transform3D(-0.999059, 0, -0.0433753, 0, 1, 0, 0.0433753, 0, -0.999059, -15.81094, -20.6621, -66.61654)
-script = ExtResource("26_1wecw")
-npc_profile = ExtResource("26_7ga42")
-cooldown_timer_path = NodePath("")
-convo_area_path = NodePath("")
 selfie_cam_path = NodePath("")
-default_anim_name = &""
 
 [node name="ConstructionWorker01" parent="Characters" unique_id=12047610 instance=ExtResource("23_mb44p")]
 transform = Transform3D(-0.980288, 0, -0.197572, 0, 1, 0, 0.197572, 0, -0.980288, -23.9658, -27.9703, -115.741)
@@ -4706,6 +4701,10 @@ script = null
 [node name="StorePerson_2" parent="Characters" unique_id=1684637003 instance=ExtResource("26_0wmvb")]
 transform = Transform3D(0.594051, 0, -0.804428, 0, 1, 0, 0.804428, 0, 0.594051, 12.2361, -24.0099, -89.1664)
 script = null
+
+[node name="NPC_Generic" parent="Characters" unique_id=826303058 instance=ExtResource("30_7ga42")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.996075, -20.538637, -66.48065)
+npc_profile = ExtResource("31_1wecw")
 
 [node name="pathing" type="Node" parent="." unique_id=1388669794]
 

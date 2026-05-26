@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NPCProfile" format=3 uid="uid://cuc7lbor82qfy"]
+
+[ext_resource type="Script" uid="uid://dedrk12jjdsyp" path="res://Scripts/NPCS/NPCProfile.gd" id="1_7hmcs"]
+
+[resource]
+script = ExtResource("1_7hmcs")
+npc_id = &"Townsperson2"
+display_name = "Joe Smith"
+role = "Mechanic"
+personality_type = 4
+default_timeline = &"Hello"
+first_meeting_timeline = &"Townsperson02"
+repeat_timeline = &"Townsperson02"
+metadata/_custom_type_script = "uid://dedrk12jjdsyp"

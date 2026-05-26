@@ -2,7 +2,7 @@ extends Node
 class_name ThugMidAIBrain
 
 # =============================================================================
-# References v0.1.1
+# References
 # =============================================================================
 
 @export var character: ThugMid
@@ -21,7 +21,7 @@ class_name ThugMidAIBrain
 # Distance bands
 # =============================================================================
 # too_close_range:
-# Enemy may try to step away.
+# Enemy is uncomfortably close and may backstep / retreat / light attack.
 #
 # true_light_attack_range:
 # Enemy only jabs when it is actually close enough.
@@ -52,6 +52,7 @@ class_name ThugMidAIBrain
 
 @export var can_use_light_attack: bool = true
 @export var can_use_heavy_attack: bool = true
+@export var can_backstep: bool = true
 @export var can_guard: bool = false
 @export var can_dodge: bool = false
 
@@ -60,11 +61,17 @@ class_name ThugMidAIBrain
 # Chance tuning
 # =============================================================================
 
-@export_range(0.0, 1.0, 0.01) var retreat_chance_too_close: float = 0.25
+@export_range(0.0, 1.0, 0.01) var retreat_chance_too_close: float = 0.15
+@export_range(0.0, 1.0, 0.01) var backstep_chance_too_close: float = 0.25
 @export_range(0.0, 1.0, 0.01) var hover_hold_chance: float = 0.45
 @export_range(0.0, 1.0, 0.01) var hover_creep_chance: float = 0.55
 @export_range(0.0, 1.0, 0.01) var close_creep_chance: float = 0.8
 @export_range(0.0, 1.0, 0.01) var approaching_heavy_chance: float = 0.35
+
+# Post-attack reset behaviour.
+# These make the AI sometimes step back after attacking instead of always sticking.
+@export_range(0.0, 1.0, 0.01) var backstep_chance_after_light: float = 0.18
+@export_range(0.0, 1.0, 0.01) var backstep_chance_after_heavy: float = 0.35
 
 # These are off by default for AI v0.1.
 # They are here so this profile can be tuned later without rewriting the script.
@@ -82,6 +89,10 @@ class_name ThugMidAIBrain
 @export var heavy_consider_interval: float = 0.45
 @export var dodge_cooldown: float = 2.5
 
+@export var backstep_cooldown: float = 1.6
+@export var backstep_duration: float = 0.45
+@export var post_attack_backstep_delay: float = 0.55
+
 @export var guard_min_duration: float = 0.4
 @export var guard_max_duration: float = 1.0
 
@@ -98,12 +109,23 @@ class_name ThugMidAIBrain
 # =============================================================================
 
 var _think_accum: float = 0.0
+
 var _time_since_any_action: float = 999.0
 var _time_since_light_attack: float = 999.0
 var _time_since_heavy_attack: float = 999.0
 var _time_since_heavy_consider: float = 999.0
 var _time_since_dodge: float = 999.0
+var _time_since_backstep: float = 999.0
+
 var _guard_timer: float = 0.0
+
+var _backstep_timer: float = 0.0
+var _backstep_dir: float = 0.0
+
+var _pending_post_attack_backstep: bool = false
+var _pending_post_attack_backstep_timer: float = 0.0
+var _pending_post_attack_backstep_dir: float = 0.0
+
 var _last_debug_state: StringName = &""
 
 
@@ -148,15 +170,24 @@ func _physics_process(delta: float) -> void:
 
 func _update_timers(delta: float) -> void:
 	_think_accum += delta
+
 	_time_since_any_action += delta
 	_time_since_light_attack += delta
 	_time_since_heavy_attack += delta
 	_time_since_heavy_consider += delta
 	_time_since_dodge += delta
+	_time_since_backstep += delta
 
 	_guard_timer -= delta
 	if _guard_timer < 0.0:
 		_guard_timer = 0.0
+
+	_backstep_timer -= delta
+	if _backstep_timer < 0.0:
+		_backstep_timer = 0.0
+
+	if _pending_post_attack_backstep:
+		_pending_post_attack_backstep_timer -= delta
 
 
 func _think(_delta: float) -> void:
@@ -178,6 +209,12 @@ func _think(_delta: float) -> void:
 	var dir_toward_target: float = _get_dir_toward_target(depth_distance)
 	var dir_away_from_target: float = -dir_toward_target
 
+	if _try_continue_backstep():
+		return
+
+	if _try_start_pending_post_attack_backstep():
+		return
+
 	if _try_continue_guard():
 		return
 
@@ -189,11 +226,11 @@ func _think(_delta: float) -> void:
 		return
 
 	if abs_depth <= close_pressure_range:
-		_handle_close_pressure(abs_depth, dir_toward_target)
+		_handle_close_pressure(abs_depth, dir_toward_target, dir_away_from_target)
 		return
 
 	if _is_in_approaching_heavy_range(abs_depth):
-		if _try_approaching_heavy(abs_depth):
+		if _try_approaching_heavy(abs_depth, dir_away_from_target):
 			return
 
 	if abs_depth <= hover_range_max:
@@ -238,7 +275,10 @@ func _handle_too_close(_abs_depth: float, dir_away_from_target: float, dir_towar
 	if _try_close_dodge():
 		return
 
-	if _try_light_attack(_abs_depth):
+	if _try_start_backstep(dir_away_from_target, backstep_chance_too_close, &"TOO_CLOSE_BACKSTEP"):
+		return
+
+	if _try_light_attack(_abs_depth, dir_away_from_target):
 		return
 
 	if randf() < retreat_chance_too_close:
@@ -250,10 +290,10 @@ func _handle_too_close(_abs_depth: float, dir_away_from_target: float, dir_towar
 	_debug_state(&"TOO_CLOSE_PRESSURE")
 
 
-func _handle_close_pressure(abs_depth: float, dir_toward_target: float) -> void:
+func _handle_close_pressure(abs_depth: float, dir_toward_target: float, dir_away_from_target: float) -> void:
 	character.set_guarding(false)
 
-	if _try_light_attack(abs_depth):
+	if _try_light_attack(abs_depth, dir_away_from_target):
 		return
 
 	# If close but not quite jab-close, keep pressure instead of freezing.
@@ -295,7 +335,7 @@ func _handle_far(_abs_depth: float, dir_toward_target: float) -> void:
 	_debug_state(&"FAR_APPROACH")
 
 
-func _try_light_attack(abs_depth: float) -> bool:
+func _try_light_attack(abs_depth: float, dir_away_from_target: float) -> bool:
 	if not can_use_light_attack:
 		return false
 
@@ -315,6 +355,8 @@ func _try_light_attack(abs_depth: float) -> bool:
 	_time_since_any_action = 0.0
 	_time_since_light_attack = 0.0
 
+	_maybe_queue_post_attack_backstep(dir_away_from_target, backstep_chance_after_light)
+
 	_debug_event(&"LIGHT_ATTACK")
 	return true
 
@@ -329,7 +371,7 @@ func _is_in_approaching_heavy_range(abs_depth: float) -> bool:
 	return true
 
 
-func _try_approaching_heavy(abs_depth: float) -> bool:
+func _try_approaching_heavy(abs_depth: float, dir_away_from_target: float) -> bool:
 	if not can_use_heavy_attack:
 		return false
 
@@ -357,7 +399,77 @@ func _try_approaching_heavy(abs_depth: float) -> bool:
 	_time_since_any_action = 0.0
 	_time_since_heavy_attack = 0.0
 
+	_maybe_queue_post_attack_backstep(dir_away_from_target, backstep_chance_after_heavy)
+
 	_debug_event(&"APPROACHING_HEAVY")
+	return true
+
+
+func _maybe_queue_post_attack_backstep(dir_away_from_target: float, chance: float) -> void:
+	if not can_backstep:
+		return
+
+	if chance <= 0.0:
+		return
+
+	if _time_since_backstep < backstep_cooldown:
+		return
+
+	if randf() > chance:
+		return
+
+	_pending_post_attack_backstep = true
+	_pending_post_attack_backstep_timer = post_attack_backstep_delay
+	_pending_post_attack_backstep_dir = dir_away_from_target
+
+
+func _try_start_pending_post_attack_backstep() -> bool:
+	if not _pending_post_attack_backstep:
+		return false
+
+	if _pending_post_attack_backstep_timer > 0.0:
+		return false
+
+	_pending_post_attack_backstep = false
+	return _start_backstep(_pending_post_attack_backstep_dir, &"POST_ATTACK_BACKSTEP")
+
+
+func _try_start_backstep(dir_away_from_target: float, chance: float, debug_label: StringName) -> bool:
+	if not can_backstep:
+		return false
+
+	if chance <= 0.0:
+		return false
+
+	if _time_since_backstep < backstep_cooldown:
+		return false
+
+	if randf() > chance:
+		return false
+
+	return _start_backstep(dir_away_from_target, debug_label)
+
+
+func _start_backstep(dir_away_from_target: float, debug_label: StringName) -> bool:
+	_backstep_timer = backstep_duration
+	_backstep_dir = dir_away_from_target
+	_time_since_backstep = 0.0
+
+	character.set_guarding(false)
+	character.set_desired_lane_dir(_backstep_dir)
+
+	_debug_event(debug_label)
+	return true
+
+
+func _try_continue_backstep() -> bool:
+	if _backstep_timer <= 0.0:
+		return false
+
+	character.set_guarding(false)
+	character.set_desired_lane_dir(_backstep_dir)
+
+	_debug_state(&"BACKSTEP")
 	return true
 
 
@@ -434,6 +546,11 @@ func _stop_all_intent() -> void:
 	character.set_desired_lane_dir(0.0)
 	character.set_guarding(false)
 	character.clear_attack_request()
+
+	_pending_post_attack_backstep = false
+	_pending_post_attack_backstep_timer = 0.0
+	_backstep_timer = 0.0
+
 	_debug_state(&"NO_TARGET")
 
 
@@ -444,6 +561,11 @@ func _think_dummy_idle(_delta: float) -> void:
 	character.set_desired_lane_dir(0.0)
 	character.set_guarding(false)
 	character.clear_attack_request()
+
+	_pending_post_attack_backstep = false
+	_pending_post_attack_backstep_timer = 0.0
+	_backstep_timer = 0.0
+
 	_debug_state(&"DUMMY_IDLE")
 
 
@@ -454,6 +576,11 @@ func _think_dummy_block_all(_delta: float) -> void:
 	character.set_desired_lane_dir(0.0)
 	character.set_guarding(true)
 	character.clear_attack_request()
+
+	_pending_post_attack_backstep = false
+	_pending_post_attack_backstep_timer = 0.0
+	_backstep_timer = 0.0
+
 	_debug_state(&"DUMMY_BLOCK_ALL")
 
 

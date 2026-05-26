@@ -1,6 +1,4 @@
-[gd_scene load_steps=136 format=4 uid="uid://bnvn1katbbcb1"]
-
-[ext_resource type="Script" uid="uid://ht7gm4k0wx8f" path="res://Scripts/NPCS/Towns_person_02.gd" id="1_tvxxp"]
+[gd_scene format=4 uid="uid://bnvn1katbbcb1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q4nwi"]
 size = Vector3(0.741699, 1.79578, 1)
@@ -48917,22 +48915,21 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_qg4uj"]
 size = Vector3(1.83942, 1, 1.85791)
 
-[node name="Townsperson-02" type="Node3D"]
-script = ExtResource("1_tvxxp")
+[node name="Townsperson-02" type="Node3D" unique_id=826303058]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=300907312]
 collision_layer = 9
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=686248433]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0197754, 0.943568, 0)
 shape = SubResource("BoxShape3D_q4nwi")
 
-[node name="AnimationLibrary_Godot" type="Node3D" parent="."]
+[node name="AnimationLibrary_Godot" type="Node3D" parent="." unique_id=613097721]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0165764, 0, 0.0612304)
 
-[node name="Rig" type="Node3D" parent="AnimationLibrary_Godot"]
+[node name="Rig" type="Node3D" parent="AnimationLibrary_Godot" unique_id=407057258]
 
-[node name="Skeleton3D" type="Skeleton3D" parent="AnimationLibrary_Godot/Rig"]
+[node name="Skeleton3D" type="Skeleton3D" parent="AnimationLibrary_Godot/Rig" unique_id=983343858]
 bones/0/name = "root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
@@ -49305,28 +49302,26 @@ bones/52/position = Vector3(-3.53066e-09, 0.173301, -8.18545e-09)
 bones/52/rotation = Quaternion(-0.000137144, 0.964307, -0.264787, -0.000499409)
 bones/52/scale = Vector3(1, 1, 1)
 
-[node name="Mannequin" type="MeshInstance3D" parent="AnimationLibrary_Godot/Rig/Skeleton3D"]
+[node name="Mannequin" type="MeshInstance3D" parent="AnimationLibrary_Godot/Rig/Skeleton3D" unique_id=121531388]
 mesh = SubResource("ArrayMesh_yguud")
 skin = SubResource("Skin_86ccw")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationLibrary_Godot"]
-libraries = {
-&"": SubResource("AnimationLibrary_4a7c5")
-}
-autoplay = "Sitting_Idle03"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationLibrary_Godot" unique_id=698717200]
+libraries/ = SubResource("AnimationLibrary_4a7c5")
+autoplay = &"Sitting_Idle03"
 
-[node name="Convo_area" type="Area3D" parent="."]
+[node name="Convo_area" type="Area3D" parent="." unique_id=1239567175]
 collision_layer = 8
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Convo_area"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Convo_area" unique_id=182137140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0416565, 0.559403, -0.455798)
 shape = SubResource("BoxShape3D_qg4uj")
 
-[node name="Selfie_cam" type="Camera3D" parent="."]
+[node name="Selfie_cam" type="Camera3D" parent="." unique_id=2136387285]
 transform = Transform3D(-0.999081, 0, -0.0428697, 0, 1, 0, 0.0428697, 0, -0.999081, -0.0416565, 1.20779, -0.268994)
 
-[node name="cinematic_cooldown" type="Timer" parent="."]
+[node name="cinematic_cooldown" type="Timer" parent="." unique_id=979796268]
 
 [connection signal="body_entered" from="Convo_area" to="." method="_on_convo_area_body_entered"]
 [connection signal="timeout" from="cinematic_cooldown" to="." method="_on_cinematic_cooldown_timeout"]
