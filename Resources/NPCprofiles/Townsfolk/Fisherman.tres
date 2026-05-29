@@ -10,5 +10,5 @@ role = "Local Old-timer"
 personality_type = 3
 default_timeline = &"Fisherman"
 first_meeting_timeline = &"Hello"
-repeat_timeline = &"Fisherman"
+repeat_timeline = &"Tester"
 metadata/_custom_type_script = "uid://dedrk12jjdsyp"

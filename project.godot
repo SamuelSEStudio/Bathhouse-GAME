@@ -62,6 +62,7 @@ directories/dtl_directory={
 "StoreOwner2": "res://Dialogic_stuff/Timeline/StoreOwners/StoreOwner2.dtl",
 "Student": "res://Dialogic_stuff/Timeline/Townspeople/Student.dtl",
 "Student02": "res://Dialogic_stuff/Timeline/Townspeople/Student02.dtl",
+"Tester": "res://Dialogic_stuff/Timeline/BathHouse/Tester.dtl",
 "TiredPerson": "res://Dialogic_stuff/Timeline/Townspeople/TiredPerson.dtl",
 "Townsperson01": "res://Dialogic_stuff/Timeline/Townspeople/Townsperson01.dtl",
 "Townsperson02": "res://Dialogic_stuff/Timeline/Townspeople/Townsperson02.dtl",

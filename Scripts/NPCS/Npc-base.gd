@@ -130,6 +130,25 @@ func _get_node_from_path(path: NodePath) -> Node:
 func _resolve_dialogue_cameras() -> void:
 	_dialogue_cameras.clear()
 
+	_resolve_dialogue_cameras_from_spawned_model()
+	_resolve_dialogue_cameras_from_exported_paths()
+	
+func _resolve_dialogue_cameras_from_spawned_model() -> void:
+	if spawned_model == null:
+		return
+
+	var camera_root: Node = spawned_model.get_node_or_null("DialogueCameras")
+
+	if camera_root == null:
+		return
+
+	_add_dialogue_camera_from_node(&"default", camera_root.get_node_or_null("DefaultCam"))
+	_add_dialogue_camera_from_node(&"close", camera_root.get_node_or_null("CloseCam"))
+	_add_dialogue_camera_from_node(&"side", camera_root.get_node_or_null("SideCam"))
+	_add_dialogue_camera_from_node(&"dramatic", camera_root.get_node_or_null("DramaticCam"))
+
+
+func _resolve_dialogue_cameras_from_exported_paths() -> void:
 	var default_path: NodePath = default_dialogue_camera_path
 
 	if String(default_path) == "" and String(selfie_cam_path) != "":
@@ -140,6 +159,18 @@ func _resolve_dialogue_cameras() -> void:
 	_add_dialogue_camera(&"side", side_dialogue_camera_path)
 	_add_dialogue_camera(&"dramatic", dramatic_dialogue_camera_path)
 
+
+func _add_dialogue_camera_from_node(slot_name: StringName, node: Node) -> void:
+	if node == null:
+		return
+
+	var camera: Camera3D = node as Camera3D
+
+	if camera == null:
+		push_warning("%s dialogue camera slot '%s' was not a Camera3D." % [name, String(slot_name)])
+		return
+
+	_dialogue_cameras[slot_name] = camera
 
 func _add_dialogue_camera(slot_name: StringName, camera_path: NodePath) -> void:
 	if String(camera_path) == "":

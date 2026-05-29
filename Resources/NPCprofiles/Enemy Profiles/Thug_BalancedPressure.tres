@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ThugAIProfile" format=3 uid="uid://djcn7ojnt81us"]
+
+[ext_resource type="Script" uid="uid://ultjh46vvnw5" path="res://Scripts/Enemys/EnemyScripts/Thug_mid/ThugAI_profile.gd" id="1_mukrg"]
+
+[resource]
+script = ExtResource("1_mukrg")
+metadata/_custom_type_script = "uid://ultjh46vvnw5"

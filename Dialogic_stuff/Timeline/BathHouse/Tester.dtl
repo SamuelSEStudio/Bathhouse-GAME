@@ -1,0 +1,6 @@
+[style]
+do GameManager.change_dialogue_cam("npc_close")
+Fisherman: Sup Loser
+do GameManager.change_dialogue_cam("player")
+Player: What you say?
+do GameManager.change_dialogue_cam("npc_side")

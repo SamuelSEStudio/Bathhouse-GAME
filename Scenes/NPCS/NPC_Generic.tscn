@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://gmxaxbppfpyy"]
 
 [ext_resource type="Script" uid="uid://45bx8gphkq6o" path="res://Scripts/NPCS/NPC-base.gd" id="1_8tpt2"]
-[ext_resource type="PackedScene" uid="uid://dshgi5o42dbyy" path="res://Scenes/NPCS/NPCVisual_Mannequin.tscn" id="2_xrfcy"]
+[ext_resource type="PackedScene" uid="uid://dshgi5o42dbyy" path="res://Scenes/NPCS/NPC_Visuals/NPCVisual_Mannequin.tscn" id="2_xrfcy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q4nwi"]
 size = Vector3(0.741699, 1.79578, 1)

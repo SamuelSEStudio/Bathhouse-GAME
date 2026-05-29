@@ -1,6 +1,6 @@
-[gd_resource type="BoneMap" load_steps=2 format=3 uid="uid://btve4mdt0xfwb"]
+[gd_resource type="BoneMap" format=3 uid="uid://btve4mdt0xfwb"]
 
-[ext_resource type="SkeletonProfileHumanoid" uid="uid://4s2pntmydwfv" path="res://Scenes/NPCS/new_skeleton_profile_humanoid.tres" id="1_s4ydh"]
+[ext_resource type="SkeletonProfileHumanoid" uid="uid://4s2pntmydwfv" path="res://Scenes/NPCS/misc/new_skeleton_profile_humanoid.tres" id="1_s4ydh"]
 
 [resource]
 profile = ExtResource("1_s4ydh")

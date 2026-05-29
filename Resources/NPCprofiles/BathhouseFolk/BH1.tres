@@ -4,4 +4,9 @@
 
 [resource]
 script = ExtResource("1_ex8ob")
+npc_id = &"BH1"
+display_name = "Relaxed John"
+role = "Background"
+personality_type = 0
+default_timeline = &"relaxing_Bath"
 metadata/_custom_type_script = "uid://dedrk12jjdsyp"

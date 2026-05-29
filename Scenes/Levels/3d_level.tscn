@@ -11,26 +11,13 @@
 [ext_resource type="Script" uid="uid://bwjs0yxv13m0d" path="res://Scripts/Game-Wide/Tools/cinematic_cam.gd" id="11_2t2k5"]
 [ext_resource type="PackedScene" uid="uid://cy03bsw7bht01" path="res://Assets/models/prototype_models/building2greybox.glb" id="11_ndx01"]
 [ext_resource type="PackedScene" uid="uid://bvb5ewpu3q2vg" path="res://Assets/models/prototype_models/BUILDING01grey.glb" id="12_vr11l"]
-[ext_resource type="PackedScene" uid="uid://cq505l1nsui6k" path="res://Scenes/NPCS/npc_worker.tscn" id="12_w0yb3"]
-[ext_resource type="PackedScene" uid="uid://c5a7dxxj047fq" path="res://Scenes/NPCS/BathGoer.tscn" id="13_a0a6v"]
 [ext_resource type="PackedScene" uid="uid://b0ipw88jji1ey" path="res://Assets/models/Buildings/building 12_11-04-finished.glb" id="13_my41f"]
-[ext_resource type="PackedScene" uid="uid://dllrgaawkjajy" path="res://Scenes/NPCS/npc_townsperson_a.tscn" id="14_a7c26"]
-[ext_resource type="PackedScene" uid="uid://bxiaaj7fyr843" path="res://Scenes/NPCS/bath_goer_2.tscn" id="15_my41f"]
-[ext_resource type="PackedScene" uid="uid://dra8cy4i4twpt" path="res://Scenes/NPCS/BathGoer_3.tscn" id="16_3tdxk"]
-[ext_resource type="PackedScene" uid="uid://djkuu8tijkg4s" path="res://Scenes/NPCS/npc_BathGoer.tscn" id="17_0y0oo"]
-[ext_resource type="PackedScene" uid="uid://cl10qm0p4khcy" path="res://Scenes/NPCS/BathGoer5.tscn" id="18_xdkp4"]
-[ext_resource type="PackedScene" uid="uid://dbigmxbdrqljc" path="res://Scenes/NPCS/Towns_Person_03.tscn" id="19_7ga42"]
-[ext_resource type="PackedScene" uid="uid://mfv3ahh2mvh4" path="res://Scenes/NPCS/Towns_person_02.tscn" id="20_1wecw"]
-[ext_resource type="PackedScene" uid="uid://82805aew4a3p" path="res://Scenes/NPCS/TownsPerson_01.tscn" id="21_y6ssj"]
+[ext_resource type="Resource" uid="uid://c4rp3cymol1m4" path="res://Resources/NPCprofiles/BathhouseFolk/BH1.tres" id="17_0wmvb"]
+[ext_resource type="PackedScene" uid="uid://buq7t7xkjvkf4" path="res://Scenes/NPCS/NPC_Visuals/NPCVisual_BH1.tscn" id="18_ndx01"]
 [ext_resource type="PackedScene" uid="uid://brtb3jg60mu2x" path="res://Scenes/Prototype-models/cube_7.tscn" id="22_l7d4s"]
 [ext_resource type="PackedScene" uid="uid://jsk4rg7akiov" path="res://Scenes/Prototype-models/fence.tscn" id="23_ay0u0"]
-[ext_resource type="PackedScene" uid="uid://dhhawb5qk5nwg" path="res://Scenes/NPCS/Construction01.tscn" id="23_mb44p"]
-[ext_resource type="PackedScene" uid="uid://eqxigdle1wtj" path="res://Scenes/NPCS/Fisher.tscn" id="23_nrngf"]
-[ext_resource type="PackedScene" uid="uid://b06425rg8ql2m" path="res://Scenes/NPCS/Construction02.tscn" id="24_8mi0t"]
 [ext_resource type="PackedScene" uid="uid://bgcu62p0dxdy3" path="res://Scenes/Prototype-models/fence_3.tscn" id="24_e1ygf"]
 [ext_resource type="PackedScene" uid="uid://bjqd6vjd3j5pi" path="res://Scenes/Prototype-models/cube_5.tscn" id="25_2e38x"]
-[ext_resource type="PackedScene" uid="uid://ct7hwrnhf1c0h" path="res://Scenes/NPCS/Store_person.tscn" id="25_e307x"]
-[ext_resource type="PackedScene" uid="uid://6kssajbp0ju8" path="res://Scenes/NPCS/Store_person_2.tscn" id="26_0wmvb"]
 [ext_resource type="PackedScene" uid="uid://bfdjy2iww0c8f" path="res://Scenes/Prototype-models/stairs.tscn" id="26_7gqom"]
 [ext_resource type="PackedScene" uid="uid://bo8xld762mi72" path="res://Scenes/Prototype-models/stairs_1.tscn" id="27_xf0i5"]
 [ext_resource type="PackedScene" uid="uid://bvqj5a4rk3nex" path="res://Scenes/Prototype-models/fence_2.tscn" id="28_qjbfq"]
@@ -4643,68 +4630,14 @@ script = ExtResource("11_2t2k5")
 
 [node name="Characters" type="Node" parent="." unique_id=1409264952]
 
-[node name="Npc-Worker" parent="Characters" unique_id=810933748 instance=ExtResource("12_w0yb3")]
-transform = Transform3D(-0.999734, 0, 0.0230538, 0, 1, 0, -0.0230538, 0, -0.999734, -0.34084, 0.0492118, 7.9846)
-
-[node name="BathGoer1" parent="Characters" unique_id=718437126 instance=ExtResource("13_a0a6v")]
-transform = Transform3D(-0.0393819, 0, -0.999224, 0, 1, 0, 0.999224, 0, -0.0393819, -1.17435, -1.90735e-06, -2.32872)
-script = null
-
-[node name="NPC_TownspersonA" parent="Characters" unique_id=716314768 instance=ExtResource("14_a7c26")]
-transform = Transform3D(-0.551733, 0, 0.83402, 0, 1, 0, -0.83402, 0, -0.551733, 14.9492, -0.145592, -12.138)
-script = null
-
-[node name="BathGoer2" parent="Characters" unique_id=1036337268 instance=ExtResource("15_my41f")]
-transform = Transform3D(-0.999987, 0, -0.00518359, 0, 1, 0, 0.00518359, 0, -0.999987, -3.32027, -0.199208, -9.72259)
-script = null
-
-[node name="BathGoer3" parent="Characters" unique_id=14558556 instance=ExtResource("16_3tdxk")]
-transform = Transform3D(0.999976, 0, -0.0069289, 0, 1, 0, 0.0069289, 0, 0.999976, -3.88875, -0.667964, -7.59292)
-script = null
-
-[node name="BathGoer4" parent="Characters" unique_id=541827973 instance=ExtResource("17_0y0oo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.65102, 9.53674e-07, -2.49959)
-script = null
-
-[node name="BathGoer5" parent="Characters" unique_id=1287888799 instance=ExtResource("18_xdkp4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43056, -1.90735e-06, 3.94823)
-script = null
-
-[node name="Townsperson-03" parent="Characters" unique_id=1254181065 instance=ExtResource("19_7ga42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6826, -10.9483, -33.3856)
-script = null
-
-[node name="Townsperson-02" parent="Characters" unique_id=1380565665 instance=ExtResource("20_1wecw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3872, -21.2596, -70.8003)
-script = null
-
-[node name="TownsPerson_01" parent="Characters" unique_id=854802486 instance=ExtResource("21_y6ssj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1209, -4.48784, -14.161)
-script = null
-
-[node name="Fisherman" parent="Characters" unique_id=225589646 instance=ExtResource("23_nrngf")]
-transform = Transform3D(-0.999059, 0, -0.0433753, 0, 1, 0, 0.0433753, 0, -0.999059, -15.81094, -20.6621, -66.61654)
-selfie_cam_path = NodePath("")
-
-[node name="ConstructionWorker01" parent="Characters" unique_id=12047610 instance=ExtResource("23_mb44p")]
-transform = Transform3D(-0.980288, 0, -0.197572, 0, 1, 0, 0.197572, 0, -0.980288, -23.9658, -27.9703, -115.741)
-script = null
-
-[node name="ConstructionWorker02" parent="Characters" unique_id=803867324 instance=ExtResource("24_8mi0t")]
-transform = Transform3D(-0.997733, 0, 0.0673013, 0, 1, 0, -0.0673013, 0, -0.997733, -20.6685, -27.9002, -115.27)
-script = null
-
-[node name="StorePerson" parent="Characters" unique_id=505049092 instance=ExtResource("25_e307x")]
-transform = Transform3D(-0.965094, 0, 0.261903, 0, 1, 0, -0.261903, 0, -0.965094, 18.2882, -25.4868, -99.0424)
-script = null
-
-[node name="StorePerson_2" parent="Characters" unique_id=1684637003 instance=ExtResource("26_0wmvb")]
-transform = Transform3D(0.594051, 0, -0.804428, 0, 1, 0, 0.804428, 0, 0.594051, 12.2361, -24.0099, -89.1664)
-script = null
-
 [node name="NPC_Generic" parent="Characters" unique_id=826303058 instance=ExtResource("30_7ga42")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.996075, -20.538637, -66.48065)
 npc_profile = ExtResource("31_1wecw")
+
+[node name="NPC_Generic2" parent="Characters" unique_id=661814372 instance=ExtResource("30_7ga42")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0783215, 2.3841858e-07, -1.9410689)
+npc_profile = ExtResource("17_0wmvb")
+model_scene = ExtResource("18_ndx01")
 
 [node name="pathing" type="Node" parent="." unique_id=1388669794]
 
