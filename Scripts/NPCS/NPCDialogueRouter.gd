@@ -24,26 +24,22 @@ static func _get_rule_timeline(profile: NPCProfile, world_state: WorldState, tal
 	if profile.dialogue_rules.is_empty():
 		return &""
 
-	var sorted_rules: Array[NPCDialogueRule] = profile.dialogue_rules.duplicate()
+	var sorted_rules: Array[NPCDialogueRule] = []
+
+	for rule: NPCDialogueRule in profile.dialogue_rules:
+		if rule != null:
+			sorted_rules.append(rule)
+
 	sorted_rules.sort_custom(_sort_rules_by_priority)
 
 	for rule: NPCDialogueRule in sorted_rules:
-		if rule == null:
-			continue
-
 		if rule.matches(world_state, profile.npc_id, talk_count):
-			return rule.choose_timeline()
+			return rule.choose_timeline(world_state, profile.npc_id)
 
 	return &""
 
 
 static func _sort_rules_by_priority(a: NPCDialogueRule, b: NPCDialogueRule) -> bool:
-	if a == null:
-		return false
-
-	if b == null:
-		return true
-
 	return a.priority > b.priority
 
 
@@ -91,15 +87,5 @@ static func _get_world_state() -> WorldState:
 	if scene_tree == null:
 		return null
 
-	var possible_names: Array[StringName] = [
-		&"World_State",
-		&"World_state",
-		&"WorldStateGlobal"
-	]
-
-	for autoload_name: StringName in possible_names:
-		var node: Node = scene_tree.root.get_node_or_null(String(autoload_name))
-		if node is WorldState:
-			return node as WorldState
-
-	return null
+	var node: Node = scene_tree.root.get_node_or_null("World_State")
+	return node as WorldState
