@@ -13,6 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://cg2pldpkmepri" path="res://Scenes/Enemys/thug_mid.tscn" id="10_x1toi"]
 [ext_resource type="PackedScene" uid="uid://8rio60mfip36" path="res://Scenes/Menus_UI/training_prompt_ui.tscn" id="11_2jqxp"]
 [ext_resource type="Script" uid="uid://cy7pmii3ge7gg" path="res://Scripts/Game-Wide/Encounter/practice_encounter.gd" id="12_2jqxp"]
+[ext_resource type="Resource" uid="uid://djcn7ojnt81us" path="res://Resources/NPCprofiles/Enemy Profiles/Thug_BalancedPressure.tres" id="13_8t7ty"]
+[ext_resource type="Script" uid="uid://dcj8qdtflphr2" path="res://Scripts/Game-Wide/Encounter/EnemyAttackCoordinator.gd" id="14_5no8q"]
+[ext_resource type="Script" uid="uid://u1vbpjds8j1r" path="res://Scripts/Game-Wide/Encounter/EnemyRoleCoordinator.gd" id="15_8t7ty"]
+[ext_resource type="Resource" uid="uid://cojn7natutpv2" path="res://Resources/EncounterProfiles/TrainingDuel.tres" id="16_ki47q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -80,7 +84,7 @@ shadow_enabled = true
 environment = SubResource("Environment_eb7qw")
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=632277123]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.502172, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000975132, -0.5021727, -0.013125896)
 material_override = SubResource("StandardMaterial3D_eb7qw")
 use_collision = true
 size = Vector3(20, 1, 20)
@@ -138,22 +142,51 @@ max_sessions = 2
 forced_exit_timeline = &"training_keep_going"
 prompt_ui_scene = ExtResource("11_2jqxp")
 
+[node name="ThugMid2" parent="." unique_id=836138803 node_paths=PackedStringArray("combat_target") instance=ExtResource("10_x1toi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6933415, -0.00045457098, -2.1965878)
+collision_mask = 19
+combat_target = NodePath("../Player")
+
+[node name="Combatant" parent="ThugMid2" index="2" unique_id=740841139]
+body_path = NodePath("../../ThugMid2")
+
+[node name="AI_brain" parent="ThugMid2" index="3" unique_id=1349601638 node_paths=PackedStringArray("target")]
+target = NodePath("../../Player")
+profile = ExtResource("13_8t7ty")
+
 [node name="ThugMid" parent="." unique_id=1499457437 node_paths=PackedStringArray("combat_target") instance=ExtResource("10_x1toi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.421243, -0.000454571, -2.2206)
+collision_mask = 19
 combat_target = NodePath("../Player")
 
 [node name="AI_brain" parent="ThugMid" index="3" unique_id=1349601638 node_paths=PackedStringArray("target")]
 target = NodePath("../../Player")
+profile = ExtResource("13_8t7ty")
 think_interval = 0.1
 true_light_attack_range = 1.0
 
-[node name="PracticeEncounter" type="Node" parent="." unique_id=1401889867 node_paths=PackedStringArray("player_combatant", "enemy_combatants")]
+[node name="PracticeEncounter" type="Node" parent="." unique_id=1401889867 node_paths=PackedStringArray("player_combatant", "enemy_combatants", "attack_coordinator", "role_coordinator")]
 script = ExtResource("12_2jqxp")
 encounter_id = &"P_en"
 player_combatant = NodePath("../Player/Combatant")
-enemy_combatants = [NodePath("../ThugMid/Combatant")]
-win_condition = 1
+enemy_combatants = [NodePath("../ThugMid/Combatant"), NodePath("../ThugMid2/Combatant")]
+combat_profile = ExtResource("16_ki47q")
+attack_coordinator = NodePath("EnemyAttackCoordinator")
+role_coordinator = NodePath("EnemyRoleCoordinator")
+win_condition = 2
 game_over_scene = "uid://b4xhlahiorjsr"
 
+[node name="EnemyAttackCoordinator" type="Node" parent="PracticeEncounter" unique_id=1654924936 node_paths=PackedStringArray("role_coordinator")]
+script = ExtResource("14_5no8q")
+profile = ExtResource("16_ki47q")
+role_coordinator = NodePath("../EnemyRoleCoordinator")
+debug_permissions = true
+
+[node name="EnemyRoleCoordinator" type="Node" parent="PracticeEncounter" unique_id=381322621]
+script = ExtResource("15_8t7ty")
+profile = ExtResource("16_ki47q")
+debug_roles = true
+
 [editable path="Player"]
+[editable path="ThugMid2"]
 [editable path="ThugMid"]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="NPCDialogueRule" format=3 uid="uid://b0nav4xdm6wjw"]
+
+[ext_resource type="Script" uid="uid://duwldrtqsruw" path="res://Scripts/NPCS/NPCDialogueRule.gd" id="1_hj2tp"]
+
+[resource]
+script = ExtResource("1_hj2tp")
+designer_note = "FisherMan talk options test still"
+timeline_pool = Array[StringName]([&"Hello", &"Fisherman", &"Tester"])
+selection_mode = 3
+metadata/_custom_type_script = "uid://duwldrtqsruw"

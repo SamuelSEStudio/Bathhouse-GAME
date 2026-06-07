@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ThugAIProfile" format=3 uid="uid://dxyj62vnp284l"]
+
+[ext_resource type="Script" uid="uid://ultjh46vvnw5" path="res://Scripts/Enemys/EnemyScripts/Thug_mid/ThugAI_profile.gd" id="1_5bytm"]
+
+[resource]
+script = ExtResource("1_5bytm")
+too_close_range = 1.3
+true_light_attack_range = 1.1
+close_pressure_range = 1.8
+hover_range_min = 2.2
+hover_range_max = 3.4
+far_range = 4.8
+can_use_heavy_attack = false
+retreat_chance_too_close = 0.65
+backstep_chance_too_close = 0.55
+hover_hold_chance = 0.7
+hover_creep_chance = 0.25
+close_creep_chance = 0.25
+approaching_heavy_chance = 0.0
+backstep_chance_after_light = 0.55
+backstep_chance_after_heavy = 0.0
+guard_chance_close = 0.22
+shared_action_cooldown = 0.8
+light_attack_cooldown = 1.6
+heavy_attack_cooldown = 4.0
+backstep_cooldown = 1.0
+backstep_duration = 0.55
+guard_min_duration = 0.5
+guard_max_duration = 1.1
+metadata/_custom_type_script = "uid://ultjh46vvnw5"

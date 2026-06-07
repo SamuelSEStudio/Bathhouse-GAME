@@ -25,7 +25,7 @@
 [ext_resource type="Script" uid="uid://chuwnw135pxh4" path="res://Scripts/Enemys/Enemy-StateMachnines/THUG-m/Movement/e_combat_dodge.gd" id="16_oc0ct"]
 [ext_resource type="Script" uid="uid://bn6knwsdrvdt2" path="res://Scenes/Enemys/e_combat_knocked_out.gd" id="18_17vtg"]
 [ext_resource type="Resource" uid="uid://bairmscpduu3k" path="res://Resources/Character-MoveSet_Profiles/Thug-mid.tres" id="20_bkulq"]
-[ext_resource type="Resource" uid="uid://djcn7ojnt81us" path="res://Resources/NPCprofiles/Enemy Profiles/Thug_BalancedPressure.tres" id="26_xf1au"]
+[ext_resource type="Resource" uid="uid://dxyj62vnp284l" path="res://Resources/NPCprofiles/Enemy Profiles/Thug_Cowardly.tres" id="26_xf1au"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1mvln"]
 resource_name = "Beta_Joints_MAT1"

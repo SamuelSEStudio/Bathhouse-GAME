@@ -87,6 +87,17 @@ class_name ThugMidAIBrain
 @export_range(0.0, 1.0, 0.01) var backstep_chance_after_string: float = 0.25
 @export var post_string_backstep_delay: float = 0.65
 
+# =============================================================================
+# Encounter Coordination
+# =============================================================================
+
+@export_group("Encounter Coordination")
+@export var use_attack_permission: bool = true
+@export var light_attack_lock_duration: float = 0.75
+@export var heavy_attack_lock_duration: float = 1.05
+@export var dodge_lock_duration: float = 0.8
+@export var pressure_string_extra_lock_duration: float = 0.65
+
 
 # =============================================================================
 # Debug
@@ -432,7 +443,9 @@ func _try_light_attack(abs_depth: float, dir_away_from_target: float) -> bool:
 
 	character.set_guarding(false)
 	character.set_desired_lane_dir(0.0)
-	character.request_attack(&"fast_poke")
+
+	if not _request_permitted_attack(&"fast_poke", light_attack_lock_duration):
+		return false
 
 	_time_since_any_action = 0.0
 	_time_since_light_attack = 0.0
@@ -474,7 +487,9 @@ func _try_approaching_heavy(abs_depth: float, dir_away_from_target: float) -> bo
 
 	character.set_guarding(false)
 	character.set_desired_lane_dir(0.0)
-	character.request_attack(&"heavy_poke")
+
+	if not _request_permitted_attack(&"heavy_poke", heavy_attack_lock_duration):
+		return false
 
 	_time_since_any_action = 0.0
 	_time_since_heavy_attack = 0.0
@@ -488,7 +503,52 @@ func _try_approaching_heavy(abs_depth: float, dir_away_from_target: float) -> bo
 	_debug_event(&"APPROACHING_HEAVY")
 	return true
 
+func _request_permitted_attack(role: StringName, lock_duration: float = -1.0) -> bool:
+	if character == null:
+		return false
 
+	if use_attack_permission:
+		if not character.request_attack_permission(role, lock_duration):
+			_debug_event(&"ATTACK_PERMISSION_DENIED")
+			return false
+
+	character.request_attack(role)
+	return true
+
+
+func _request_pressure_string_permission(roles: Array[StringName]) -> bool:
+	if character == null:
+		return false
+
+	if not use_attack_permission:
+		return true
+
+	var lock_duration: float = _get_pressure_string_lock_duration(roles)
+
+	if not character.request_attack_permission(&"pressure_string", lock_duration):
+		_debug_event(&"PRESSURE_STRING_PERMISSION_DENIED")
+		return false
+
+	return true
+
+
+func _get_pressure_string_lock_duration(roles: Array[StringName]) -> float:
+	var step_count: int = maxi(roles.size(), 1)
+	return pressure_string_step_delay * float(step_count) + pressure_string_extra_lock_duration
+
+
+func _get_attack_lock_duration(role: StringName) -> float:
+	match role:
+		&"fast_poke":
+			return light_attack_lock_duration
+
+		&"heavy_poke":
+			return heavy_attack_lock_duration
+
+		&"dodge":
+			return dodge_lock_duration
+
+	return -1.0
 # =============================================================================
 # Pressure Strings
 # =============================================================================
@@ -543,6 +603,10 @@ func _choose_pressure_string_roles() -> Array[StringName]:
 
 
 func _start_pressure_string(roles: Array[StringName], dir_away_from_target: float) -> void:
+	if not _request_pressure_string_permission(roles):
+		_clear_pressure_string()
+		return
+
 	_pressure_string_active = true
 	_pressure_string_roles = roles.duplicate()
 	_pressure_string_index = 0
@@ -551,7 +615,6 @@ func _start_pressure_string(roles: Array[StringName], dir_away_from_target: floa
 
 	_debug_event(&"PRESSURE_STRING_START")
 	_request_next_pressure_string_step()
-
 
 func _try_continue_pressure_string(abs_depth: float) -> bool:
 	if not _pressure_string_active:
@@ -716,7 +779,9 @@ func _try_close_dodge() -> bool:
 
 	character.set_guarding(false)
 	character.set_desired_lane_dir(0.0)
-	character.request_attack(&"dodge")
+
+	if not _request_permitted_attack(&"dodge", dodge_lock_duration):
+		return false
 
 	_time_since_any_action = 0.0
 	_time_since_dodge = 0.0

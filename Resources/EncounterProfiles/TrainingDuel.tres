@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EncounterCombatProfile" format=3 uid="uid://cojn7natutpv2"]
+
+[ext_resource type="Script" uid="uid://327llcfwpr6l" path="res://Scripts/Game-Wide/Encounter/EncounterCombatProfile.gd" id="1_u1b1u"]
+
+[resource]
+script = ExtResource("1_u1b1u")
+debug_encounter_combat = true
+metadata/_custom_type_script = "uid://327llcfwpr6l"
