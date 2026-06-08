@@ -285,7 +285,8 @@ func _think(_delta: float) -> void:
 	var abs_depth: float = absf(depth_distance)
 	var dir_toward_target: float = _get_dir_toward_target(depth_distance)
 	var dir_away_from_target: float = -dir_toward_target
-
+	var enemy_role: EnemyRoleCoordinator.EnemyRole = character.get_enemy_role()
+	
 	if _try_continue_backstep():
 		return
 
@@ -297,6 +298,18 @@ func _think(_delta: float) -> void:
 
 	if _try_continue_guard():
 		return
+	
+	if enemy_role == EnemyRoleCoordinator.EnemyRole.HOLD_OFF:
+		_handle_hold_off_role(abs_depth, dir_toward_target, dir_away_from_target)
+		return
+
+	if enemy_role == EnemyRoleCoordinator.EnemyRole.RECOVERING:
+		_handle_recovering_role(abs_depth, dir_toward_target, dir_away_from_target)
+		return
+
+	if enemy_role == EnemyRoleCoordinator.EnemyRole.PRESSURE:
+		if _handle_pressure_role_spacing(abs_depth, dir_toward_target, dir_away_from_target):
+			return
 
 	if _try_start_guard(abs_depth):
 		return
@@ -423,6 +436,108 @@ func _handle_far(dir_toward_target: float) -> void:
 	character.set_desired_lane_dir(dir_toward_target)
 	_debug_state(&"FAR_APPROACH")
 
+# =============================================================================
+# Encounter Role Behaviour
+# =============================================================================
+
+func _handle_pressure_role_spacing(
+	abs_depth: float,
+	dir_toward_target: float,
+	dir_away_from_target: float
+) -> bool:
+	var spacing: Vector2 = character.get_role_spacing(
+		EnemyRoleCoordinator.EnemyRole.PRESSURE
+	)
+
+	if spacing == Vector2.ZERO:
+		return false
+
+	var min_range: float = spacing.x
+	var max_range: float = spacing.y
+
+	character.set_guarding(false)
+
+	if abs_depth > max_range:
+		character.set_desired_lane_dir(dir_toward_target)
+		_debug_state(&"ROLE_PRESSURE_APPROACH")
+		return true
+
+	if abs_depth < min_range:
+		character.set_desired_lane_dir(dir_away_from_target)
+		_debug_state(&"ROLE_PRESSURE_MAKE_SPACE")
+		return true
+
+	# In the pressure band, let the normal AI continue.
+	# This enemy is the main candidate to request attack permission.
+	return false
+
+
+func _handle_hold_off_role(
+	abs_depth: float,
+	dir_toward_target: float,
+	dir_away_from_target: float
+) -> void:
+	var spacing: Vector2 = character.get_role_spacing(
+		EnemyRoleCoordinator.EnemyRole.HOLD_OFF
+	)
+
+	if spacing == Vector2.ZERO:
+		character.set_guarding(false)
+		character.set_desired_lane_dir(0.0)
+		_debug_state(&"ROLE_HOLD_OFF")
+		return
+
+	var min_range: float = spacing.x
+	var max_range: float = spacing.y
+
+	character.set_guarding(false)
+
+	if abs_depth < min_range:
+		character.set_desired_lane_dir(dir_away_from_target)
+		_debug_state(&"ROLE_HOLD_OFF_RETREAT")
+		return
+
+	if abs_depth > max_range:
+		character.set_desired_lane_dir(dir_toward_target)
+		_debug_state(&"ROLE_HOLD_OFF_CLOSER")
+		return
+
+	character.set_desired_lane_dir(0.0)
+	_debug_state(&"ROLE_HOLD_OFF_HOLD")
+
+
+func _handle_recovering_role(
+	abs_depth: float,
+	dir_toward_target: float,
+	dir_away_from_target: float
+) -> void:
+	var spacing: Vector2 = character.get_role_spacing(
+		EnemyRoleCoordinator.EnemyRole.RECOVERING
+	)
+
+	if spacing == Vector2.ZERO:
+		character.set_guarding(false)
+		character.set_desired_lane_dir(0.0)
+		_debug_state(&"ROLE_RECOVERING")
+		return
+
+	var min_range: float = spacing.x
+	var max_range: float = spacing.y
+
+	character.set_guarding(false)
+
+	if abs_depth < min_range:
+		character.set_desired_lane_dir(dir_away_from_target)
+		_debug_state(&"ROLE_RECOVERING_RETREAT")
+		return
+
+	if abs_depth > max_range:
+		character.set_desired_lane_dir(dir_toward_target)
+		_debug_state(&"ROLE_RECOVERING_CLOSER")
+		return
+
+	character.set_desired_lane_dir(0.0)
+	_debug_state(&"ROLE_RECOVERING_HOLD")
 
 # =============================================================================
 # Single Attacks

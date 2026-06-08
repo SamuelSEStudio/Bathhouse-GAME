@@ -15,8 +15,10 @@
 [ext_resource type="Script" uid="uid://cy7pmii3ge7gg" path="res://Scripts/Game-Wide/Encounter/practice_encounter.gd" id="12_2jqxp"]
 [ext_resource type="Resource" uid="uid://djcn7ojnt81us" path="res://Resources/NPCprofiles/Enemy Profiles/Thug_BalancedPressure.tres" id="13_8t7ty"]
 [ext_resource type="Script" uid="uid://dcj8qdtflphr2" path="res://Scripts/Game-Wide/Encounter/EnemyAttackCoordinator.gd" id="14_5no8q"]
+[ext_resource type="Script" uid="uid://cgck68fqdcuyo" path="res://Scripts/Game-Wide/Encounter/EncounterCombatDirector.gd" id="15_2u2d2"]
 [ext_resource type="Script" uid="uid://u1vbpjds8j1r" path="res://Scripts/Game-Wide/Encounter/EnemyRoleCoordinator.gd" id="15_8t7ty"]
-[ext_resource type="Resource" uid="uid://cojn7natutpv2" path="res://Resources/EncounterProfiles/TrainingDuel.tres" id="16_ki47q"]
+[ext_resource type="Script" uid="uid://f2wa5lqxhahx" path="res://Scripts/Game-Wide/Encounter/SoftLockCoordinator.gd" id="18_wb6uo"]
+[ext_resource type="Script" uid="uid://cefuxykoj4kxc" path="res://Scripts/Game-Wide/Encounter/EncounterCameraCoordinator.gd" id="19_xobb8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -165,27 +167,29 @@ profile = ExtResource("13_8t7ty")
 think_interval = 0.1
 true_light_attack_range = 1.0
 
-[node name="PracticeEncounter" type="Node" parent="." unique_id=1401889867 node_paths=PackedStringArray("player_combatant", "enemy_combatants", "attack_coordinator", "role_coordinator")]
+[node name="PracticeEncounter" type="Node" parent="." unique_id=1401889867 node_paths=PackedStringArray("player_combatant", "enemy_combatants", "combat_director")]
 script = ExtResource("12_2jqxp")
 encounter_id = &"P_en"
 player_combatant = NodePath("../Player/Combatant")
 enemy_combatants = [NodePath("../ThugMid/Combatant"), NodePath("../ThugMid2/Combatant")]
-combat_profile = ExtResource("16_ki47q")
-attack_coordinator = NodePath("EnemyAttackCoordinator")
-role_coordinator = NodePath("EnemyRoleCoordinator")
+combat_director = NodePath("EncounterCombatDirector")
 win_condition = 2
 game_over_scene = "uid://b4xhlahiorjsr"
 
-[node name="EnemyAttackCoordinator" type="Node" parent="PracticeEncounter" unique_id=1654924936 node_paths=PackedStringArray("role_coordinator")]
-script = ExtResource("14_5no8q")
-profile = ExtResource("16_ki47q")
-role_coordinator = NodePath("../EnemyRoleCoordinator")
-debug_permissions = true
+[node name="EncounterCombatDirector" type="Node" parent="PracticeEncounter" unique_id=870319157]
+script = ExtResource("15_2u2d2")
 
-[node name="EnemyRoleCoordinator" type="Node" parent="PracticeEncounter" unique_id=381322621]
+[node name="EnemyAttackCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=1654924936]
+script = ExtResource("14_5no8q")
+
+[node name="EnemyRoleCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=381322621]
 script = ExtResource("15_8t7ty")
-profile = ExtResource("16_ki47q")
-debug_roles = true
+
+[node name="SoftLockCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=299399355]
+script = ExtResource("18_wb6uo")
+
+[node name="EncounterCameraCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=343265690]
+script = ExtResource("19_xobb8")
 
 [editable path="Player"]
 [editable path="ThugMid2"]

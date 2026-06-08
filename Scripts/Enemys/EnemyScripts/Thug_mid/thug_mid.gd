@@ -23,11 +23,7 @@ enum MovementMode {
 @export var invert_facing: bool = true
 @export var lane_axis: Vector3 = Vector3.FORWARD
 
-@export_group("Encounter Coordination")
-@export var allow_coordinator_autofind_fallback: bool = true
-var attack_coordinator: EnemyAttackCoordinator
-var role_coordinator: EnemyRoleCoordinator
-@export var auto_find_coordinators: bool = true
+var encounter_combat_director: EncounterCombatDirector
 
 var desired_lane_dir: float = 0.0
 var pending_attack_role: StringName = &""
@@ -42,7 +38,6 @@ var wants_guard: bool = false
 
 func _ready() -> void:
 	add_to_group("enemy_attackers")
-	_auto_find_coordinators_if_needed()
 	state_machine.init(self)
 
 
@@ -54,19 +49,12 @@ func _process(delta: float) -> void:
 	state_machine.process_frame(delta)
 
 
-func _auto_find_coordinators_if_needed() -> void:
-	if not auto_find_coordinators:
-		return
+func bind_encounter_combat_director(new_director: EncounterCombatDirector) -> void:
+	encounter_combat_director = new_director
 
-	if attack_coordinator == null:
-		var attack_nodes: Array[Node] = get_tree().get_nodes_in_group("enemy_attack_coordinators")
-		if not attack_nodes.is_empty():
-			attack_coordinator = attack_nodes[0] as EnemyAttackCoordinator
 
-	if role_coordinator == null:
-		var role_nodes: Array[Node] = get_tree().get_nodes_in_group("enemy_role_coordinators")
-		if not role_nodes.is_empty():
-			role_coordinator = role_nodes[0] as EnemyRoleCoordinator
+func clear_encounter_combat_director() -> void:
+	encounter_combat_director = null
 
 
 func set_desired_lane_dir(dir: float) -> void:
@@ -92,31 +80,38 @@ func update_facing_to_combat_target() -> void:
 
 
 func request_attack_permission(role: StringName, lock_duration: float = -1.0) -> bool:
-	if attack_coordinator == null:
+	if encounter_combat_director == null:
 		return true
 
-	return attack_coordinator.try_request_attack(self, role, lock_duration)
+	return encounter_combat_director.request_attack_permission(self, role, lock_duration)
 
 
 func release_attack_permission(mark_recovering: bool = true) -> void:
-	if attack_coordinator == null:
+	if encounter_combat_director == null:
 		return
 
-	attack_coordinator.release_attack_permission(self, mark_recovering)
+	encounter_combat_director.release_attack_permission(self, mark_recovering)
 
 
 func has_attack_permission() -> bool:
-	if attack_coordinator == null:
+	if encounter_combat_director == null:
 		return true
 
-	return attack_coordinator.has_attack_permission(self)
+	return encounter_combat_director.has_attack_permission(self)
 
 
 func get_enemy_role() -> EnemyRoleCoordinator.EnemyRole:
-	if role_coordinator == null:
+	if encounter_combat_director == null:
 		return EnemyRoleCoordinator.EnemyRole.UNASSIGNED
 
-	return role_coordinator.get_role(self)
+	return encounter_combat_director.get_enemy_role(self)
+
+
+func get_role_spacing(role: EnemyRoleCoordinator.EnemyRole) -> Vector2:
+	if encounter_combat_director == null:
+		return Vector2.ZERO
+
+	return encounter_combat_director.get_role_spacing(role)
 
 
 func request_attack(role: StringName) -> void:

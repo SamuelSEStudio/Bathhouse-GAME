@@ -31,9 +31,7 @@ enum EncounterOutcome {
 @export var enemy_combatants: Array[Combatant] = []
 
 @export_group("Encounter Combat Direction")
-@export var combat_profile: EncounterCombatProfile
-@export var attack_coordinator: EnemyAttackCoordinator
-@export var role_coordinator: EnemyRoleCoordinator
+@export var combat_director: EncounterCombatDirector
 
 @export_group("Win / Loss")
 @export var win_condition: WinCondition = WinCondition.NONE
@@ -69,7 +67,7 @@ var defeated_enemies: Array[Combatant] = []
 
 
 func _ready() -> void:
-	_auto_find_coordinators_if_needed()
+	_auto_find_combat_director_if_needed()
 	_connect_combatants()
 
 	if auto_start:
@@ -98,47 +96,25 @@ func end_encounter() -> void:
 	_stop_encounter_combat_direction()
 
 
-func _auto_find_coordinators_if_needed() -> void:
-	if attack_coordinator == null:
-		attack_coordinator = get_node_or_null("EnemyAttackCoordinator") as EnemyAttackCoordinator
+func _auto_find_combat_director_if_needed() -> void:
+	if combat_director != null:
+		return
 
-	if role_coordinator == null:
-		role_coordinator = get_node_or_null("EnemyRoleCoordinator") as EnemyRoleCoordinator
+	combat_director = get_node_or_null("EncounterCombatDirector") as EncounterCombatDirector
 
 
 func _start_encounter_combat_direction() -> void:
-	if role_coordinator != null:
-		role_coordinator.configure(combat_profile)
-		role_coordinator.register_enemy_combatants(enemy_combatants)
-		role_coordinator.start_coordinating()
+	if combat_director == null:
+		return
 
-	if attack_coordinator != null:
-		attack_coordinator.configure(combat_profile, role_coordinator)
-		attack_coordinator.register_enemy_combatants(enemy_combatants)
-		attack_coordinator.start_coordinating()
-
-	_assign_coordinators_to_enemy_bodies()
+	combat_director.start_directing(player_combatant, enemy_combatants)
 
 
 func _stop_encounter_combat_direction() -> void:
-	if attack_coordinator != null:
-		attack_coordinator.stop_coordinating()
+	if combat_director == null:
+		return
 
-	if role_coordinator != null:
-		role_coordinator.stop_coordinating()
-
-
-func _assign_coordinators_to_enemy_bodies() -> void:
-	for enemy: Combatant in enemy_combatants:
-		if not is_instance_valid(enemy):
-			continue
-
-		var enemy_body: ThugMid = enemy.body as ThugMid
-		if enemy_body == null:
-			continue
-
-		enemy_body.attack_coordinator = attack_coordinator
-		enemy_body.role_coordinator = role_coordinator
+	combat_director.stop_directing()
 
 
 func _connect_combatants() -> void:

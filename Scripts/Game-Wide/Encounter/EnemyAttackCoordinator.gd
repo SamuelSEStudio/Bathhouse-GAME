@@ -5,24 +5,19 @@ signal attack_permission_granted(enemy: Node, role: StringName)
 signal attack_permission_denied(enemy: Node, role: StringName)
 signal attack_permission_released(enemy: Node)
 
-@export var profile: EncounterCombatProfile
-@export var role_coordinator: EnemyRoleCoordinator
+var max_committed_attackers: int = 1
+var default_attack_lock_duration: float = 1.2
+var first_attack_delay: float = 0.75
+var minimum_gap_between_attack_turns: float = 0.65
+var maximum_gap_between_attack_turns: float = 1.1
 
-@export var max_committed_attackers: int = 1
-@export var default_attack_lock_duration: float = 1.2
-@export var first_attack_delay: float = 0.75
-@export var minimum_gap_between_attack_turns: float = 0.65
-@export var maximum_gap_between_attack_turns: float = 1.1
-@export var debug_permissions: bool = false
+var _role_coordinator: EnemyRoleCoordinator
+var _debug_enabled: bool = false
 
 var _registered_enemies: Array[Node] = []
 var _active_attackers: Dictionary = {}
 var _is_running: bool = false
 var _attack_gap_timer: float = 0.0
-
-
-func _ready() -> void:
-	add_to_group("enemy_attack_coordinators")
 
 
 func _physics_process(delta: float) -> void:
@@ -33,9 +28,13 @@ func _physics_process(delta: float) -> void:
 	_update_active_attackers(delta)
 
 
-func configure(new_profile: EncounterCombatProfile, new_role_coordinator: EnemyRoleCoordinator) -> void:
-	profile = new_profile
-	role_coordinator = new_role_coordinator
+func configure_from_profile(
+	profile: EncounterCombatProfile,
+	new_role_coordinator: EnemyRoleCoordinator,
+	debug_enabled: bool
+) -> void:
+	_role_coordinator = new_role_coordinator
+	_debug_enabled = debug_enabled
 
 	if profile == null:
 		return
@@ -45,7 +44,6 @@ func configure(new_profile: EncounterCombatProfile, new_role_coordinator: EnemyR
 	first_attack_delay = profile.first_attack_delay
 	minimum_gap_between_attack_turns = profile.minimum_gap_between_attack_turns
 	maximum_gap_between_attack_turns = profile.maximum_gap_between_attack_turns
-	debug_permissions = profile.debug_encounter_combat
 
 
 func start_coordinating() -> void:
@@ -94,8 +92,11 @@ func unregister_enemy(enemy: Node) -> void:
 	if enemy == null:
 		return
 
+	release_attack_permission(enemy, false)
 	_registered_enemies.erase(enemy)
-	release_attack_permission(enemy)
+
+	if _role_coordinator != null:
+		_role_coordinator.unregister_enemy(enemy)
 
 	_debug("Unregistered enemy: %s" % enemy.name)
 
@@ -115,9 +116,9 @@ func try_request_attack(enemy: Node, role: StringName, lock_duration: float = -1
 	if _active_attackers.has(enemy):
 		return true
 
-	if role_coordinator != null:
-		if not role_coordinator.can_become_attacker(enemy):
-			_debug("Denied because enemy is recovering: %s" % enemy.name)
+	if _role_coordinator != null:
+		if not _role_coordinator.can_become_attacker(enemy):
+			_debug("Denied because role cannot attack: %s role: %s" % [enemy.name, role])
 			attack_permission_denied.emit(enemy, role)
 			return false
 
@@ -137,8 +138,8 @@ func try_request_attack(enemy: Node, role: StringName, lock_duration: float = -1
 
 	_active_attackers[enemy] = duration
 
-	if role_coordinator != null:
-		role_coordinator.mark_active_attacker(enemy)
+	if _role_coordinator != null:
+		_role_coordinator.mark_active_attacker(enemy)
 
 	_debug("Granted: %s role: %s duration: %.2f" % [enemy.name, role, duration])
 	attack_permission_granted.emit(enemy, role)
@@ -154,10 +155,12 @@ func release_attack_permission(enemy: Node, mark_recovering: bool = true) -> voi
 
 	_active_attackers.erase(enemy)
 
-	if mark_recovering and role_coordinator != null:
-		role_coordinator.mark_recovering(enemy)
-	elif role_coordinator != null:
-		role_coordinator.set_role(enemy, EnemyRoleCoordinator.EnemyRole.UNASSIGNED)
+	if _role_coordinator != null:
+		if mark_recovering:
+			_role_coordinator.mark_recovering(enemy)
+		else:
+			_role_coordinator.set_role(enemy, EnemyRoleCoordinator.EnemyRole.UNASSIGNED)
+			_role_coordinator.rebalance_roles()
 
 	_start_attack_gap()
 
@@ -166,12 +169,24 @@ func release_attack_permission(enemy: Node, mark_recovering: bool = true) -> voi
 
 
 func clear_all_permissions() -> void:
-	var enemies_to_release: Array[Node] = _active_attackers.keys()
+	var enemies_to_release: Array[Node] = []
 
-	for enemy: Node in enemies_to_release:
-		release_attack_permission(enemy, false)
+	for key: Variant in _active_attackers.keys():
+		var enemy: Node = key as Node
+		if enemy != null:
+			enemies_to_release.append(enemy)
 
 	_active_attackers.clear()
+	_attack_gap_timer = 0.0
+
+	for enemy: Node in enemies_to_release:
+		if _role_coordinator != null and is_instance_valid(enemy):
+			_role_coordinator.set_role(enemy, EnemyRoleCoordinator.EnemyRole.UNASSIGNED)
+
+		attack_permission_released.emit(enemy)
+
+	if _role_coordinator != null:
+		_role_coordinator.rebalance_roles()
 
 
 func has_attack_permission(enemy: Node) -> bool:
@@ -191,9 +206,12 @@ func _update_attack_gap(delta: float) -> void:
 func _update_active_attackers(delta: float) -> void:
 	var enemies_to_release: Array[Node] = []
 
-	for enemy: Node in _active_attackers.keys():
-		if not is_instance_valid(enemy):
-			enemies_to_release.append(enemy)
+	for key: Variant in _active_attackers.keys():
+		var enemy: Node = key as Node
+
+		if enemy == null or not is_instance_valid(enemy):
+			if enemy != null:
+				enemies_to_release.append(enemy)
 			continue
 
 		var time_left: float = float(_active_attackers[enemy]) - delta
@@ -219,12 +237,11 @@ func _start_attack_gap() -> void:
 
 
 func _on_enemy_died(enemy: Node) -> void:
-	release_attack_permission(enemy, false)
 	unregister_enemy(enemy)
 
 
 func _debug(message: String) -> void:
-	if not debug_permissions:
+	if not _debug_enabled:
 		return
 
 	print("EnemyAttackCoordinator: ", message)
