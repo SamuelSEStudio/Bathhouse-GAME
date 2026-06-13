@@ -33,6 +33,15 @@ func end_npc_dialogue() -> void:
 	active_dialogue_npc = null
 	active_dialogue_timeline = &""
 
+func get_active_dialogue_npc() -> NPCBase:
+	if active_dialogue_npc == null:
+		return null
+
+	if is_instance_valid(active_dialogue_npc) == false:
+		active_dialogue_npc = null
+		return null
+
+	return active_dialogue_npc
 
 func is_in_practice() -> bool:
 	return mode == Mode.PRACTICE

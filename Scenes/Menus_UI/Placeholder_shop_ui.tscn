@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://chp2ht1cec5l5"]
+
+[ext_resource type="Script" uid="uid://c7j6xxs2v747g" path="res://Scripts/Menu_UI/placeholder_shop_ui.gd" id="1_6cnqq"]
+
+[node name="PlaceholderShopUi" type="CanvasLayer" unique_id=174143381]
+script = ExtResource("1_6cnqq")
+
+[node name="Container" type="CenterContainer" parent="." unique_id=1518071216]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Container" unique_id=1748746416]
+modulate = Color(0.5405204, 0.29466683, 0.50474817, 1)
+layout_mode = 2
+size_flags_stretch_ratio = 3.33
+
+[node name="MargnContainer" type="MarginContainer" parent="Container/Panel" unique_id=1103012183]
+layout_mode = 0
+offset_left = -88.0
+offset_top = -122.0
+offset_right = 180.0
+offset_bottom = 232.0
+
+[node name="VboxContainer" type="VBoxContainer" parent="Container/Panel/MargnContainer" unique_id=1246001559]
+layout_mode = 2
+
+[node name="Title Label" type="Label" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=363063007]
+layout_mode = 2
+text = "Title"
+
+[node name="Shop Id Label" type="Label" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=1784781947]
+layout_mode = 2
+text = "SHOP ID:"
+
+[node name="BuyButton" type="Button" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=687701540]
+layout_mode = 2
+text = "BUY"
+
+[node name="SellButton" type="Button" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=237052064]
+layout_mode = 2
+text = "SELL"
+
+[node name="ExitButton" type="Button" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=750722165]
+layout_mode = 2
+text = "LEAVE"

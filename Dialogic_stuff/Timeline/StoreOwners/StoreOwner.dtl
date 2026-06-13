@@ -3,3 +3,9 @@ do GameManager.change_selfie_cam("Player")
 Player: Busy day?
 do GameManager.change_selfie_cam("StorePerson")
 StoreOwner: Had three customers before noon! That’s enough excitement for me.
+StoreOwner: Looking to buy?
+- Buy something? | [=""]
+	Player: lemme shop!
+	do ServiceManager.open_active_npc_service()
+- talk about stars
+	Player: Stars!

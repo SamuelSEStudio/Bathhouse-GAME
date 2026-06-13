@@ -8,6 +8,7 @@ class_name EncounterCombatDirector
 @export_group("Child Modules")
 @export var attack_coordinator: EnemyAttackCoordinator
 @export var role_coordinator: EnemyRoleCoordinator
+@export var engagement_coordinator: EnemyEngagementCoordinator
 @export var soft_lock_coordinator: SoftLockCoordinator
 @export var encounter_camera_coordinator: EncounterCameraCoordinator
 
@@ -25,8 +26,8 @@ func start_directing(
 	new_enemy_combatants: Array[Combatant]
 ) -> void:
 	_player_combatant = new_player_combatant
-
 	_enemy_combatants.clear()
+
 	for enemy_combatant: Combatant in new_enemy_combatants:
 		if is_instance_valid(enemy_combatant):
 			_enemy_combatants.append(enemy_combatant)
@@ -35,20 +36,22 @@ func start_directing(
 	_auto_find_child_modules()
 	_configure_modules()
 	_bind_enemy_bodies()
-
 	_is_running = true
 
 	if role_coordinator != null:
 		role_coordinator.start_coordinating()
 
+	if engagement_coordinator != null:
+		engagement_coordinator.start_coordinating()
+
 	if attack_coordinator != null:
 		attack_coordinator.start_coordinating()
 
-	if soft_lock_coordinator != null:
-		soft_lock_coordinator.start_coordinating()
-
 	if encounter_camera_coordinator != null:
 		encounter_camera_coordinator.start_coordinating()
+
+	if soft_lock_coordinator != null:
+		soft_lock_coordinator.start_coordinating()
 
 	_debug("Started directing encounter combat")
 
@@ -58,26 +61,20 @@ func stop_directing() -> void:
 
 	if attack_coordinator != null:
 		attack_coordinator.stop_coordinating()
-
 	if role_coordinator != null:
 		role_coordinator.stop_coordinating()
-
+	if engagement_coordinator != null:
+		engagement_coordinator.stop_coordinating()
 	if soft_lock_coordinator != null:
 		soft_lock_coordinator.stop_coordinating()
-
 	if encounter_camera_coordinator != null:
 		encounter_camera_coordinator.stop_coordinating()
 
 	_unbind_enemy_bodies()
-
 	_debug("Stopped directing encounter combat")
 
 
-func request_attack_permission(
-	enemy: Node,
-	role: StringName,
-	lock_duration: float = -1.0
-) -> bool:
+func request_attack_permission(enemy: Node, role: StringName, lock_duration: float = -1.0) -> bool:
 	if not _is_running:
 		return false
 
@@ -87,11 +84,9 @@ func request_attack_permission(
 	return attack_coordinator.try_request_attack(enemy, role, lock_duration)
 
 
-func release_attack_permission(enemy: Node, mark_recovering: bool = true) -> void:
-	if attack_coordinator == null:
-		return
-
-	attack_coordinator.release_attack_permission(enemy, mark_recovering)
+func release_attack_permission(enemy: Node, start_recovery: bool = true) -> void:
+	if attack_coordinator != null:
+		attack_coordinator.release_attack_permission(enemy, start_recovery)
 
 
 func has_attack_permission(enemy: Node) -> bool:
@@ -118,39 +113,37 @@ func get_role_spacing(role: EnemyRoleCoordinator.EnemyRole) -> Vector2:
 func _auto_find_child_modules() -> void:
 	if attack_coordinator == null:
 		attack_coordinator = get_node_or_null("EnemyAttackCoordinator") as EnemyAttackCoordinator
-
 	if role_coordinator == null:
 		role_coordinator = get_node_or_null("EnemyRoleCoordinator") as EnemyRoleCoordinator
-
+	if engagement_coordinator == null:
+		engagement_coordinator = get_node_or_null("EnemyEngagementCoordinator") as EnemyEngagementCoordinator
 	if soft_lock_coordinator == null:
 		soft_lock_coordinator = get_node_or_null("SoftLockCoordinator") as SoftLockCoordinator
-
 	if encounter_camera_coordinator == null:
 		encounter_camera_coordinator = get_node_or_null("EncounterCameraCoordinator") as EncounterCameraCoordinator
 
 
 func _apply_profile_debug() -> void:
-	if combat_profile == null:
-		return
-
-	debug_group_combat = combat_profile.debug_encounter_combat
+	if combat_profile != null:
+		debug_group_combat = combat_profile.debug_encounter_combat
 
 
 func _configure_modules() -> void:
 	var player_body: Node3D = _get_body_from_combatant(_player_combatant)
 
 	if role_coordinator != null:
-		role_coordinator.configure_from_profile(
-			combat_profile,
-			player_body,
-			debug_group_combat
-		)
+		role_coordinator.configure_from_profile(combat_profile, player_body, debug_group_combat)
 		role_coordinator.register_enemy_combatants(_enemy_combatants)
+
+	if engagement_coordinator != null:
+		engagement_coordinator.configure_from_profile(combat_profile, player_body, debug_group_combat)
+		engagement_coordinator.register_enemy_combatants(_enemy_combatants)
 
 	if attack_coordinator != null:
 		attack_coordinator.configure_from_profile(
 			combat_profile,
 			role_coordinator,
+			engagement_coordinator,
 			debug_group_combat
 		)
 		attack_coordinator.register_enemy_combatants(_enemy_combatants)
@@ -159,6 +152,7 @@ func _configure_modules() -> void:
 		soft_lock_coordinator.configure_from_profile(
 			combat_profile,
 			player_body,
+			role_coordinator,
 			debug_group_combat
 		)
 		soft_lock_coordinator.register_enemy_combatants(_enemy_combatants)
@@ -167,6 +161,7 @@ func _configure_modules() -> void:
 		encounter_camera_coordinator.configure_from_profile(
 			combat_profile,
 			player_body,
+			soft_lock_coordinator,
 			debug_group_combat
 		)
 		encounter_camera_coordinator.register_enemy_combatants(_enemy_combatants)
@@ -178,10 +173,8 @@ func _bind_enemy_bodies() -> void:
 			continue
 
 		var enemy_body: ThugMid = enemy_combatant.body as ThugMid
-		if enemy_body == null:
-			continue
-
-		enemy_body.bind_encounter_combat_director(self)
+		if enemy_body != null:
+			enemy_body.bind_encounter_combat_director(self)
 
 
 func _unbind_enemy_bodies() -> void:
@@ -190,10 +183,8 @@ func _unbind_enemy_bodies() -> void:
 			continue
 
 		var enemy_body: ThugMid = enemy_combatant.body as ThugMid
-		if enemy_body == null:
-			continue
-
-		enemy_body.clear_encounter_combat_director()
+		if enemy_body != null:
+			enemy_body.clear_encounter_combat_director()
 
 
 func _get_body_from_combatant(combatant: Combatant) -> Node3D:
@@ -204,7 +195,5 @@ func _get_body_from_combatant(combatant: Combatant) -> Node3D:
 
 
 func _debug(message: String) -> void:
-	if not debug_group_combat:
-		return
-
-	print("EncounterCombatDirector: ", message)
+	if debug_group_combat:
+		print("EncounterCombatDirector: ", message)

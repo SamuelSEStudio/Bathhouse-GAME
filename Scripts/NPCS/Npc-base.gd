@@ -353,10 +353,26 @@ func _on_dialogic_timeline_ended() -> void:
 		cinematic_cooldown_timer.start()
 	else:
 		can_cinematic = true
-
+	_try_open_profile_service_after_dialogue()
 	interaction_finished.emit(self)
 
+func _try_open_profile_service_after_dialogue() -> void:
+	if npc_profile == null:
+		return
 
+	if npc_profile.opens_service_after_dialogue == false:
+		return
+
+	if npc_profile.service_type == NPCProfile.ServiceType.NONE:
+		return
+
+	var service_manager: ServiceManagerService = get_tree().root.get_node_or_null("ServiceManager") as ServiceManagerService
+
+	if service_manager == null:
+		push_warning("ServiceManager autoload was not found.")
+		return
+
+	service_manager.open_service_for_profile(npc_profile, self)
 func _on_cinematic_cooldown_timeout() -> void:
 	can_cinematic = true
 

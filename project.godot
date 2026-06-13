@@ -28,6 +28,7 @@ CameraShake_Loader="*res://Autoloads/Combat/CameraShake.gd"
 CombatFx_Loader="*res://Autoloads/Combat/CombatFX.gd"
 TrainingFlow="*res://Autoloads/Combat/training_flow.gd"
 World_State="*res://Autoloads/WorldState/world_state.gd"
+ServiceManager="*uid://dnojo4r6cqqry"
 
 [dialogic]
 

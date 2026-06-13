@@ -17,8 +17,10 @@
 [ext_resource type="Script" uid="uid://dcj8qdtflphr2" path="res://Scripts/Game-Wide/Encounter/EnemyAttackCoordinator.gd" id="14_5no8q"]
 [ext_resource type="Script" uid="uid://cgck68fqdcuyo" path="res://Scripts/Game-Wide/Encounter/EncounterCombatDirector.gd" id="15_2u2d2"]
 [ext_resource type="Script" uid="uid://u1vbpjds8j1r" path="res://Scripts/Game-Wide/Encounter/EnemyRoleCoordinator.gd" id="15_8t7ty"]
+[ext_resource type="Resource" uid="uid://cojn7natutpv2" path="res://Resources/EncounterProfiles/TrainingDuel.tres" id="16_wb6uo"]
 [ext_resource type="Script" uid="uid://f2wa5lqxhahx" path="res://Scripts/Game-Wide/Encounter/SoftLockCoordinator.gd" id="18_wb6uo"]
 [ext_resource type="Script" uid="uid://cefuxykoj4kxc" path="res://Scripts/Game-Wide/Encounter/EncounterCameraCoordinator.gd" id="19_xobb8"]
+[ext_resource type="Script" uid="uid://dceo3vhoxk216" path="res://Scripts/Game-Wide/Encounter/EnemyEngagementCoordinator.gd" id="21_xobb8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvsmj"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -130,9 +132,6 @@ use_internal_cam = false
 combat_target = NodePath("../ThugMid")
 player_combat_cam = NodePath("../Fight_Cam-2D")
 
-[node name="Combatant" parent="Player" index="1" unique_id=1163145363]
-max_health = 10000
-
 [node name="dodge" parent="Player/controllers/state_machine" parent_id_path=PackedInt32Array(1577914003, 181884020) index="24" unique_id=1538018172]
 side_in_dodge_anim = &"animations_extra/Running_scared"
 side_out_dodge_anim = &"anims_again/Inside_leg_L"
@@ -176,8 +175,14 @@ combat_director = NodePath("EncounterCombatDirector")
 win_condition = 2
 game_over_scene = "uid://b4xhlahiorjsr"
 
-[node name="EncounterCombatDirector" type="Node" parent="PracticeEncounter" unique_id=870319157]
+[node name="EncounterCombatDirector" type="Node" parent="PracticeEncounter" unique_id=870319157 node_paths=PackedStringArray("attack_coordinator", "role_coordinator", "soft_lock_coordinator", "encounter_camera_coordinator")]
 script = ExtResource("15_2u2d2")
+combat_profile = ExtResource("16_wb6uo")
+debug_group_combat = true
+attack_coordinator = NodePath("EnemyAttackCoordinator")
+role_coordinator = NodePath("EnemyRoleCoordinator")
+soft_lock_coordinator = NodePath("SoftLockCoordinator")
+encounter_camera_coordinator = NodePath("EncounterCameraCoordinator")
 
 [node name="EnemyAttackCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=1654924936]
 script = ExtResource("14_5no8q")
@@ -188,8 +193,12 @@ script = ExtResource("15_8t7ty")
 [node name="SoftLockCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=299399355]
 script = ExtResource("18_wb6uo")
 
-[node name="EncounterCameraCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=343265690]
+[node name="EncounterCameraCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=343265690 node_paths=PackedStringArray("fight_camera")]
 script = ExtResource("19_xobb8")
+fight_camera = NodePath("../../../Fight_Cam-2D")
+
+[node name="EnemyEngagementCoordinator" type="Node" parent="PracticeEncounter/EncounterCombatDirector" unique_id=579420260]
+script = ExtResource("21_xobb8")
 
 [editable path="Player"]
 [editable path="ThugMid2"]
