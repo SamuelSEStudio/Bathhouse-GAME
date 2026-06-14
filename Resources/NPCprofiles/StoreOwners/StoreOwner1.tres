@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_bls6b")
-display_name = "ShopLeeper Joe"
+display_name = "ShopKeeper Joe"
 role = "Local grocer"
 personality_type = 9
 dialogue_rules = Array[ExtResource("1_5fjbm")]([ExtResource("2_db7oe")])

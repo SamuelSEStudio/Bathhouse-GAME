@@ -15,6 +15,7 @@
 [ext_resource type="Resource" uid="uid://c4rp3cymol1m4" path="res://Resources/NPCprofiles/BathhouseFolk/BH1.tres" id="17_0wmvb"]
 [ext_resource type="Resource" uid="uid://dklwsa2ekaurh" path="res://Resources/NPCprofiles/StoreOwners/StoreOwner1.tres" id="17_ndx01"]
 [ext_resource type="PackedScene" uid="uid://buq7t7xkjvkf4" path="res://Scenes/NPCS/NPC_Visuals/NPCVisual_BH1.tscn" id="18_ndx01"]
+[ext_resource type="Resource" uid="uid://ekvitjajekpr" path="res://Resources/NPCprofiles/StoreOwners/StoreOwner2.tres" id="20_vr11l"]
 [ext_resource type="PackedScene" uid="uid://brtb3jg60mu2x" path="res://Scenes/Prototype-models/cube_7.tscn" id="22_l7d4s"]
 [ext_resource type="PackedScene" uid="uid://jsk4rg7akiov" path="res://Scenes/Prototype-models/fence.tscn" id="23_ay0u0"]
 [ext_resource type="PackedScene" uid="uid://bgcu62p0dxdy3" path="res://Scenes/Prototype-models/fence_3.tscn" id="24_e1ygf"]
@@ -4643,6 +4644,10 @@ npc_profile = ExtResource("17_ndx01")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0783215, 2.3841858e-07, -1.9410689)
 npc_profile = ExtResource("17_0wmvb")
 model_scene = ExtResource("18_ndx01")
+
+[node name="NPC_Generic4" parent="Characters" unique_id=1948784597 instance=ExtResource("30_7ga42")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7572439, -3.642854, -18.300148)
+npc_profile = ExtResource("20_vr11l")
 
 [node name="pathing" type="Node" parent="." unique_id=1388669794]
 

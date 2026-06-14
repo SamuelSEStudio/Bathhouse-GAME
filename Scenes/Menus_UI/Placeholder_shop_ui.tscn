@@ -35,6 +35,9 @@ text = "Title"
 layout_mode = 2
 text = "SHOP ID:"
 
+[node name="ItemListContainer" type="VBoxContainer" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=1663694039]
+layout_mode = 2
+
 [node name="BuyButton" type="Button" parent="Container/Panel/MargnContainer/VboxContainer" unique_id=687701540]
 layout_mode = 2
 text = "BUY"

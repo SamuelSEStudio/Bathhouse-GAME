@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ServiceDefinition" format=3 uid="uid://fueouie8n6oc"]
+
+[ext_resource type="Script" uid="uid://up2ge2kjaog8" path="res://Scripts/Service/ServiceDefinition.gd" id="1_y6ort"]
+[ext_resource type="Resource" uid="uid://blughadvys611" path="res://Resources/Shop/CornerStore_Shop.tres" id="2_lhsh7"]
+[ext_resource type="PackedScene" uid="uid://chp2ht1cec5l5" path="res://Scenes/Menus_UI/Placeholder_shop_ui.tscn" id="2_rl6r4"]
+
+[resource]
+script = ExtResource("1_y6ort")
+service_id = &"corner_store"
+service_type = 1
+display_name = "Joe's Corner Sstore"
+ui_scene = ExtResource("2_rl6r4")
+shop_definition = ExtResource("2_lhsh7")
+metadata/_custom_type_script = "uid://up2ge2kjaog8"

@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="ServiceDefinition" format=3 uid="uid://fueouie8n6oc"]
-
-[ext_resource type="Script" uid="uid://up2ge2kjaog8" path="res://Scripts/extra-code-bits/ServiceDefinition.gd" id="1_q30bb"]
-
-[resource]
-script = ExtResource("1_q30bb")
-service_id = &"Tester"
-service_type = 1
-metadata/_custom_type_script = "uid://up2ge2kjaog8"

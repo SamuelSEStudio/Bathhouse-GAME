@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShopStockEntry" format=3 uid="uid://8kc8rywq6bh3"]
+
+[ext_resource type="Resource" uid="uid://b4v3p3ixpbhow" path="res://Resources/Shop/Items/Cola.tres" id="1_tuuq1"]
+[ext_resource type="Script" uid="uid://dnilx8ahtku0x" path="res://Scripts/Service/ShopStockEntry.gd" id="1_wsbqj"]
+
+[resource]
+script = ExtResource("1_wsbqj")
+item = ExtResource("1_tuuq1")
+metadata/_custom_type_script = "uid://dnilx8ahtku0x"

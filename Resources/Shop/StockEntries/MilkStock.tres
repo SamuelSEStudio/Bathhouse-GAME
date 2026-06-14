@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShopStockEntry" format=3 uid="uid://dooy3yaln6guq"]
+
+[ext_resource type="Resource" uid="uid://clvn8h2a071cv" path="res://Resources/Shop/Items/Milk.tres" id="1_owjhj"]
+[ext_resource type="Script" uid="uid://dnilx8ahtku0x" path="res://Scripts/Service/ShopStockEntry.gd" id="1_ylsog"]
+
+[resource]
+script = ExtResource("1_ylsog")
+item = ExtResource("1_owjhj")
+metadata/_custom_type_script = "uid://dnilx8ahtku0x"

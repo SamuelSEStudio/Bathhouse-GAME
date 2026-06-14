@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ShopDefinition" format=3 uid="uid://blughadvys611"]
+
+[ext_resource type="Script" uid="uid://bk8y7ne63ulmr" path="res://Scripts/Service/ShopDefinition.gd" id="1_uqnji"]
+[ext_resource type="Script" uid="uid://dnilx8ahtku0x" path="res://Scripts/Service/ShopStockEntry.gd" id="2_73hrx"]
+[ext_resource type="Resource" uid="uid://8kc8rywq6bh3" path="res://Resources/Shop/StockEntries/ColaStock.tres" id="3_yt6u5"]
+[ext_resource type="Resource" uid="uid://dooy3yaln6guq" path="res://Resources/Shop/StockEntries/MilkStock.tres" id="4_1nkiu"]
+
+[resource]
+script = ExtResource("1_uqnji")
+shop_id = &"Corner Store"
+display_name = "Joe's General"
+description = "Joe's Corner Store sells general items."
+stock = Array[ExtResource("2_73hrx")]([ExtResource("3_yt6u5"), ExtResource("4_1nkiu")])
+metadata/_custom_type_script = "uid://bk8y7ne63ulmr"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ServiceRegistry" format=3 uid="uid://j44qf5hpcech"]
+
+[ext_resource type="Script" uid="uid://calq2c4asrcko" path="res://Scripts/Service/ServiceRegistry.gd" id="1_7aghq"]
+[ext_resource type="Script" uid="uid://up2ge2kjaog8" path="res://Scripts/Service/ServiceDefinition.gd" id="2_x8xh3"]
+[ext_resource type="Resource" uid="uid://fueouie8n6oc" path="res://Resources/Services/CornerStore_Service.tres" id="3_x8xh3"]
+[ext_resource type="Resource" uid="uid://btlygnhm3qp6o" path="res://Resources/Services/Vending_Service.tres" id="4_hqnt4"]
+
+[resource]
+script = ExtResource("1_7aghq")
+services = Array[ExtResource("2_x8xh3")]([ExtResource("3_x8xh3"), ExtResource("4_hqnt4")])
+metadata/_custom_type_script = "uid://calq2c4asrcko"

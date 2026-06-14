@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cytqi1f7unj0x"]
+
+[ext_resource type="Script" uid="uid://bp2fo22yidt1k" path="res://Scripts/Menu_UI/shop_item_row.gd" id="1_h725k"]
+[ext_resource type="Texture2D" uid="uid://dt41rm4d0e4mv" path="res://icon.svg" id="2_aobxo"]
+
+[node name="ShopItemRow" type="PanelContainer" unique_id=932740767]
+custom_minimum_size = Vector2(300, 44)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -854.0
+offset_bottom = -555.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h725k")
+
+[node name="Button" type="Button" parent="." unique_id=1658959782]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Button" unique_id=1444074378]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IconTextureRect" type="TextureRect" parent="Button/HBoxContainer" unique_id=1310092675]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_aobxo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Button/HBoxContainer" unique_id=1635119959]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PLACEHOLDER"
+
+[node name="PriceLabel" type="Label" parent="Button/HBoxContainer" unique_id=1545067295]
+layout_mode = 2
+text = "$$$"
+horizontal_alignment = 2

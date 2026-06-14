@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ShopItemDefinition" format=3 uid="uid://b4v3p3ixpbhow"]
+
+[ext_resource type="Texture2D" uid="uid://dyshw81wmob45" path="res://Assets/textures/grids/Green/texture_10.png" id="1_1ihci"]
+[ext_resource type="Script" uid="uid://c388i4nvgvhq" path="res://Scripts/Service/ShopItemDefinition.gd" id="1_knfx7"]
+
+[resource]
+script = ExtResource("1_knfx7")
+item_id = &"cola"
+display_name = "Cola"
+description = "Ice cold cola... yum"
+category = 2
+icon = ExtResource("1_1ihci")
+base_price = 10
+metadata/_custom_type_script = "uid://c388i4nvgvhq"

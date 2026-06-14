@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ShopItemDefinition" format=3 uid="uid://clvn8h2a071cv"]
+
+[ext_resource type="Script" uid="uid://c388i4nvgvhq" path="res://Scripts/Service/ShopItemDefinition.gd" id="1_pmspp"]
+[ext_resource type="Texture2D" uid="uid://dt41rm4d0e4mv" path="res://icon.svg" id="1_qk1o4"]
+
+[resource]
+script = ExtResource("1_pmspp")
+item_id = &"milk"
+display_name = "Cold Milk"
+description = "Ice cold milk, delicious"
+category = 2
+icon = ExtResource("1_qk1o4")
+base_price = 2
+metadata/_custom_type_script = "uid://c388i4nvgvhq"

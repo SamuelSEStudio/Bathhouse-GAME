@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ShopDefinition" format=3 uid="uid://p3r855nvbfd4"]
+
+[ext_resource type="Script" uid="uid://bk8y7ne63ulmr" path="res://Scripts/Service/ShopDefinition.gd" id="1_owgc8"]
+[ext_resource type="Script" uid="uid://dnilx8ahtku0x" path="res://Scripts/Service/ShopStockEntry.gd" id="2_lrc1e"]
+[ext_resource type="Resource" uid="uid://8kc8rywq6bh3" path="res://Resources/Shop/StockEntries/ColaStock.tres" id="3_lrc1e"]
+
+[resource]
+script = ExtResource("1_owgc8")
+shop_id = &"vending"
+display_name = "Vending"
+stock = Array[ExtResource("2_lrc1e")]([ExtResource("3_lrc1e")])
+metadata/_custom_type_script = "uid://bk8y7ne63ulmr"

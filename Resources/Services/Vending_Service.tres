@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ServiceDefinition" format=3 uid="uid://btlygnhm3qp6o"]
+
+[ext_resource type="Script" uid="uid://up2ge2kjaog8" path="res://Scripts/Service/ServiceDefinition.gd" id="1_5advd"]
+[ext_resource type="PackedScene" uid="uid://chp2ht1cec5l5" path="res://Scenes/Menus_UI/Placeholder_shop_ui.tscn" id="2_lhom1"]
+[ext_resource type="Resource" uid="uid://p3r855nvbfd4" path="res://Resources/Shop/Vending_shop.tres" id="2_v1xps"]
+
+[resource]
+script = ExtResource("1_5advd")
+service_id = &"Vending"
+service_type = 1
+display_name = "Vendin"
+ui_scene = ExtResource("2_lhom1")
+shop_definition = ExtResource("2_v1xps")
+metadata/_custom_type_script = "uid://up2ge2kjaog8"

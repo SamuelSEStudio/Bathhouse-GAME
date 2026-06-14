@@ -5,15 +5,16 @@ signal service_open_requested(service_type: int, service_id: StringName, source_
 signal shop_open_requested(shop_id: StringName, source_npc: Node)
 signal service_closed(service_type: int, service_id: StringName)
 
-const PLACEHOLDER_SHOP_UI_SCENE: PackedScene = preload(
-	"res://Scenes/Menus_UI/Placeholder_shop_ui.tscn"
+var service_registry: ServiceRegistry = preload(
+	"res://Resources/Services/ServiceRegistry.tres"
 )
 
 var current_service_id: StringName = &""
 var current_service_type: int = NPCProfile.ServiceType.NONE
 var current_source_npc: Node = null
+var current_service_definition: ServiceDefinition = null
+var current_shop_definition: ShopDefinition = null
 
-@export var service_registry: ServiceRegistry
 var _open_shop_ui: PlaceholderShopUI = null
 var _locked_player: Player = null
 var _previous_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_CAPTURED
@@ -52,11 +53,28 @@ func open_service_for_profile(profile: NPCProfile, source_npc: Node = null) -> v
 		push_warning("%s has no service_id." % profile.display_name)
 		return
 
+	var definition: ServiceDefinition = _get_service_definition(profile.service_id)
+
+	if definition == null:
+		return
+
+	if definition.service_type != profile.service_type:
+		push_warning(
+			"Service type mismatch for '%s'. Profile type: %s, definition type: %s"
+			% [
+				String(profile.service_id),
+				str(profile.service_type),
+				str(definition.service_type)
+			]
+		)
+
 	if current_service_id != &"":
 		close_current_service()
 
-	current_service_type = profile.service_type
-	current_service_id = profile.service_id
+	current_service_definition = definition
+	current_shop_definition = definition.shop_definition
+	current_service_type = definition.service_type
+	current_service_id = definition.service_id
 	current_source_npc = source_npc
 
 	service_open_requested.emit(
@@ -65,28 +83,21 @@ func open_service_for_profile(profile: NPCProfile, source_npc: Node = null) -> v
 		current_source_npc
 	)
 
-	match profile.service_type:
+	match definition.service_type:
 		NPCProfile.ServiceType.SHOP:
-			open_shop(profile.service_id, source_npc)
+			_open_shop(definition, source_npc)
 
 		NPCProfile.ServiceType.BATHHOUSE_COUNTER:
-			_open_placeholder_service("Bathhouse counter", profile.service_id)
+			_open_service_ui(definition)
 
 		NPCProfile.ServiceType.TRAINING:
-			_open_placeholder_service("Training service", profile.service_id)
+			_open_service_ui(definition)
 
 		NPCProfile.ServiceType.INFORMATION:
-			_open_placeholder_service("Information service", profile.service_id)
+			_open_service_ui(definition)
 
 		_:
-			_open_placeholder_service("Generic service", profile.service_id)
-
-
-func open_shop(shop_id: StringName, source_npc: Node = null) -> void:
-	print("SHOP OPENED: %s" % String(shop_id))
-
-	shop_open_requested.emit(shop_id, source_npc)
-	_open_placeholder_shop_ui(shop_id)
+			_open_service_ui(definition)
 
 
 func close_current_service() -> void:
@@ -103,8 +114,11 @@ func close_current_service() -> void:
 	current_service_id = &""
 	current_service_type = NPCProfile.ServiceType.NONE
 	current_source_npc = null
+	current_service_definition = null
+	current_shop_definition = null
 
 	service_closed.emit(closing_service_type, closing_service_id)
+
 
 func _get_service_definition(service_id: StringName) -> ServiceDefinition:
 	if service_registry == null:
@@ -118,23 +132,14 @@ func _get_service_definition(service_id: StringName) -> ServiceDefinition:
 		return null
 
 	return definition
-	
-func _open_placeholder_shop_ui(shop_id: StringName) -> void:
-	var ui_instance: Node = PLACEHOLDER_SHOP_UI_SCENE.instantiate()
-	var shop_ui: PlaceholderShopUI = ui_instance as PlaceholderShopUI
 
-	if shop_ui == null:
-		push_warning("Placeholder shop UI scene root must use PlaceholderShopUI.")
-		ui_instance.queue_free()
-		return
 
-	_open_shop_ui = shop_ui
-	get_tree().root.add_child(_open_shop_ui)
+func _open_shop(definition: ServiceDefinition, source_npc: Node = null) -> void:
+	print("SHOP OPENED: %s" % String(definition.service_id))
 
-	_open_shop_ui.close_requested.connect(close_current_service)
-	_open_shop_ui.setup(shop_id)
+	shop_open_requested.emit(definition.service_id, source_npc)
+	_open_service_ui(definition)
 
-	_lock_player_input()
 
 func _open_service_ui(definition: ServiceDefinition) -> void:
 	if definition.ui_scene == null:
@@ -147,9 +152,20 @@ func _open_service_ui(definition: ServiceDefinition) -> void:
 		push_warning("Could not instantiate UI scene for service: %s" % String(definition.service_id))
 		return
 
-	get_tree().root.add_child(ui_instance)
-func _open_placeholder_service(label: String, service_id: StringName) -> void:
-	print("%s opened: %s" % [label, String(service_id)])
+	var shop_ui: PlaceholderShopUI = ui_instance as PlaceholderShopUI
+
+	if shop_ui == null:
+		push_warning("Service UI scene root must currently use PlaceholderShopUI.")
+		ui_instance.queue_free()
+		return
+
+	_open_shop_ui = shop_ui
+	get_tree().root.add_child(_open_shop_ui)
+
+	_open_shop_ui.close_requested.connect(close_current_service)
+	_open_shop_ui.setup_service(definition)
+
+	_lock_player_input()
 
 
 func _lock_player_input() -> void:
