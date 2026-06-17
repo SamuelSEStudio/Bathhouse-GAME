@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://clmiv5e8m0723"]
+
+[ext_resource type="Script" uid="uid://ct7ed4me86ye0" path="res://Scripts/NPCS/Scheduling/NPCScheduleMarker.gd" id="1_iwqmh"]
+[ext_resource type="PackedScene" uid="uid://bo6d04i5t4d4a" path="res://Scenes/Prototype-models/arrow.tscn" id="1_ua3h0"]
+
+[node name="Marker" type="Node3D" unique_id=548474337]
+script = ExtResource("1_iwqmh")
+
+[node name="arrow" parent="." unique_id=1022165088 instance=ExtResource("1_ua3h0")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.019798994, 1.5355713, -0.15529704)

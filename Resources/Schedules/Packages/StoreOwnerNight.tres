@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="NPCSchedulePackage" format=3 uid="uid://caecxf4qsqlvp"]
+
+[ext_resource type="Script" uid="uid://4mm5fa5b8vuf" path="res://Scripts/NPCS/Scheduling/NPCSchedulePackage.gd" id="1_y0kx0"]
+
+[resource]
+script = ExtResource("1_y0kx0")
+metadata/_custom_type_script = "uid://4mm5fa5b8vuf"

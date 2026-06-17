@@ -22,6 +22,10 @@ enum TimelineSelectionMode {
 @export_group("Sequence Settings")
 @export var sequence_loops: bool = false
 
+@export_group("Schedules")
+@export var required_schedule_contexts: Array[StringName] = []
+@export var blocked_schedule_contexts: Array[StringName] = []
+
 @export_group("Talk Count Conditions")
 @export var min_talk_count: int = -1
 @export var max_talk_count: int = -1
@@ -190,3 +194,9 @@ func _normalise_rule_id(value: String) -> StringName:
 	normalised = normalised.replace(" ", "_")
 	normalised = normalised.replace("-", "_")
 	return StringName(normalised)
+	
+static func get_schedule_contexts_for_npc(npc: NPCBase) -> Array[StringName]:
+	if npc == null:
+		return []
+
+	return npc.current_schedule_contexts

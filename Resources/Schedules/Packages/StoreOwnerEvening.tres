@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NPCSchedulePackage" format=3 uid="uid://5pseflctm68c"]
+
+[ext_resource type="Script" uid="uid://4mm5fa5b8vuf" path="res://Scripts/NPCS/Scheduling/NPCSchedulePackage.gd" id="1_vj6dl"]
+
+[resource]
+script = ExtResource("1_vj6dl")
+package_id = &"SOEven"
+valid_time_blocks_mask = 8
+location_id = &"corner_store_night"
+spawn_mode = 1
+activity_id = &"unavailable"
+idle_animation = &"shop_closed, unavailable"
+can_interact = false
+service_available = false
+metadata/_custom_type_script = "uid://4mm5fa5b8vuf"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NPCSchedule" format=3 uid="uid://d0h4uqossp8pp"]
+
+[ext_resource type="Script" uid="uid://4mm5fa5b8vuf" path="res://Scripts/NPCS/Scheduling/NPCSchedulePackage.gd" id="1_rxgoe"]
+[ext_resource type="Resource" uid="uid://bhx7j41pficph" path="res://Resources/Schedules/Packages/StoreOwnerMorning.tres" id="2_af58l"]
+[ext_resource type="Script" uid="uid://csawltng3jqo4" path="res://Scripts/NPCS/Scheduling/NPCSchedule.gd" id="2_i2bln"]
+[ext_resource type="Resource" uid="uid://dnsprshlsm3qb" path="res://Resources/Schedules/Packages/StoreOwnerDay.tres" id="3_eoo63"]
+[ext_resource type="Resource" uid="uid://caecxf4qsqlvp" path="res://Resources/Schedules/Packages/StoreOwnerNight.tres" id="4_4klds"]
+[ext_resource type="Resource" uid="uid://5pseflctm68c" path="res://Resources/Schedules/Packages/StoreOwnerEvening.tres" id="5_f23tt"]
+
+[resource]
+script = ExtResource("2_i2bln")
+schedule_id = &"SOSched"
+packages = Array[ExtResource("1_rxgoe")]([ExtResource("2_af58l"), ExtResource("3_eoo63"), ExtResource("4_4klds"), ExtResource("5_f23tt")])
+metadata/_custom_type_script = "uid://csawltng3jqo4"

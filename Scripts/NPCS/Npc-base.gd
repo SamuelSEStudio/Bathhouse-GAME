@@ -3,6 +3,8 @@ extends Node3D
 
 signal interaction_started(npc: NPCBase, timeline_name: StringName)
 signal interaction_finished(npc: NPCBase)
+signal schedule_package_changed(npc: NPCBase, package: NPCSchedulePackage)
+signal schedule_service_availability_changed(npc: NPCBase, is_available: bool)
 
 @export_group("NPC Data")
 @export var npc_profile: NPCProfile
@@ -46,6 +48,9 @@ var _dialogue_cameras: Dictionary = {}
 var _is_currently_interacting: bool = false
 var _current_timeline_name: StringName = &""
 
+var current_schedule_package: NPCSchedulePackage = null
+var current_schedule_contexts: Array[StringName] = []
+var current_service_available: bool = true
 
 func _ready() -> void:
 	add_to_group("npcs")
@@ -54,7 +59,8 @@ func _ready() -> void:
 	_resolve_nodes()
 	_cache_default_animation()
 	_connect_signals()
-
+	_connect_world_state_schedule_signal()
+	_refresh_schedule_from_world_state()
 
 func _spawn_model_scene() -> void:
 	if model_scene == null:
@@ -233,6 +239,9 @@ func can_interact() -> bool:
 	if can_cinematic == false:
 		return false
 
+	if is_interaction_available_from_schedule() == false:
+		return false
+
 	return true
 
 
@@ -380,6 +389,159 @@ func _on_cinematic_cooldown_timeout() -> void:
 func _on_convo_area_body_entered(body: Node3D) -> void:
 	if auto_interact_on_body_entered == false:
 		return
-
+		
 	if body is Player:
 		interact()
+
+
+func refresh_schedule() -> void:
+	_refresh_schedule_from_world_state()
+
+
+func has_schedule_context(context_id: StringName) -> bool:
+	return current_schedule_contexts.has(context_id)
+
+
+func is_service_available_from_schedule() -> bool:
+	if npc_profile == null:
+		return false
+
+	if npc_profile.schedule_resource == null:
+		return true
+
+	return current_service_available
+
+
+func is_interaction_available_from_schedule() -> bool:
+	if current_schedule_package == null:
+		return true
+
+	return current_schedule_package.allows_interaction()
+
+
+func get_current_schedule_package() -> NPCSchedulePackage:
+	return current_schedule_package
+
+
+func _connect_world_state_schedule_signal() -> void:
+	var world_state: WorldState = _get_world_state()
+
+	if world_state == null:
+		return
+
+	if world_state.time_block_changed.is_connected(_on_world_time_block_changed):
+		return
+
+	world_state.time_block_changed.connect(_on_world_time_block_changed)
+
+
+func _on_world_time_block_changed(_new_time_block: int) -> void:
+	_refresh_schedule_from_world_state()
+
+
+func _refresh_schedule_from_world_state() -> void:
+	if npc_profile == null:
+		return
+
+	if npc_profile.uses_world_schedule == false:
+		return
+
+	if npc_profile.schedule_resource == null:
+		current_schedule_package = null
+		current_schedule_contexts.clear()
+		current_service_available = true
+		return
+
+	var world_state: WorldState = _get_world_state()
+	var package: NPCSchedulePackage = npc_profile.schedule_resource.get_package_for_current_world_state(world_state)
+
+	_apply_schedule_package(package)
+
+
+func _apply_schedule_package(package: NPCSchedulePackage) -> void:
+	current_schedule_package = package
+	current_schedule_contexts.clear()
+
+	if current_schedule_package == null:
+		current_service_available = true
+		visible = true
+		return
+
+	current_schedule_contexts.append_array(current_schedule_package.schedule_contexts)
+	current_service_available = current_schedule_package.allows_service()
+
+	_apply_schedule_visibility(current_schedule_package)
+	_apply_schedule_location(current_schedule_package)
+	_apply_schedule_animation(current_schedule_package)
+
+	schedule_package_changed.emit(self, current_schedule_package)
+	schedule_service_availability_changed.emit(self, current_service_available)
+
+
+func _apply_schedule_visibility(package: NPCSchedulePackage) -> void:
+	visible = package.is_visible_in_world()
+
+	set_process(visible)
+	set_physics_process(visible)
+
+	var convo_area_node: Area3D = convo_area
+
+	if convo_area_node != null:
+		convo_area_node.monitoring = package.allows_interaction()
+		convo_area_node.monitorable = package.allows_interaction()
+
+
+func _apply_schedule_location(package: NPCSchedulePackage) -> void:
+	if package.snap_to_marker == false:
+		return
+
+	if package.location_id == &"":
+		return
+
+	var marker: NPCScheduleMarker = _find_schedule_marker(package.location_id)
+
+	if marker == null:
+		push_warning(
+			"%s could not find NPCScheduleMarker with id: %s"
+			% [name, String(package.location_id)]
+		)
+		return
+
+	global_transform = marker.get_marker_transform()
+
+
+func _apply_schedule_animation(package: NPCSchedulePackage) -> void:
+	if package.idle_animation == &"":
+		return
+
+	play_animation(String(package.idle_animation))
+
+
+func _find_schedule_marker(location_id: StringName) -> NPCScheduleMarker:
+	var markers: Array[Node] = get_tree().get_nodes_in_group("npc_schedule_markers")
+
+	for marker_node: Node in markers:
+		var marker: NPCScheduleMarker = marker_node as NPCScheduleMarker
+
+		if marker == null:
+			continue
+
+		if marker.matches_id(location_id):
+			return marker
+
+	return null
+
+
+func _debug_print_schedule() -> void:
+	if current_schedule_package == null:
+		print("%s has no active schedule package." % name)
+		return
+
+	print(
+		"%s schedule package: %s | service available: %s"
+		% [
+			name,
+			current_schedule_package.get_debug_label(),
+			str(current_service_available)
+		]
+	)

@@ -53,6 +53,13 @@ func open_service_for_profile(profile: NPCProfile, source_npc: Node = null) -> v
 		push_warning("%s has no service_id." % profile.display_name)
 		return
 
+	if source_npc is NPCBase:
+		var npc: NPCBase = source_npc as NPCBase
+
+		if npc.is_service_available_from_schedule() == false:
+			push_warning("%s service is not available in the current schedule package." % npc.name)
+			return
+		
 	var definition: ServiceDefinition = _get_service_definition(profile.service_id)
 
 	if definition == null:

@@ -69,10 +69,10 @@ enum ServiceType {
 @export var starting_relationship_points: int = 0
 @export var relationship_group: StringName = &""
 
-@export_group("Schedule - Future Container")
-@export var schedule_resource: Resource
+@export_group("Schedule")
+@export var schedule_resource: NPCSchedule
 @export var default_schedule_id: StringName = &""
-@export var uses_world_schedule: bool = false
+@export var uses_world_schedule: bool = true
 
 @export_group("Shop / Service - Future Container")
 @export var service_type: ServiceType = ServiceType.NONE

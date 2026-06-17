@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCSchedulePackage" format=3 uid="uid://dnsprshlsm3qb"]
+
+[ext_resource type="Script" uid="uid://4mm5fa5b8vuf" path="res://Scripts/NPCS/Scheduling/NPCSchedulePackage.gd" id="1_4rdpr"]
+
+[resource]
+script = ExtResource("1_4rdpr")
+package_id = &"SODay"
+valid_time_blocks_mask = 2
+location_id = &"corner_store_day"
+activity_id = &"Shopkepping"
+idle_animation = &"Sword_Attack_Standing"
+schedule_contexts = Array[StringName]([&"shop_open", &"at_counter"])
+metadata/_custom_type_script = "uid://4mm5fa5b8vuf"

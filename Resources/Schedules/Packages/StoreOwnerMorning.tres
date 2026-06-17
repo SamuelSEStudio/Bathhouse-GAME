@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NPCSchedulePackage" format=3 uid="uid://bhx7j41pficph"]
+
+[ext_resource type="Script" uid="uid://4mm5fa5b8vuf" path="res://Scripts/NPCS/Scheduling/NPCSchedulePackage.gd" id="1_j68e8"]
+
+[resource]
+script = ExtResource("1_j68e8")
+package_id = &"SOMorn"
+valid_time_blocks_mask = 1
+location_id = &"corner_store_morning"
+activity_id = &"setting_up_shop"
+idle_animation = &"Conter_Enter"
+schedule_contexts = Array[StringName]([&"shop_closed", &"morning_setup"])
+service_available = false
+metadata/_custom_type_script = "uid://4mm5fa5b8vuf"
