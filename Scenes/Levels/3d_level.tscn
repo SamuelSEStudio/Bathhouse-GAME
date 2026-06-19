@@ -3354,7 +3354,7 @@ use_collision = true
 size = Vector3(4.65331, 29.1377, 21.0971)
 
 [node name="Floor2" type="CSGBox3D" parent="map" unique_id=218241000]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5358217, -4.987839, -17.492199)
+transform = Transform3D(0.9999989, -0.00063986547, 0.0012844125, 0.0006429898, 0.99999684, -0.002435819, -0.0012828513, 0.0024366418, 0.9999962, 3.5142376, -4.998158, -17.542316)
 material_override = SubResource("StandardMaterial3D_qwcx0")
 use_collision = true
 size = Vector3(62.1261, 1, 9.29073)
@@ -4924,23 +4924,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.87149, -4.37537, -18.2939)
 
 [node name="PauseMenuUI" parent="CanvasLayer" unique_id=164596420 instance=ExtResource("46_xdkp4")]
 
-[node name="Marker" parent="." unique_id=548474337 instance=ExtResource("38_ma83d")]
+[node name="ScheduleMarkers" type="Node" parent="." unique_id=955123086]
+
+[node name="Marker" parent="ScheduleMarkers" unique_id=548474337 instance=ExtResource("38_ma83d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.713074, -4.48784, -13.203991)
 marker_id = &"corner_store_morning"
 
-[node name="Marker2" parent="." unique_id=1547839505 instance=ExtResource("38_ma83d")]
+[node name="Marker2" parent="ScheduleMarkers" unique_id=1547839505 instance=ExtResource("38_ma83d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.427747, -4.48784, -15.338124)
-marker_id = &"corner_store_evening"
-
-[node name="Marker3" parent="." unique_id=1058801843 instance=ExtResource("38_ma83d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7376814, -4.48784, -17.583729)
-marker_id = &"corner_store_night"
-
-[node name="Marker4" parent="." unique_id=899972472 instance=ExtResource("38_ma83d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.830739, -4.487841, -21.4305)
 marker_id = &"corner_store_day"
+
+[node name="Marker3" parent="ScheduleMarkers" unique_id=1058801843 instance=ExtResource("38_ma83d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7376814, -4.48784, -17.583729)
+show_debug_marker = false
+
+[node name="Marker4" parent="ScheduleMarkers" unique_id=899972472 instance=ExtResource("38_ma83d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.830739, -4.487841, -21.4305)
 
 [node name="DebugTools" type="Node" parent="." unique_id=1682586521]
 
 [node name="TimeBlockDebug" type="Node" parent="DebugTools" unique_id=1630922264]
 script = ExtResource("39_2t2k5")
+enabled = null
+print_debug = null
+morning_key = null
+day_key = null
+evening_key = null
+night_key = null
+refresh_key = null

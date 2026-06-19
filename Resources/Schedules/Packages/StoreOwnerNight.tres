@@ -4,4 +4,12 @@
 
 [resource]
 script = ExtResource("1_y0kx0")
+package_id = &"SONight"
+valid_time_blocks_mask = 8
+location_id = &"corner_store_night"
+activity_id = &"closing_shop"
+idle_animation = &"Idle"
+schedule_contexts = Array[StringName]([&"closing_shop", &"unavailable"])
+can_interact = false
+service_available = false
 metadata/_custom_type_script = "uid://4mm5fa5b8vuf"

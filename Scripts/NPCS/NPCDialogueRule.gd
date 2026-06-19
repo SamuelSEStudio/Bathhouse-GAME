@@ -22,7 +22,7 @@ enum TimelineSelectionMode {
 @export_group("Sequence Settings")
 @export var sequence_loops: bool = false
 
-@export_group("Schedules")
+@export_group("Schedule Conditions")
 @export var required_schedule_contexts: Array[StringName] = []
 @export var blocked_schedule_contexts: Array[StringName] = []
 
@@ -39,7 +39,12 @@ enum TimelineSelectionMode {
 var valid_time_blocks_mask: int = 0
 
 
-func matches(world_state: WorldState, _npc_id: StringName, talk_count: int) -> bool:
+func matches(
+	world_state: WorldState,
+	_npc_id: StringName,
+	talk_count: int,
+	schedule_contexts: Array[StringName] = []
+) -> bool:
 	if is_enabled == false:
 		return false
 
@@ -53,6 +58,9 @@ func matches(world_state: WorldState, _npc_id: StringName, talk_count: int) -> b
 		return false
 
 	if _matches_time_block(world_state) == false:
+		return false
+
+	if _matches_schedule_contexts(schedule_contexts) == false:
 		return false
 
 	return true
@@ -189,14 +197,20 @@ func _matches_time_block(world_state: WorldState) -> bool:
 	return (valid_time_blocks_mask & time_bit) != 0
 
 
+func _matches_schedule_contexts(schedule_contexts: Array[StringName]) -> bool:
+	for required_context: StringName in required_schedule_contexts:
+		if schedule_contexts.has(required_context) == false:
+			return false
+
+	for blocked_context: StringName in blocked_schedule_contexts:
+		if schedule_contexts.has(blocked_context):
+			return false
+
+	return true
+
+
 func _normalise_rule_id(value: String) -> StringName:
 	var normalised: String = value.strip_edges().to_lower()
 	normalised = normalised.replace(" ", "_")
 	normalised = normalised.replace("-", "_")
 	return StringName(normalised)
-	
-static func get_schedule_contexts_for_npc(npc: NPCBase) -> Array[StringName]:
-	if npc == null:
-		return []
-
-	return npc.current_schedule_contexts

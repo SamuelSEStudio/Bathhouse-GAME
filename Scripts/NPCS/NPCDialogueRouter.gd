@@ -2,14 +2,35 @@ class_name NPCDialogueRouter
 extends RefCounted
 
 
-static func get_timeline(profile: NPCProfile, fallback_timeline: StringName = &"") -> StringName:
+static func get_timeline_for_npc(npc: NPCBase, fallback_timeline: StringName = &"") -> StringName:
+	if npc == null:
+		return fallback_timeline
+
+	return get_timeline(
+		npc.npc_profile,
+		fallback_timeline,
+		npc.current_schedule_contexts
+	)
+
+
+static func get_timeline(
+	profile: NPCProfile,
+	fallback_timeline: StringName = &"",
+	schedule_contexts: Array[StringName] = []
+) -> StringName:
 	if profile == null:
 		return fallback_timeline
 
 	var world_state: WorldState = _get_world_state()
 	var talk_count: int = _get_talk_count(profile, world_state)
 
-	var rule_timeline: StringName = _get_rule_timeline(profile, world_state, talk_count)
+	var rule_timeline: StringName = _get_rule_timeline(
+		profile,
+		world_state,
+		talk_count,
+		schedule_contexts
+	)
+
 	if rule_timeline != &"":
 		return rule_timeline
 
@@ -20,7 +41,12 @@ static func get_timeline(profile: NPCProfile, fallback_timeline: StringName = &"
 	return fallback_timeline
 
 
-static func _get_rule_timeline(profile: NPCProfile, world_state: WorldState, talk_count: int) -> StringName:
+static func _get_rule_timeline(
+	profile: NPCProfile,
+	world_state: WorldState,
+	talk_count: int,
+	schedule_contexts: Array[StringName]
+) -> StringName:
 	if profile.dialogue_rules.is_empty():
 		return &""
 
@@ -33,7 +59,7 @@ static func _get_rule_timeline(profile: NPCProfile, world_state: WorldState, tal
 	sorted_rules.sort_custom(_sort_rules_by_priority)
 
 	for rule: NPCDialogueRule in sorted_rules:
-		if rule.matches(world_state, profile.npc_id, talk_count):
+		if rule.matches(world_state, profile.npc_id, talk_count, schedule_contexts):
 			return rule.choose_timeline(world_state, profile.npc_id)
 
 	return &""

@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource("1_vj6dl")
 package_id = &"SOEven"
-valid_time_blocks_mask = 8
-location_id = &"corner_store_night"
+valid_time_blocks_mask = 4
+location_id = &"corner_store_evening"
 spawn_mode = 1
+snap_to_marker = false
 activity_id = &"unavailable"
 idle_animation = &"shop_closed, unavailable"
 can_interact = false

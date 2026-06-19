@@ -1,0 +1,3 @@
+[style]
+do GameManager.change_dialogue_cam("npc_side")
+StoreOwner: Well afternoon... check out the shop

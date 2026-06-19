@@ -60,7 +60,7 @@ func _ready() -> void:
 	_cache_default_animation()
 	_connect_signals()
 	_connect_world_state_schedule_signal()
-	_refresh_schedule_from_world_state()
+	call_deferred("_refresh_schedule_from_world_state")
 
 func _spawn_model_scene() -> void:
 	if model_scene == null:
@@ -214,7 +214,7 @@ func interact() -> void:
 	if can_interact() == false:
 		return
 
-	var selected_timeline: StringName = NPCDialogueRouter.get_timeline(npc_profile, timeline_name)
+	var selected_timeline: StringName = NPCDialogueRouter.get_timeline_for_npc(self, timeline_name)
 
 	if selected_timeline == &"":
 		push_warning("%s has no Dialogic timeline assigned." % name)

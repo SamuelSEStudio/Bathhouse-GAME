@@ -9,18 +9,15 @@ extends Node3D
 var _debug_mesh_instance: MeshInstance3D = null
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	add_to_group("npc_schedule_markers")
 
+
+func _ready() -> void:
 	if Engine.is_editor_hint():
 		_refresh_debug_marker()
 	else:
 		_hide_debug_marker()
-
-
-func _process(_delta: float) -> void:
-	if Engine.is_editor_hint():
-		_refresh_debug_marker()
 
 
 func matches_id(target_id: StringName) -> bool:

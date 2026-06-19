@@ -39,7 +39,7 @@ func set_time_block(new_time_block: int) -> void:
 	time_block_changed.emit(current_time_block)
 
 
-func get_time_block() -> int:
+func get_current_time_block() -> int:
 	return current_time_block
 
 

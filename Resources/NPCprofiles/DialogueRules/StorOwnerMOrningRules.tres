@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NPCDialogueRule" format=3 uid="uid://dqjq76kl0jetp"]
+
+[ext_resource type="Script" uid="uid://duwldrtqsruw" path="res://Scripts/NPCS/NPCDialogueRule.gd" id="1_wnku4"]
+
+[resource]
+script = ExtResource("1_wnku4")
+rule_id = &"store_owner_morning"
+rule_name = "Store Owner Morning"
+priority = 30
+timeline_pool = Array[StringName]([&"MorningTimeline"])
+required_schedule_contexts = Array[StringName]([&"morning_setup"])
+metadata/_custom_type_script = "uid://duwldrtqsruw"

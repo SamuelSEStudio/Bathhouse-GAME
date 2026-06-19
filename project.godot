@@ -53,12 +53,14 @@ directories/dch_directory={
 "Townsperson04": "res://Dialogic_stuff/Characters/Townsperson04.dch"
 }
 directories/dtl_directory={
+"AfternoontimeLIne": "res://Dialogic_stuff/Timeline/StoreOwners/AfternoontimeLIne.dtl",
 "BathPatron1": "res://Dialogic_stuff/Timeline/BathHouse/BathPatron1.dtl",
 "Construction01": "res://Dialogic_stuff/Timeline/Construction/Construction01.dtl",
 "Construction02": "res://Dialogic_stuff/Timeline/Construction/Construction02.dtl",
 "Fisherman": "res://Dialogic_stuff/Timeline/Townspeople/Fisherman.dtl",
 "Front_Desk": "res://Dialogic_stuff/Timeline/BathHouse/Front_Desk.dtl",
 "Hello": "res://Dialogic_stuff/Timeline/Townspeople/Hello.dtl",
+"MorningTimeline": "res://Dialogic_stuff/Timeline/StoreOwners/MorningTimeline.dtl",
 "StoreOwner": "res://Dialogic_stuff/Timeline/StoreOwners/StoreOwner.dtl",
 "StoreOwner2": "res://Dialogic_stuff/Timeline/StoreOwners/StoreOwner2.dtl",
 "Student": "res://Dialogic_stuff/Timeline/Townspeople/Student.dtl",

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NPCDialogueRule" format=3 uid="uid://djwiwrxulb78q"]
+
+[ext_resource type="Script" uid="uid://duwldrtqsruw" path="res://Scripts/NPCS/NPCDialogueRule.gd" id="1_i0if2"]
+
+[resource]
+script = ExtResource("1_i0if2")
+rule_id = &" store_owner_day_shop_open"
+rule_name = "Store Owner Day Shop Open"
+priority = 30
+timeline_pool = Array[StringName]([&"AfternoontimeLIne"])
+required_schedule_contexts = Array[StringName]([&"shop_open"])
+metadata/_custom_type_script = "uid://duwldrtqsruw"
