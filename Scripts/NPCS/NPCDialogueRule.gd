@@ -191,7 +191,7 @@ func _matches_time_block(world_state: WorldState) -> bool:
 	if world_state == null:
 		return false
 
-	var time_block: int = world_state.get_time_block()
+	var time_block: int = world_state.get_current_time_block()
 	var time_bit: int = 1 << time_block
 
 	return (valid_time_blocks_mask & time_bit) != 0

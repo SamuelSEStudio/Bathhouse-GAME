@@ -10,5 +10,5 @@
 [resource]
 script = ExtResource("2_i2bln")
 schedule_id = &"SOSched"
-packages = Array[ExtResource("1_rxgoe")]([ExtResource("2_af58l"), ExtResource("3_eoo63"), ExtResource("4_4klds"), ExtResource("5_f23tt")])
+packages = Array[ExtResource("1_rxgoe")]([ExtResource("2_af58l"), ExtResource("3_eoo63"), ExtResource("5_f23tt"), ExtResource("4_4klds")])
 metadata/_custom_type_script = "uid://csawltng3jqo4"

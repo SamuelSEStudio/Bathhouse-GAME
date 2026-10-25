@@ -6,6 +6,6 @@
 script = ExtResource("1_h6iwe")
 rule_id = &"Store1"
 rule_name = "StoreOwnertest"
-timeline_pool = Array[StringName]([&"StoreOwner", &"StoreOwner"])
+timeline_pool = Array[StringName]([&"StoreOwner", &"Hello"])
 selection_mode = 3
 metadata/_custom_type_script = "uid://duwldrtqsruw"
